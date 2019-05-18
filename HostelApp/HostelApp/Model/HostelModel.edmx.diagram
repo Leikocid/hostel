@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="fff31dfc04494d7bbbaeaaf823fde517" Name="HostelModelDiagram" >
+        <EntityTypeShape EntityType="HostelModel.User" Width="1.5" PointX="10.375" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HostelModel.Person" Width="1.5" PointX="8.25" PointY="0.5" IsExpanded="true" />
+        <AssociationConnector Association="HostelModel.PersonUser" ManuallyRouted="false" >
+        </AssociationConnector>
+        <EntityTypeShape EntityType="HostelModel.Hostel" Width="1.5" PointX="0.5" PointY="0.5" />
+        <EntityTypeShape EntityType="HostelModel.Room" Width="1.5" PointX="0.5" PointY="2.875" />
+        <AssociationConnector Association="HostelModel.HostelRoom" />
+        <EntityTypeShape EntityType="HostelModel.Student" Width="1.5" PointX="5.875" PointY="2.875" />
+        <AssociationConnector Association="HostelModel.PersonStudent" />
+        <EntityTypeShape EntityType="HostelModel.Faculty" Width="1.5" PointX="3.25" PointY="0.5" />
+        <EntityTypeShape EntityType="HostelModel.Group" Width="1.5" PointX="5.875" PointY="0.5" />
+        <AssociationConnector Association="HostelModel.FacultyGroup" />
+        <AssociationConnector Association="HostelModel.GroupStudent" />
+        <AssociationConnector Association="HostelModel.Mother" />
+        <AssociationConnector Association="HostelModel.Father" />
+        <EntityTypeShape EntityType="HostelModel.Ocupation" Width="1.5" PointX="3.25" PointY="2.5" />
+        <AssociationConnector Association="HostelModel.RoomOcupation" />
+        <AssociationConnector Association="HostelModel.StudentOcupation" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

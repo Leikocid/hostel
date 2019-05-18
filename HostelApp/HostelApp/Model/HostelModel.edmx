@@ -1,0 +1,595 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="HostelModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="HostelModelStoreContainer">
+    <EntitySet Name="UserSet" EntityType="HostelModel.Store.UserSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="HostelSet" EntityType="HostelModel.Store.HostelSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="RoomSet" EntityType="HostelModel.Store.RoomSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="StudentSet" EntityType="HostelModel.Store.StudentSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PersonSet" EntityType="HostelModel.Store.PersonSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="FacultySet" EntityType="HostelModel.Store.FacultySet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GroupSet" EntityType="HostelModel.Store.GroupSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="OcupationSet" EntityType="HostelModel.Store.OcupationSet" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="PersonUser" Association="HostelModel.Store.PersonUser">
+      <End Role="Person" EntitySet="PersonSet" />
+      <End Role="User" EntitySet="UserSet" />
+    </AssociationSet>
+    <AssociationSet Name="HostelRoom" Association="HostelModel.Store.HostelRoom">
+      <End Role="Hostel" EntitySet="HostelSet" />
+      <End Role="Room" EntitySet="RoomSet" />
+    </AssociationSet>
+    <AssociationSet Name="PersonStudent" Association="HostelModel.Store.PersonStudent">
+      <End Role="Person" EntitySet="PersonSet" />
+      <End Role="Student" EntitySet="StudentSet" />
+    </AssociationSet>
+    <AssociationSet Name="FacultyGroup" Association="HostelModel.Store.FacultyGroup">
+      <End Role="Faculty" EntitySet="FacultySet" />
+      <End Role="Group" EntitySet="GroupSet" />
+    </AssociationSet>
+    <AssociationSet Name="GroupStudent" Association="HostelModel.Store.GroupStudent">
+      <End Role="Group" EntitySet="GroupSet" />
+      <End Role="Student" EntitySet="StudentSet" />
+    </AssociationSet>
+    <AssociationSet Name="PersonPerson" Association="HostelModel.Store.Mother">
+      <End Role="ChildPerson" EntitySet="PersonSet" />
+      <End Role="Mother" EntitySet="PersonSet" />
+    </AssociationSet>
+    <AssociationSet Name="PersonPerson1" Association="HostelModel.Store.Father">
+      <End Role="ChildPerson" EntitySet="PersonSet" />
+      <End Role="Father" EntitySet="PersonSet" />
+    </AssociationSet>
+    <AssociationSet Name="RoomOcupation" Association="HostelModel.Store.RoomOcupation">
+      <End Role="Room" EntitySet="RoomSet" />
+      <End Role="Ocupation" EntitySet="OcupationSet" />
+    </AssociationSet>
+    <AssociationSet Name="StudentOcupation" Association="HostelModel.Store.StudentOcupation">
+      <End Role="Student" EntitySet="StudentSet" />
+      <End Role="Ocupation" EntitySet="OcupationSet" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="UserSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Login" Type="varchar" Nullable="false" MaxLength="200" />
+    <Property Name="Pasword" Type="varchar" Nullable="false" MaxLength="200" />
+    <Property Name="Active" Type="bit" Nullable="false" />
+    <Property Name="Person_Id" Type="int" Nullable="true" />
+  </EntityType>
+  <EntityType Name="HostelSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="200" />
+    <Property Name="Address" Type="nvarchar" Nullable="true" MaxLength="1000" />
+  </EntityType>
+  <EntityType Name="RoomSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Floor" Type="int" Nullable="false" />
+    <Property Name="Number" Type="int" Nullable="false" />
+    <Property Name="Capacity" Type="smallint" Nullable="false" />
+    <Property Name="Hostel_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="StudentSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Active" Type="bit" Nullable="false" />
+    <Property Name="Person_Id" Type="int" Nullable="false" />
+    <Property Name="Group_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PersonSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" Nullable="false" MaxLength="200" />
+    <Property Name="SecondName" Type="nvarchar" Nullable="false" MaxLength="200" />
+    <Property Name="MiddleName" Type="nvarchar" Nullable="true" MaxLength="200" />
+    <Property Name="Passport" Type="varchar" Nullable="false" MaxLength="15" />
+    <Property Name="RegistrationAddress" Type="nvarchar" Nullable="true" MaxLength="1000" />
+    <Property Name="Mother_Id" Type="int" Nullable="true" />
+    <Property Name="Father_Id" Type="int" Nullable="true" />
+  </EntityType>
+  <EntityType Name="FacultySet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="1000" />
+  </EntityType>
+  <EntityType Name="GroupSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StudyYear" Type="tinyint" Nullable="false" />
+    <Property Name="Number" Type="int" Nullable="false" />
+    <Property Name="Faculty_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OcupationSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="From" Type="datetime" Nullable="false" />
+    <Property Name="To" Type="datetime" Nullable="true" />
+    <Property Name="Room_Id" Type="int" Nullable="false" />
+    <Property Name="Student_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="PersonUser">
+    <End Role="Person" Type="HostelModel.Store.PersonSet" Multiplicity="0..1" />
+    <End Role="User" Type="HostelModel.Store.UserSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="Person_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="HostelRoom">
+    <End Role="Hostel" Type="HostelModel.Store.HostelSet" Multiplicity="1" />
+    <End Role="Room" Type="HostelModel.Store.RoomSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Hostel">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Room">
+        <PropertyRef Name="Hostel_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PersonStudent">
+    <End Role="Person" Type="HostelModel.Store.PersonSet" Multiplicity="1" />
+    <End Role="Student" Type="HostelModel.Store.StudentSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Student">
+        <PropertyRef Name="Person_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FacultyGroup">
+    <End Role="Faculty" Type="HostelModel.Store.FacultySet" Multiplicity="1" />
+    <End Role="Group" Type="HostelModel.Store.GroupSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Faculty">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Group">
+        <PropertyRef Name="Faculty_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="GroupStudent">
+    <End Role="Group" Type="HostelModel.Store.GroupSet" Multiplicity="1" />
+    <End Role="Student" Type="HostelModel.Store.StudentSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Group">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Student">
+        <PropertyRef Name="Group_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Mother">
+    <End Role="ChildPerson" Type="HostelModel.Store.PersonSet" Multiplicity="0..1" />
+    <End Role="Mother" Type="HostelModel.Store.PersonSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ChildPerson">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Mother">
+        <PropertyRef Name="Mother_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="Father">
+    <End Role="ChildPerson" Type="HostelModel.Store.PersonSet" Multiplicity="0..1" />
+    <End Role="Father" Type="HostelModel.Store.PersonSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ChildPerson">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Father">
+        <PropertyRef Name="Father_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="RoomOcupation">
+    <End Role="Room" Type="HostelModel.Store.RoomSet" Multiplicity="1" />
+    <End Role="Ocupation" Type="HostelModel.Store.OcupationSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Room">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Ocupation">
+        <PropertyRef Name="Room_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="StudentOcupation">
+    <End Role="Student" Type="HostelModel.Store.StudentSet" Multiplicity="1" />
+    <End Role="Ocupation" Type="HostelModel.Store.OcupationSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Student">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Ocupation">
+        <PropertyRef Name="Student_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="HostelModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="HostelModelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="UserSet" EntityType="HostelModel.User" />
+          <AssociationSet Name="PersonUser" Association="HostelModel.PersonUser">
+            <End Role="Person" EntitySet="PersonSet" />
+            <End Role="User" EntitySet="UserSet" />
+          </AssociationSet>
+          <EntitySet Name="HostelSet" EntityType="HostelModel.Hostel" />
+          <EntitySet Name="RoomSet" EntityType="HostelModel.Room" />
+          <AssociationSet Name="HostelRoom" Association="HostelModel.HostelRoom">
+            <End Role="Hostel" EntitySet="HostelSet" />
+            <End Role="Room" EntitySet="RoomSet" />
+          </AssociationSet>
+          <EntitySet Name="StudentSet" EntityType="HostelModel.Student" />
+          <EntitySet Name="PersonSet" EntityType="HostelModel.Person" />
+          <AssociationSet Name="PersonStudent" Association="HostelModel.PersonStudent">
+            <End Role="Person" EntitySet="PersonSet" />
+            <End Role="Student" EntitySet="StudentSet" />
+          </AssociationSet>
+          <EntitySet Name="FacultySet" EntityType="HostelModel.Faculty" />
+          <EntitySet Name="GroupSet" EntityType="HostelModel.Group" />
+          <AssociationSet Name="FacultyGroup" Association="HostelModel.FacultyGroup">
+            <End Role="Faculty" EntitySet="FacultySet" />
+            <End Role="Group" EntitySet="GroupSet" />
+          </AssociationSet>
+          <AssociationSet Name="GroupStudent" Association="HostelModel.GroupStudent">
+            <End Role="Group" EntitySet="GroupSet" />
+            <End Role="Student" EntitySet="StudentSet" />
+          </AssociationSet>
+          <AssociationSet Name="PersonPerson" Association="HostelModel.Mother">
+            <End Role="ChildPerson" EntitySet="PersonSet" />
+            <End Role="Mother" EntitySet="PersonSet" />
+          </AssociationSet>
+          <AssociationSet Name="PersonPerson1" Association="HostelModel.Father">
+            <End Role="ChildPerson" EntitySet="PersonSet" />
+            <End Role="Father" EntitySet="PersonSet" />
+          </AssociationSet>
+          <EntitySet Name="OcupationSet" EntityType="HostelModel.Ocupation" />
+          <AssociationSet Name="RoomOcupation" Association="HostelModel.RoomOcupation">
+            <End Role="Room" EntitySet="RoomSet" />
+            <End Role="Ocupation" EntitySet="OcupationSet" />
+          </AssociationSet>
+          <AssociationSet Name="StudentOcupation" Association="HostelModel.StudentOcupation">
+            <End Role="Student" EntitySet="StudentSet" />
+            <End Role="Ocupation" EntitySet="OcupationSet" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="User">
+          <Documentation>
+            <Summary>Пользователь системы</Summary>
+          </Documentation>
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Login" Type="String" Nullable="false" MaxLength="200" Unicode="false" />
+          <Property Name="Pasword" Type="String" Nullable="false" MaxLength="200" Unicode="false" />
+          <NavigationProperty Name="Person" Relationship="HostelModel.PersonUser" FromRole="User" ToRole="Person" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Person">
+          <Documentation>
+            <Summary>Персональные данные человека</Summary>
+          </Documentation>
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="200" Unicode="true" />
+          <Property Name="SecondName" Type="String" Nullable="false" MaxLength="200" Unicode="true" />
+          <Property Name="MiddleName" Type="String" MaxLength="200" Unicode="true" />
+          <Property Name="Passport" Type="String" Nullable="false" MaxLength="15" Unicode="false" />
+          <NavigationProperty Name="User" Relationship="HostelModel.PersonUser" FromRole="Person" ToRole="User" />
+          <NavigationProperty Name="Student" Relationship="HostelModel.PersonStudent" FromRole="Person" ToRole="Student" />
+          <NavigationProperty Name="Mother" Relationship="HostelModel.Mother" FromRole="Mother" ToRole="ChildPerson" />
+          <NavigationProperty Name="Father" Relationship="HostelModel.Father" FromRole="Father" ToRole="ChildPerson" />
+          <Property Name="RegistrationAddress" Type="String" MaxLength="1000" Unicode="true" />
+        </EntityType>
+        <Association Name="PersonUser">
+          <End Type="HostelModel.Person" Role="Person" Multiplicity="0..1" />
+          <End Type="HostelModel.User" Role="User" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Hostel">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="200" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="1000" Unicode="true" >
+            <Documentation>
+              <Summary>Здания общежитий</Summary>
+            </Documentation>
+          </Property>
+          <NavigationProperty Name="Room" Relationship="HostelModel.HostelRoom" FromRole="Hostel" ToRole="Room" />
+        </EntityType>
+        <EntityType Name="Room">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Floor" Type="Int32" Nullable="false" />
+          <Property Name="Number" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Hostel" Relationship="HostelModel.HostelRoom" FromRole="Room" ToRole="Hostel" />
+          <Property Name="Capacity" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="Ocupation" Relationship="HostelModel.RoomOcupation" FromRole="Room" ToRole="Ocupation" />
+        </EntityType>
+        <Association Name="HostelRoom">
+          <End Type="HostelModel.Hostel" Role="Hostel" Multiplicity="1" />
+          <End Type="HostelModel.Room" Role="Room" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Person" Relationship="HostelModel.PersonStudent" FromRole="Student" ToRole="Person" />
+          <NavigationProperty Name="Group" Relationship="HostelModel.GroupStudent" FromRole="Student" ToRole="Group" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Ocupation" Relationship="HostelModel.StudentOcupation" FromRole="Student" ToRole="Ocupation" />
+        </EntityType>
+        <Association Name="PersonStudent">
+          <End Type="HostelModel.Person" Role="Person" Multiplicity="1" />
+          <End Type="HostelModel.Student" Role="Student" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Faculty">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="1000" />
+          <NavigationProperty Name="Group" Relationship="HostelModel.FacultyGroup" FromRole="Faculty" ToRole="Group" />
+        </EntityType>
+        <EntityType Name="Group">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudyYear" Type="Byte" Nullable="false" />
+          <Property Name="Number" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Faculty" Relationship="HostelModel.FacultyGroup" FromRole="Group" ToRole="Faculty" />
+          <NavigationProperty Name="Student" Relationship="HostelModel.GroupStudent" FromRole="Group" ToRole="Student" />
+        </EntityType>
+        <Association Name="FacultyGroup">
+          <End Type="HostelModel.Faculty" Role="Faculty" Multiplicity="1" />
+          <End Type="HostelModel.Group" Role="Group" Multiplicity="*" />
+        </Association>
+        <Association Name="GroupStudent">
+          <End Type="HostelModel.Group" Role="Group" Multiplicity="1" />
+          <End Type="HostelModel.Student" Role="Student" Multiplicity="*" />
+        </Association>
+        <Association Name="Mother">
+          <End Type="HostelModel.Person" Role="ChildPerson" Multiplicity="0..1" />
+          <End Type="HostelModel.Person" Role="Mother" Multiplicity="*" />
+        </Association>
+        <Association Name="Father">
+          <End Type="HostelModel.Person" Role="ChildPerson" Multiplicity="0..1" />
+          <End Type="HostelModel.Person" Role="Father" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Ocupation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Room" Relationship="HostelModel.RoomOcupation" FromRole="Ocupation" ToRole="Room" />
+          <NavigationProperty Name="Student" Relationship="HostelModel.StudentOcupation" FromRole="Ocupation" ToRole="Student" />
+          <Property Name="From" Type="DateTime" Nullable="false" />
+          <Property Name="To" Type="DateTime" Nullable="true" />
+        </EntityType>
+        <Association Name="RoomOcupation">
+          <End Type="HostelModel.Room" Role="Room" Multiplicity="1" />
+          <End Type="HostelModel.Ocupation" Role="Ocupation" Multiplicity="*" />
+        </Association>
+        <Association Name="StudentOcupation">
+          <End Type="HostelModel.Student" Role="Student" Multiplicity="1" />
+          <End Type="HostelModel.Ocupation" Role="Ocupation" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="HostelModelStoreContainer" CdmEntityContainer="HostelModelContainer">
+    <EntitySetMapping Name="UserSet">
+      <EntityTypeMapping TypeName="IsTypeOf(HostelModel.User)">
+        <MappingFragment StoreEntitySet="UserSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Login" ColumnName="Login" />
+          <ScalarProperty Name="Pasword" ColumnName="Pasword" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HostelSet">
+      <EntityTypeMapping TypeName="IsTypeOf(HostelModel.Hostel)">
+        <MappingFragment StoreEntitySet="HostelSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Address" ColumnName="Address" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RoomSet">
+      <EntityTypeMapping TypeName="IsTypeOf(HostelModel.Room)">
+        <MappingFragment StoreEntitySet="RoomSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Floor" ColumnName="Floor" />
+          <ScalarProperty Name="Number" ColumnName="Number" />
+          <ScalarProperty Name="Capacity" ColumnName="Capacity" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="StudentSet">
+      <EntityTypeMapping TypeName="IsTypeOf(HostelModel.Student)">
+        <MappingFragment StoreEntitySet="StudentSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Active" ColumnName="Active" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PersonSet">
+      <EntityTypeMapping TypeName="IsTypeOf(HostelModel.Person)">
+        <MappingFragment StoreEntitySet="PersonSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="SecondName" ColumnName="SecondName" />
+          <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+          <ScalarProperty Name="Passport" ColumnName="Passport" />
+          <ScalarProperty Name="RegistrationAddress" ColumnName="RegistrationAddress" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FacultySet">
+      <EntityTypeMapping TypeName="IsTypeOf(HostelModel.Faculty)">
+        <MappingFragment StoreEntitySet="FacultySet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GroupSet">
+      <EntityTypeMapping TypeName="IsTypeOf(HostelModel.Group)">
+        <MappingFragment StoreEntitySet="GroupSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="StudyYear" ColumnName="StudyYear" />
+          <ScalarProperty Name="Number" ColumnName="Number" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OcupationSet">
+      <EntityTypeMapping TypeName="IsTypeOf(HostelModel.Ocupation)">
+        <MappingFragment StoreEntitySet="OcupationSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="From" ColumnName="From" />
+          <ScalarProperty Name="To" ColumnName="To" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="PersonUser" TypeName="HostelModel.PersonUser" StoreEntitySet="UserSet">
+      <EndProperty Name="Person">
+        <ScalarProperty Name="Id" ColumnName="Person_Id" />
+      </EndProperty>
+      <EndProperty Name="User">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+      <Condition ColumnName="Person_Id" IsNull="false" />
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="HostelRoom" TypeName="HostelModel.HostelRoom" StoreEntitySet="RoomSet">
+      <EndProperty Name="Hostel">
+        <ScalarProperty Name="Id" ColumnName="Hostel_Id" />
+      </EndProperty>
+      <EndProperty Name="Room">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="PersonStudent" TypeName="HostelModel.PersonStudent" StoreEntitySet="StudentSet">
+      <EndProperty Name="Person">
+        <ScalarProperty Name="Id" ColumnName="Person_Id" />
+      </EndProperty>
+      <EndProperty Name="Student">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="FacultyGroup" TypeName="HostelModel.FacultyGroup" StoreEntitySet="GroupSet">
+      <EndProperty Name="Faculty">
+        <ScalarProperty Name="Id" ColumnName="Faculty_Id" />
+      </EndProperty>
+      <EndProperty Name="Group">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="GroupStudent" TypeName="HostelModel.GroupStudent" StoreEntitySet="StudentSet">
+      <EndProperty Name="Group">
+        <ScalarProperty Name="Id" ColumnName="Group_Id" />
+      </EndProperty>
+      <EndProperty Name="Student">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="PersonPerson" TypeName="HostelModel.Mother" StoreEntitySet="PersonSet">
+      <EndProperty Name="ChildPerson">
+        <ScalarProperty Name="Id" ColumnName="Mother_Id" />
+      </EndProperty>
+      <EndProperty Name="Mother">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+      <Condition ColumnName="Mother_Id" IsNull="false" />
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="PersonPerson1" TypeName="HostelModel.Father" StoreEntitySet="PersonSet">
+      <EndProperty Name="ChildPerson">
+        <ScalarProperty Name="Id" ColumnName="Father_Id" />
+      </EndProperty>
+      <EndProperty Name="Father">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+      <Condition ColumnName="Father_Id" IsNull="false" />
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="RoomOcupation" TypeName="HostelModel.RoomOcupation" StoreEntitySet="OcupationSet">
+      <EndProperty Name="Room">
+        <ScalarProperty Name="Id" ColumnName="Room_Id" />
+      </EndProperty>
+      <EndProperty Name="Ocupation">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="StudentOcupation" TypeName="HostelModel.StudentOcupation" StoreEntitySet="OcupationSet">
+      <EndProperty Name="Student">
+        <ScalarProperty Name="Id" ColumnName="Student_Id" />
+      </EndProperty>
+      <EndProperty Name="Ocupation">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -35,8 +35,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -55,11 +64,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Windows\LoginScreen.xaml">
+    <Page Include="View\LoginScreen.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Windows\MainWindow.xaml">
+    <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -67,10 +76,49 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Windows\LoginScreen.xaml.cs">
+    <Compile Include="Model\Faculty.cs">
+      <DependentUpon>HostelModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Group.cs">
+      <DependentUpon>HostelModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Hostel.cs">
+      <DependentUpon>HostelModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\HostelModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HostelModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\HostelModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HostelModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\HostelModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HostelModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Ocupation.cs">
+      <DependentUpon>HostelModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Person.cs">
+      <DependentUpon>HostelModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Room.cs">
+      <DependentUpon>HostelModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Student.cs">
+      <DependentUpon>HostelModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\User.cs">
+      <DependentUpon>HostelModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="View\LoginScreen.xaml.cs">
       <DependentUpon>LoginScreen.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Windows\MainWindow.xaml.cs">
+    <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -92,6 +140,14 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EntityDeploy Include="Model\HostelModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>HostelModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Model\HostelModel.edmx.diagram">
+      <DependentUpon>HostelModel.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -99,6 +155,22 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Model\HostelModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>HostelModel.Context.cs</LastGenOutput>
+      <DependentUpon>HostelModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="Model\HostelModel.edmx.sql" />
+    <Content Include="Model\HostelModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>HostelModel.cs</LastGenOutput>
+      <DependentUpon>HostelModel.edmx</DependentUpon>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

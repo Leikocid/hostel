@@ -12,13 +12,20 @@ namespace HostelApp.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class User
+    public partial class Order
     {
-        public int Id { get; set; }
-        public string Login { get; set; }
-        public string Pasword { get; set; }
-        public bool Active { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Order()
+        {
+            this.Payment = new HashSet<Payment>();
+        }
     
-        public virtual Person Person { get; set; }
+        public int Id { get; set; }
+        public string Number { get; set; }
+        public double Price { get; set; }
+    
+        public virtual Ocupation Ocupation { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Payment> Payment { get; set; }
     }
 }

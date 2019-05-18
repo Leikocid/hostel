@@ -103,6 +103,12 @@
     <Compile Include="Model\Ocupation.cs">
       <DependentUpon>HostelModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Order.cs">
+      <DependentUpon>HostelModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Payment.cs">
+      <DependentUpon>HostelModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Person.cs">
       <DependentUpon>HostelModel.tt</DependentUpon>
     </Compile>

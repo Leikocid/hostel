@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 05/18/2019 19:58:35
--- Generated from EDMX file: C:\Work\hostel\HostelApp\HostelApp\Model\HostelModel.edmx
+-- Date Created: 05/18/2019 20:54:57
+-- Generated from EDMX file: D:\work\hostel\HostelApp\HostelApp\Model\HostelModel.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -38,6 +38,12 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_Father]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[PersonSet] DROP CONSTRAINT [FK_Father];
 GO
+IF OBJECT_ID(N'[dbo].[FK_RoomOcupation]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[OcupationSet] DROP CONSTRAINT [FK_RoomOcupation];
+GO
+IF OBJECT_ID(N'[dbo].[FK_StudentOcupation]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[OcupationSet] DROP CONSTRAINT [FK_StudentOcupation];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
@@ -63,6 +69,9 @@ IF OBJECT_ID(N'[dbo].[FacultySet]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[GroupSet]', 'U') IS NOT NULL
     DROP TABLE [dbo].[GroupSet];
+GO
+IF OBJECT_ID(N'[dbo].[OcupationSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[OcupationSet];
 GO
 
 -- --------------------------------------------------
@@ -145,6 +154,25 @@ CREATE TABLE [dbo].[OcupationSet] (
 );
 GO
 
+-- Creating table 'OrderSet'
+CREATE TABLE [dbo].[OrderSet] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Number] nvarchar(200)  NOT NULL,
+    [Price] float  NOT NULL,
+    [Ocupation_Id] int  NOT NULL
+);
+GO
+
+-- Creating table 'PaymentSet'
+CREATE TABLE [dbo].[PaymentSet] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Number] nvarchar(200)  NOT NULL,
+    [Amount] float  NOT NULL,
+    [Payer_Id] int  NULL,
+    [Order_Id] int  NOT NULL
+);
+GO
+
 -- --------------------------------------------------
 -- Creating all PRIMARY KEY constraints
 -- --------------------------------------------------
@@ -194,6 +222,18 @@ GO
 -- Creating primary key on [Id] in table 'OcupationSet'
 ALTER TABLE [dbo].[OcupationSet]
 ADD CONSTRAINT [PK_OcupationSet]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'OrderSet'
+ALTER TABLE [dbo].[OrderSet]
+ADD CONSTRAINT [PK_OrderSet]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'PaymentSet'
+ALTER TABLE [dbo].[PaymentSet]
+ADD CONSTRAINT [PK_PaymentSet]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
@@ -334,6 +374,51 @@ GO
 CREATE INDEX [IX_FK_StudentOcupation]
 ON [dbo].[OcupationSet]
     ([Student_Id]);
+GO
+
+-- Creating foreign key on [Ocupation_Id] in table 'OrderSet'
+ALTER TABLE [dbo].[OrderSet]
+ADD CONSTRAINT [FK_OcupationOrder]
+    FOREIGN KEY ([Ocupation_Id])
+    REFERENCES [dbo].[OcupationSet]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_OcupationOrder'
+CREATE INDEX [IX_FK_OcupationOrder]
+ON [dbo].[OrderSet]
+    ([Ocupation_Id]);
+GO
+
+-- Creating foreign key on [Payer_Id] in table 'PaymentSet'
+ALTER TABLE [dbo].[PaymentSet]
+ADD CONSTRAINT [FK_PaymentPerson]
+    FOREIGN KEY ([Payer_Id])
+    REFERENCES [dbo].[PersonSet]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_PaymentPerson'
+CREATE INDEX [IX_FK_PaymentPerson]
+ON [dbo].[PaymentSet]
+    ([Payer_Id]);
+GO
+
+-- Creating foreign key on [Order_Id] in table 'PaymentSet'
+ALTER TABLE [dbo].[PaymentSet]
+ADD CONSTRAINT [FK_PaymentOrder]
+    FOREIGN KEY ([Order_Id])
+    REFERENCES [dbo].[OrderSet]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_PaymentOrder'
+CREATE INDEX [IX_FK_PaymentOrder]
+ON [dbo].[PaymentSet]
+    ([Order_Id]);
 GO
 
 -- --------------------------------------------------

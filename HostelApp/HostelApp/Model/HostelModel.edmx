@@ -14,6 +14,8 @@
     <EntitySet Name="FacultySet" EntityType="HostelModel.Store.FacultySet" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GroupSet" EntityType="HostelModel.Store.GroupSet" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="OcupationSet" EntityType="HostelModel.Store.OcupationSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="OrderSet" EntityType="HostelModel.Store.OrderSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="PaymentSet" EntityType="HostelModel.Store.PaymentSet" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="PersonUser" Association="HostelModel.Store.PersonUser">
       <End Role="Person" EntitySet="PersonSet" />
       <End Role="User" EntitySet="UserSet" />
@@ -49,6 +51,18 @@
     <AssociationSet Name="StudentOcupation" Association="HostelModel.Store.StudentOcupation">
       <End Role="Student" EntitySet="StudentSet" />
       <End Role="Ocupation" EntitySet="OcupationSet" />
+    </AssociationSet>
+    <AssociationSet Name="OcupationOrder" Association="HostelModel.Store.OcupationOrder">
+      <End Role="Ocupation" EntitySet="OcupationSet" />
+      <End Role="Order" EntitySet="OrderSet" />
+    </AssociationSet>
+    <AssociationSet Name="PaymentPerson" Association="HostelModel.Store.PaymentPerson">
+      <End Role="Payment" EntitySet="PaymentSet" />
+      <End Role="Person" EntitySet="PersonSet" />
+    </AssociationSet>
+    <AssociationSet Name="PaymentOrder" Association="HostelModel.Store.PaymentOrder">
+      <End Role="Payment" EntitySet="PaymentSet" />
+      <End Role="Order" EntitySet="OrderSet" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="UserSet">
@@ -126,6 +140,25 @@
     <Property Name="To" Type="datetime" Nullable="true" />
     <Property Name="Room_Id" Type="int" Nullable="false" />
     <Property Name="Student_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="OrderSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Number" Type="nvarchar" Nullable="false" MaxLength="200" />
+    <Property Name="Price" Type="float" Nullable="false" />
+    <Property Name="Ocupation_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PaymentSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Number" Type="nvarchar" Nullable="false" MaxLength="200" />
+    <Property Name="Amount" Type="float" Nullable="false" />
+    <Property Name="Payer_Id" Type="int" Nullable="true" />
+    <Property Name="Order_Id" Type="int" Nullable="false" />
   </EntityType>
   <Association Name="PersonUser">
     <End Role="Person" Type="HostelModel.Store.PersonSet" Multiplicity="0..1" />
@@ -235,6 +268,42 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="OcupationOrder">
+    <End Role="Ocupation" Type="HostelModel.Store.OcupationSet" Multiplicity="1" />
+    <End Role="Order" Type="HostelModel.Store.OrderSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ocupation">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="Ocupation_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PaymentPerson">
+    <End Role="Payment" Type="HostelModel.Store.PaymentSet" Multiplicity="*" />
+    <End Role="Person" Type="HostelModel.Store.PersonSet" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Payment">
+        <PropertyRef Name="Payer_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PaymentOrder">
+    <End Role="Payment" Type="HostelModel.Store.PaymentSet" Multiplicity="*" />
+    <End Role="Order" Type="HostelModel.Store.OrderSet" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Order">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Payment">
+        <PropertyRef Name="Order_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -284,6 +353,20 @@
             <End Role="Student" EntitySet="StudentSet" />
             <End Role="Ocupation" EntitySet="OcupationSet" />
           </AssociationSet>
+          <EntitySet Name="OrderSet" EntityType="HostelModel.Order" />
+          <AssociationSet Name="OcupationOrder" Association="HostelModel.OcupationOrder">
+            <End Role="Ocupation" EntitySet="OcupationSet" />
+            <End Role="Order" EntitySet="OrderSet" />
+          </AssociationSet>
+          <EntitySet Name="PaymentSet" EntityType="HostelModel.Payment" />
+          <AssociationSet Name="PaymentPerson" Association="HostelModel.PaymentPerson">
+            <End Role="Payment" EntitySet="PaymentSet" />
+            <End Role="Person" EntitySet="PersonSet" />
+          </AssociationSet>
+          <AssociationSet Name="PaymentOrder" Association="HostelModel.PaymentOrder">
+            <End Role="Payment" EntitySet="PaymentSet" />
+            <End Role="Order" EntitySet="OrderSet" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="User">
           <Documentation>
@@ -315,6 +398,7 @@
           <NavigationProperty Name="Mother" Relationship="HostelModel.Mother" FromRole="Mother" ToRole="ChildPerson" />
           <NavigationProperty Name="Father" Relationship="HostelModel.Father" FromRole="Father" ToRole="ChildPerson" />
           <Property Name="RegistrationAddress" Type="String" MaxLength="1000" Unicode="true" />
+          <NavigationProperty Name="Payment" Relationship="HostelModel.PaymentPerson" FromRole="Person" ToRole="Payment" />
         </EntityType>
         <Association Name="PersonUser">
           <End Type="HostelModel.Person" Role="Person" Multiplicity="0..1" />
@@ -405,6 +489,7 @@
           <NavigationProperty Name="Student" Relationship="HostelModel.StudentOcupation" FromRole="Ocupation" ToRole="Student" />
           <Property Name="From" Type="DateTime" Nullable="false" />
           <Property Name="To" Type="DateTime" Nullable="true" />
+          <NavigationProperty Name="Order" Relationship="HostelModel.OcupationOrder" FromRole="Ocupation" ToRole="Order" />
         </EntityType>
         <Association Name="RoomOcupation">
           <End Type="HostelModel.Room" Role="Room" Multiplicity="1" />
@@ -413,6 +498,38 @@
         <Association Name="StudentOcupation">
           <End Type="HostelModel.Student" Role="Student" Multiplicity="1" />
           <End Type="HostelModel.Ocupation" Role="Ocupation" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Ocupation" Relationship="HostelModel.OcupationOrder" FromRole="Order" ToRole="Ocupation" />
+          <Property Name="Number" Type="String" Nullable="false" MaxLength="200" />
+          <Property Name="Price" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Payment" Relationship="HostelModel.PaymentOrder" FromRole="Order" ToRole="Payment" />
+        </EntityType>
+        <Association Name="OcupationOrder">
+          <End Type="HostelModel.Ocupation" Role="Ocupation" Multiplicity="1" />
+          <End Type="HostelModel.Order" Role="Order" Multiplicity="0..1" />
+        </Association>
+        <EntityType Name="Payment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Payer" Relationship="HostelModel.PaymentPerson" FromRole="Payment" ToRole="Person" />
+          <NavigationProperty Name="Order" Relationship="HostelModel.PaymentOrder" FromRole="Payment" ToRole="Order" />
+          <Property Name="Number" Type="String" Nullable="false" MaxLength="200" />
+          <Property Name="Amount" Type="Double" Nullable="false" />
+        </EntityType>
+        <Association Name="PaymentPerson">
+          <End Type="HostelModel.Payment" Role="Payment" Multiplicity="*" />
+          <End Type="HostelModel.Person" Role="Person" Multiplicity="0..1" />
+        </Association>
+        <Association Name="PaymentOrder">
+          <End Type="HostelModel.Payment" Role="Payment" Multiplicity="*" />
+          <End Type="HostelModel.Order" Role="Order" Multiplicity="1" />
         </Association>
       </Schema>
     </edmx:ConceptualModels>
@@ -495,6 +612,24 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="OrderSet">
+      <EntityTypeMapping TypeName="IsTypeOf(HostelModel.Order)">
+        <MappingFragment StoreEntitySet="OrderSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Number" ColumnName="Number" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PaymentSet">
+      <EntityTypeMapping TypeName="IsTypeOf(HostelModel.Payment)">
+        <MappingFragment StoreEntitySet="PaymentSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Number" ColumnName="Number" />
+          <ScalarProperty Name="Amount" ColumnName="Amount" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <AssociationSetMapping Name="PersonUser" TypeName="HostelModel.PersonUser" StoreEntitySet="UserSet">
       <EndProperty Name="Person">
         <ScalarProperty Name="Id" ColumnName="Person_Id" />
@@ -567,6 +702,31 @@
         <ScalarProperty Name="Id" ColumnName="Student_Id" />
       </EndProperty>
       <EndProperty Name="Ocupation">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="OcupationOrder" TypeName="HostelModel.OcupationOrder" StoreEntitySet="OrderSet">
+      <EndProperty Name="Ocupation">
+        <ScalarProperty Name="Id" ColumnName="Ocupation_Id" />
+      </EndProperty>
+      <EndProperty Name="Order">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="PaymentPerson" TypeName="HostelModel.PaymentPerson" StoreEntitySet="PaymentSet">
+      <EndProperty Name="Person">
+        <ScalarProperty Name="Id" ColumnName="Payer_Id" />
+      </EndProperty>
+      <EndProperty Name="Payment">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+      <Condition ColumnName="Payer_Id" IsNull="false" />
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="PaymentOrder" TypeName="HostelModel.PaymentOrder" StoreEntitySet="PaymentSet">
+      <EndProperty Name="Order">
+        <ScalarProperty Name="Id" ColumnName="Order_Id" />
+      </EndProperty>
+      <EndProperty Name="Payment">
         <ScalarProperty Name="Id" ColumnName="Id" />
       </EndProperty>
     </AssociationSetMapping>

@@ -8,13 +8,13 @@
         Title="Login" Height="250" Width="300" Background="Black">
     <Grid>
         <StackPanel Margin="20">
-            <Label Content="Login" Foreground="White" FontSize="25" HorizontalAlignment="Center"></Label>
+            <Label Content="Общежитие" Foreground="White" FontSize="25" HorizontalAlignment="Center"></Label>
             <Separator></Separator>
-            <Label Content="UserName :" Foreground="White" Margin="10,0,0.333,0" ></Label>
+            <Label Content="Имя пользователя :" Foreground="White" Margin="10,0,0.333,0" ></Label>
             <TextBox Name="txtUsername" Background="DarkGray" Foreground="Black" FontSize="15" Margin="10,0,10.333,0"></TextBox>
-            <Label Content="Password :" Foreground="White" Margin="10,0,0.333,0" ></Label>
+            <Label Content="Пароль :" Foreground="White" Margin="10,0,0.333,0" ></Label>
             <PasswordBox Name="txtPassword" Background="DarkGray" Foreground="Black" FontSize="15" Margin="10,0,10.333,0"></PasswordBox>
-            <Button Name="btnSubmit" Content="Submit" Click="BtnSubmit_Click" Margin="91,10,91.333,10" Background="DarkGray" Foreground="Black" FontSize="15"></Button>
+            <Button x:Name="btnSubmit" Content="Войти" Click="BtnSubmit_Click" Margin="91,10" Background="DarkGray" Foreground="Black" FontSize="15" RenderTransformOrigin="0.501,0.5"/>
         </StackPanel>
     </Grid>
 </Window>

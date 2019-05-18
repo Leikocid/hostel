@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 05/18/2019 20:54:57
--- Generated from EDMX file: D:\work\hostel\HostelApp\HostelApp\Model\HostelModel.edmx
+-- Date Created: 05/19/2019 02:46:29
+-- Generated from EDMX file: C:\Work\hostel\HostelApp\HostelApp\Model\HostelModel.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -44,6 +44,15 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_StudentOcupation]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[OcupationSet] DROP CONSTRAINT [FK_StudentOcupation];
 GO
+IF OBJECT_ID(N'[dbo].[FK_OcupationOrder]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[OrderSet] DROP CONSTRAINT [FK_OcupationOrder];
+GO
+IF OBJECT_ID(N'[dbo].[FK_PaymentPerson]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[PaymentSet] DROP CONSTRAINT [FK_PaymentPerson];
+GO
+IF OBJECT_ID(N'[dbo].[FK_PaymentOrder]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[PaymentSet] DROP CONSTRAINT [FK_PaymentOrder];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
@@ -73,6 +82,12 @@ GO
 IF OBJECT_ID(N'[dbo].[OcupationSet]', 'U') IS NOT NULL
     DROP TABLE [dbo].[OcupationSet];
 GO
+IF OBJECT_ID(N'[dbo].[OrderSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[OrderSet];
+GO
+IF OBJECT_ID(N'[dbo].[PaymentSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[PaymentSet];
+GO
 
 -- --------------------------------------------------
 -- Creating all tables
@@ -81,8 +96,8 @@ GO
 -- Creating table 'UserSet'
 CREATE TABLE [dbo].[UserSet] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [Login] varchar(200)  NOT NULL,
-    [Pasword] varchar(200)  NOT NULL,
+    [Login] nvarchar(200)  NOT NULL,
+    [Pasword] nvarchar(200)  NOT NULL,
     [Active] bit  NOT NULL,
     [Person_Id] int  NULL
 );
@@ -121,7 +136,7 @@ CREATE TABLE [dbo].[PersonSet] (
     [FirstName] nvarchar(200)  NOT NULL,
     [SecondName] nvarchar(200)  NOT NULL,
     [MiddleName] nvarchar(200)  NULL,
-    [Passport] varchar(15)  NOT NULL,
+    [Passport] varchar(15)  NULL,
     [RegistrationAddress] nvarchar(1000)  NULL,
     [Mother_Id] int  NULL,
     [Father_Id] int  NULL
@@ -147,8 +162,8 @@ GO
 -- Creating table 'OcupationSet'
 CREATE TABLE [dbo].[OcupationSet] (
     [Id] int IDENTITY(1,1) NOT NULL,
-    [From] datetime  NOT NULL,
-    [To] datetime  NULL,
+    [FromDate] datetime  NOT NULL,
+    [ToDate] datetime  NULL,
     [Room_Id] int  NOT NULL,
     [Student_Id] int  NOT NULL
 );
@@ -159,6 +174,7 @@ CREATE TABLE [dbo].[OrderSet] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Number] nvarchar(200)  NOT NULL,
     [Price] float  NOT NULL,
+    [OrderDate] datetime  NOT NULL,
     [Ocupation_Id] int  NOT NULL
 );
 GO
@@ -168,6 +184,7 @@ CREATE TABLE [dbo].[PaymentSet] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Number] nvarchar(200)  NOT NULL,
     [Amount] float  NOT NULL,
+    [PaymentDate] datetime  NOT NULL,
     [Payer_Id] int  NULL,
     [Order_Id] int  NOT NULL
 );
@@ -262,7 +279,7 @@ ADD CONSTRAINT [FK_HostelRoom]
     FOREIGN KEY ([Hostel_Id])
     REFERENCES [dbo].[HostelSet]
         ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
+    ON DELETE CASCADE ON UPDATE NO ACTION;
 GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_HostelRoom'
@@ -277,7 +294,7 @@ ADD CONSTRAINT [FK_PersonStudent]
     FOREIGN KEY ([Person_Id])
     REFERENCES [dbo].[PersonSet]
         ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
+    ON DELETE CASCADE ON UPDATE NO ACTION;
 GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_PersonStudent'
@@ -292,7 +309,7 @@ ADD CONSTRAINT [FK_FacultyGroup]
     FOREIGN KEY ([Faculty_Id])
     REFERENCES [dbo].[FacultySet]
         ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
+    ON DELETE CASCADE ON UPDATE NO ACTION;
 GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_FacultyGroup'
@@ -307,7 +324,7 @@ ADD CONSTRAINT [FK_GroupStudent]
     FOREIGN KEY ([Group_Id])
     REFERENCES [dbo].[GroupSet]
         ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
+    ON DELETE CASCADE ON UPDATE NO ACTION;
 GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_GroupStudent'
@@ -352,7 +369,7 @@ ADD CONSTRAINT [FK_RoomOcupation]
     FOREIGN KEY ([Room_Id])
     REFERENCES [dbo].[RoomSet]
         ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
+    ON DELETE CASCADE ON UPDATE NO ACTION;
 GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_RoomOcupation'
@@ -382,7 +399,7 @@ ADD CONSTRAINT [FK_OcupationOrder]
     FOREIGN KEY ([Ocupation_Id])
     REFERENCES [dbo].[OcupationSet]
         ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
+    ON DELETE CASCADE ON UPDATE NO ACTION;
 GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_OcupationOrder'
@@ -412,7 +429,7 @@ ADD CONSTRAINT [FK_PaymentOrder]
     FOREIGN KEY ([Order_Id])
     REFERENCES [dbo].[OrderSet]
         ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
+    ON DELETE CASCADE ON UPDATE NO ACTION;
 GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_PaymentOrder'

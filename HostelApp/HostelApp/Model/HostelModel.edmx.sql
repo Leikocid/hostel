@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 05/19/2019 17:36:08
+-- Date Created: 05/20/2019 01:37:47
 -- Generated from EDMX file: C:\Work\hostel\HostelApp\HostelApp\Model\HostelModel.edmx
 -- --------------------------------------------------
 
@@ -134,7 +134,7 @@ GO
 CREATE TABLE [dbo].[PersonSet] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [FirstName] nvarchar(200)  NOT NULL,
-    [SecondName] nvarchar(200)  NOT NULL,
+    [LastName] nvarchar(200)  NOT NULL,
     [MiddleName] nvarchar(200)  NULL,
     [Passport] varchar(15)  NULL,
     [RegistrationAddress] nvarchar(1000)  NULL,

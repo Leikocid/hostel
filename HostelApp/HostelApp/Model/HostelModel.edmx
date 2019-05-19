@@ -108,7 +108,7 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="FirstName" Type="nvarchar" Nullable="false" MaxLength="200" />
-    <Property Name="SecondName" Type="nvarchar" Nullable="false" MaxLength="200" />
+    <Property Name="LastName" Type="nvarchar" Nullable="false" MaxLength="200" />
     <Property Name="MiddleName" Type="nvarchar" Nullable="true" MaxLength="200" />
     <Property Name="Passport" Type="varchar" Nullable="true" MaxLength="15" />
     <Property Name="RegistrationAddress" Type="nvarchar" Nullable="true" MaxLength="1000" />
@@ -408,7 +408,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="FirstName" Type="String" Nullable="false" MaxLength="200" Unicode="true" />
-          <Property Name="SecondName" Type="String" Nullable="false" MaxLength="200" Unicode="true" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="200" Unicode="true" />
           <Property Name="MiddleName" Type="String" MaxLength="200" Unicode="true" />
           <Property Name="Passport" Type="String" MaxLength="15" Unicode="false" />
           <NavigationProperty Name="User" Relationship="HostelModel.PersonUser" FromRole="Person" ToRole="User" />
@@ -616,7 +616,7 @@
         <MappingFragment StoreEntitySet="PersonSet">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-          <ScalarProperty Name="SecondName" ColumnName="SecondName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
           <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
           <ScalarProperty Name="Passport" ColumnName="Passport" />
           <ScalarProperty Name="RegistrationAddress" ColumnName="RegistrationAddress" />

@@ -5,16 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HostelApp"
         mc:Ignorable="d"
-        Title="Login" Height="300" Width="400" Background="Black">
-
-    <StackPanel >
-        <Label Content="Общежитие" Foreground="White" FontSize="25" HorizontalAlignment="Center"></Label>
-        <Separator></Separator>
-        <Label Content="Имя пользователя :" Foreground="White" Margin="5" ></Label>
-        <TextBox Name="txtUsername" Background="DarkGray" Foreground="Black" FontSize="15" Margin="5"></TextBox>
-        <Label Content="Пароль :" Foreground="White" Margin="5" ></Label>
-        <PasswordBox Name="txtPassword" Background="DarkGray" Foreground="Black" FontSize="15" Margin="5"></PasswordBox>
-        <Button Content="Войти" Click="BtnSubmit_Click" Margin="15" Background="DarkGray" Foreground="Black" FontSize="15" Width="160"/>
-        <Label Name="lblError" Visibility="Hidden" Content="Текст сообщения об ошибке" Foreground="#FFE56D6D"/>
-    </StackPanel>
+        Title="Login" Height="300" Width="400" Background="Black" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True" >
+    <Window.Effect>
+        <DropShadowEffect BlurRadius="50" Color="#FF2EAFC8"/>
+    </Window.Effect>
+    <Border BorderBrush="#FF05C4FC" BorderThickness="1">
+        <StackPanel >
+            <Label Content="Общежитие" Foreground="White" FontSize="25" HorizontalAlignment="Center"></Label>
+            <Separator></Separator>
+            <Label Content="Имя пользователя :" FontSize="18" Foreground="#FF05C4FC" ></Label>
+            <TextBox Name="txtUsername" Background="DarkGray" Foreground="Black" FontSize="15" Margin="5"></TextBox>
+            <Label Content="Пароль :" FontSize="18" Foreground="#FF05C4FC"></Label>
+            <PasswordBox Name="txtPassword" Background="DarkGray" Foreground="Black" FontSize="15" Margin="5"></PasswordBox>
+            <Button Content="Войти" Click="BtnSubmit_Click" Margin="0,15,0,0" Background="DarkGray" Foreground="Black" FontSize="15" Width="160"/>
+            <Label Name="lblError" Visibility="Hidden" FontSize="18" Content="Ошибка аутентификации" Foreground="#FFE56D6D" HorizontalAlignment="Center"/>
+        </StackPanel>
+    </Border>
 </Window>

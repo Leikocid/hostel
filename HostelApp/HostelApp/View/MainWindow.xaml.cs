@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HostelApp.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,11 +21,13 @@ namespace HostelApp.View
     /// </summary>
     public partial class MainWindow : Window
     {
+        // текущий залогиненный пользователь
+        public static User currentUser;
 
         RoomsPage roomsPage;
         SummaryPage summaryPage;
         StudentsPage studentsPage;
-
+ 
         public MainWindow()
         {
             InitializeComponent();
@@ -32,7 +35,7 @@ namespace HostelApp.View
             summaryPage = new SummaryPage();
             roomsPage = new RoomsPage();
             studentsPage = new StudentsPage();
-
+ 
             frameMain.Content = summaryPage;
         }
 
@@ -49,6 +52,44 @@ namespace HostelApp.View
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
             frameMain.Content = summaryPage;
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            LoginWindow loginWindow = new LoginWindow();
+            loginWindow.ShowDialog();
+            loginWindow.Close();
+            UpdateUserUIAccess();
+        }
+
+        private void Button_Click_4(object sender, RoutedEventArgs e)
+        {
+            currentUser = null;
+            UpdateUserUIAccess();
+        }
+
+        public void UpdateUserUIAccess() {
+            if (currentUser == null)
+            {
+                lblWelcomeName.Content = "гость";
+                summaryPage.lblDept.Visibility = Visibility.Hidden;
+                summaryPage.pnlAdmin.Visibility = Visibility.Hidden;
+                btnLogout.Visibility = Visibility.Collapsed;
+                btnLogin.Visibility = Visibility.Visible;
+                if (!frameMain.Content.Equals(studentsPage) && !frameMain.Content.Equals(roomsPage) && !frameMain.Content.Equals(summaryPage)) {
+                    frameMain.Content = summaryPage;
+                }
+            }
+            else {
+                if (currentUser.Person == null) {
+                    lblWelcomeName.Content = "анонимный администратор";
+                } else {
+                    lblWelcomeName.Content = currentUser.Person.FirstName + " " + currentUser.Person.MiddleName;
+                }
+            }
+            summaryPage.pnlAdmin.Visibility = Visibility.Visible;
+            btnLogout.Visibility = Visibility.Visible;
+            btnLogin.Visibility = Visibility.Collapsed;
         }
     }
 }

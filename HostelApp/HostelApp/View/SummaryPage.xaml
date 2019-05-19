@@ -17,7 +17,7 @@
             <Label Content="Сводобно: " FontSize="22" Foreground="#FF05C4FC"></Label>
             <Label Name="lblFree" Content="0" FontSize="22" Foreground="White"></Label>
         </StackPanel>
-        <StackPanel Visibility="Hidden" Orientation="Horizontal">
+        <StackPanel Name="pnlAdmin" Visibility="Hidden" Orientation="Horizontal">
             <Label Content="Не оплачено: " FontSize="22" Foreground="#FF05C4FC"></Label>
             <Label Name="lblDept" Content="0" FontSize="22" Foreground="#FFFCBBBB"></Label>
         </StackPanel>

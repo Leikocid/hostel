@@ -58,12 +58,12 @@ namespace HostelApp.View
                                    .Where(s => 
                                         s.Active && (
                                             s.Person.FirstName.ToLower().StartsWith(tbxSearchText.Text.ToLower()) || 
-                                            s.Person.SecondName.ToLower().StartsWith(tbxSearchText.Text.ToLower())
+                                            s.Person.LastName.ToLower().StartsWith(tbxSearchText.Text.ToLower())
                                             ))
                                    .Take<Student>(10).Select(s => new Record
                                    {
                                        Id = s.Id,
-                                       Фамилия = s.Person.SecondName,
+                                       Фамилия = s.Person.LastName,
                                        Имя = s.Person.FirstName,
                                        Отчество = s.Person.MiddleName,
                                        Факультет = s.Group.Faculty.Name,
@@ -78,8 +78,8 @@ namespace HostelApp.View
             EditStudent();
         }
 
-        private void EditStudent(){
-             MessageBox.Show("" + ((grdStudents.SelectedItem as Record).Id));
+        private void EditStudent() {
+             MessageBox.Show((grdStudents.SelectedItem as Record).Id.ToString());
         }
     }
 }

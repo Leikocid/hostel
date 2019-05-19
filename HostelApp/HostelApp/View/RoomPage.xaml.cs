@@ -62,7 +62,7 @@ namespace HostelApp.View
                 var query = context.OcupationSet.Where(o => o.Room.Id == room.Id && o.Student.Active == true).Select(o => o.Student).ToList().Select(s => new Record
                 {
                     Id = s.Id,
-                    Фамилия = s.Person.SecondName,
+                    Фамилия = s.Person.LastName,
                     Имя = s.Person.FirstName,
                     Отчество = s.Person.MiddleName,
                     Факультет = s.Group.Faculty.Name,

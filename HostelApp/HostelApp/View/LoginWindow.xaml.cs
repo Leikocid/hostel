@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HostelApp.Model;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
@@ -27,35 +28,19 @@ namespace HostelApp.View
 
         private void BtnSubmit_Click(object sender, RoutedEventArgs e)
         {
-            SqlConnection sqlCon = new SqlConnection(@"Data Source = NASTYA-YOGA; Initial Catalog = LoginDB; Integrated Security=True;");
-            try
+            using (var context = new HostelModelContainer())
             {
-                if (sqlCon.State == System.Data.ConnectionState.Closed)
-                    sqlCon.Open();
-                String query = "SELECT COUNT(1) FROM tblUser WHERE Username=@Username AND Password=@Password";
-                SqlCommand sqlCmd = new SqlCommand(query, sqlCon);
-                sqlCmd.CommandType = System.Data.CommandType.Text;
-                sqlCmd.Parameters.AddWithValue(@"Username", txtUsername.Text);
-                sqlCmd.Parameters.AddWithValue(@"Password", txtPassword.Password);
-                int count = Convert.ToInt32(sqlCmd.ExecuteScalar());
-                if(count == 1)
+                User user = context.UserSet.Where(u => u.Login == txtUsername.Text && u.Pasword == txtPassword.Password && u.Active == true).FirstOrDefault();
+                if (user == null)
                 {
-                    MainWindow dashboard = new MainWindow();
-                    dashboard.Show();
-                    this.Close();
+                    lblError.Visibility = Visibility.Visible;
                 }
                 else
                 {
-                    MessageBox.Show("Username or Password is incorrect. ");
+                    MainWindow.currentUser = user;
+                    Person person = user.Person; // загрузить дополнительные данные в объект заранее
+                    this.Close();
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            finally
-            {
-                sqlCon.Close();
             }
         }
     }

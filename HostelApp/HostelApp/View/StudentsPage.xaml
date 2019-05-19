@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:HostelApp.View"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="450" d:DesignWidth="900"
       Title="StudentsPage">
 
     <StackPanel Margin="10">
@@ -14,7 +14,7 @@
             <TextBox  Name="tbxSearchText" FontSize="22" Margin="10" KeyUp="TbxSearchText_KeyUp" VerticalAlignment="Center" ></TextBox>
         </DockPanel>
         <Separator></Separator>
-        <Label/>
+
         <DataGrid Name="grdStudents" Margin="10" Background="Transparent" AutoGenerateColumns="False" RowBackground="Transparent" Foreground="#FF05C4FC" FontSize="16" IsReadOnly="True" SelectionMode="Single" CanUserResizeRows="False" MouseDoubleClick="GrdStudents_MouseDoubleClick">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}" Visibility="Collapsed"/>

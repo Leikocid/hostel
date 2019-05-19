@@ -31,14 +31,14 @@ namespace HostelApp.View
             using (var context = new HostelModelContainer())
             {
                 int total = context.RoomSet.Sum(r => r.Capacity);
-                lblTotal.Content = "" + total;
+                lblTotal.Content = total.ToString();
 
                 int occupied = context.OcupationSet.Where(o => o.Student.Active).Count();
-                lblFree.Content = "" + (total - occupied);
+                lblFree.Content = (total - occupied).ToString();
 
-                //double orders = context.OrderSet.Sum(o => o.Price) ?? 0.0;
-                //double billed = context.PaymentSet.Sum(p => p.Amount);
-                //lblDept.Content = "" + (orders - billed);
+                double orders = context.OrderSet.Sum(o => (double?)o.Price) ?? 0;
+                double billed = context.PaymentSet.Sum(p => (double?)p.Amount) ?? 0;
+                lblDept.Content = (orders - billed).ToString();
             }
         }
     }

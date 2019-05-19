@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:HostelApp.View"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="Summary">
+      Title="Summary" Loaded="Page_Loaded">
 
     <StackPanel Margin="15">
         <StackPanel Orientation="Horizontal">

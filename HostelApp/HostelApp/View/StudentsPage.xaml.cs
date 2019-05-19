@@ -31,13 +31,13 @@ namespace HostelApp.View
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            findStudents();
+            FindStudents();
         }
 
         private void TbxSearchText_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Return) {
-                findStudents();
+                FindStudents();
             }
         }
 
@@ -51,11 +51,15 @@ namespace HostelApp.View
             public int Группа { set; get; }
         }
 
-        private void findStudents() {
+        private void FindStudents() {
             using (var context = new HostelModelContainer())
             {
                 var query = context.StudentSet
-                                   .Where(s => s.Person.FirstName.ToLower().StartsWith(tbxSearchText.Text.ToLower()) || s.Person.SecondName.ToLower().StartsWith(tbxSearchText.Text.ToLower()))
+                                   .Where(s => 
+                                        s.Active && (
+                                            s.Person.FirstName.ToLower().StartsWith(tbxSearchText.Text.ToLower()) || 
+                                            s.Person.SecondName.ToLower().StartsWith(tbxSearchText.Text.ToLower())
+                                            ))
                                    .Take<Student>(10).Select(s => new Record
                                    {
                                        Id = s.Id,
@@ -65,21 +69,16 @@ namespace HostelApp.View
                                        Факультет = s.Group.Faculty.Name,
                                        Курс = s.Group.StudyYear,
                                        Группа = s.Group.Number });
-                query.ToList();
-                grdStudents.ItemsSource = query.ToList();
-                if (grdStudents.Columns.Count > 0)
-                {
-                   // grdStudents.Columns[0].Visibility = Visibility.Collapsed;
-                }
+                 grdStudents.ItemsSource = query.ToList();
             }
         }
 
         private void GrdStudents_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            editStudent();
+            EditStudent();
         }
 
-        private void editStudent(){
+        private void EditStudent(){
              MessageBox.Show("" + ((grdStudents.SelectedItem as Record).Id));
         }
     }

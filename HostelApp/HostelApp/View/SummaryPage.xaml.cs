@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HostelApp.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,22 @@ namespace HostelApp.View
         public SummaryPage()
         {
             InitializeComponent();
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            using (var context = new HostelModelContainer())
+            {
+                int total = context.RoomSet.Sum(r => r.Capacity);
+                lblTotal.Content = "" + total;
+
+                int occupied = context.OcupationSet.Where(o => o.Student.Active).Count();
+                lblFree.Content = "" + (total - occupied);
+
+                //double orders = context.OrderSet.Sum(o => o.Price) ?? 0.0;
+                //double billed = context.PaymentSet.Sum(p => p.Amount);
+                //lblDept.Content = "" + (orders - billed);
+            }
         }
     }
 }

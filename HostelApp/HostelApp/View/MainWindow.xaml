@@ -5,8 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HostelApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="MainWindow" Height="450" Width="610" >
+    <Window.Background>
+        <ImageBrush>
+            <ImageBrush.ImageSource>
+                <BitmapImage UriSource="images (1).jpg"/>
+            </ImageBrush.ImageSource>
+        </ImageBrush>
+    </Window.Background>
+    <Grid Margin="0,0,193.333,-29.333">
+        <Separator Margin="0,0,-193,362" RenderTransformOrigin="0.511,0.54"></Separator>
+
+        <Button Content="Выйти" Visibility ="Hidden" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Background="DarkGray" Foreground="Black" FontSize="15" Margin="528,0,-193,0" Height="44"/>
+        <Button Content="Войти" Visibility ="Visible" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Background="DarkGray" Foreground="Black" FontSize="15" Margin="528,0,-193,0" Height="44"/>
+
+        <Button Content="Поиск&#xA;по комнате" HorizontalAlignment="Left" VerticalAlignment="Top" Width="113" Height="66" Background="DarkGray" Foreground="Black" FontSize="15" Margin="0,113,0,0"/>
+        <Button Content="Поиск&#xA;по жильцу " HorizontalAlignment="Left" VerticalAlignment="Top" Width="113" Height="69" Background="DarkGray" Foreground="Black" FontSize="15" Margin="0,44,0,0"/>
+        <Button Content="Информация&#xA;об оплате" Visibility ="Hidden"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="113" Height="69" Background="DarkGray" Foreground="Black" FontSize="15" Margin="0,179,0,0" />
+
+        <Grid HorizontalAlignment="Left" Height="377" VerticalAlignment="Top" Width="490"  RenderTransformOrigin="0.415,0.465" Margin="113,44,-193,0"/>
     </Grid>
 </Window>

@@ -13,14 +13,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace HostelApp
+namespace HostelApp.View
 {
     /// <summary>
     /// Логика взаимодействия для LoginScreen.xaml
     /// </summary>
-    public partial class LoginScreen : Window
+    public partial class LoginWindow : Window
     {
-        public LoginScreen()
+        public LoginWindow()
         {
             InitializeComponent();
         }

@@ -1,0 +1,36 @@
+﻿<Page x:Class="HostelApp.View.StudentsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:HostelApp.View"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="StudentsPage">
+
+    <StackPanel Margin="10">
+        <DockPanel LastChildFill="True">
+            <Button DockPanel.Dock="Right" Content="Поиск" Width="160" Margin="10" FontSize="15" Click="Button_Click" Height="40" Background="DarkGray"></Button>
+            <TextBox  Name="tbxSearchText" FontSize="22" Margin="10" KeyUp="TbxSearchText_KeyUp" VerticalAlignment="Center" ></TextBox>
+        </DockPanel>
+        <Separator></Separator>
+        <Label/>
+        <DataGrid Name="grdStudents" Margin="10" Background="Transparent" AutoGenerateColumns="False" RowBackground="Transparent" Foreground="#FF05C4FC" FontSize="16" IsReadOnly="True" SelectionMode="Single" CanUserResizeRows="False" MouseDoubleClick="GrdStudents_MouseDoubleClick">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id" Binding="{Binding Id}" Visibility="Collapsed"/>
+                <DataGridTextColumn Header="Фамилия " Binding="{Binding Фамилия}"/>
+                <DataGridTextColumn Header="Имя " Binding="{Binding Имя}"/>
+                <DataGridTextColumn Header="Отчество " Binding="{Binding Отчество}"/>
+                <DataGridTextColumn Header="Факультет " Binding="{Binding Факультет}"/>
+                <DataGridTextColumn Header="Курс " Binding="{Binding Курс}"/>
+                <DataGridTextColumn Header="Группа" Binding="{Binding Группа}"/>
+            </DataGrid.Columns>
+            <DataGrid.ColumnHeaderStyle>
+                <Style TargetType="{x:Type DataGridColumnHeader}">
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="FontWeight" Value="Bold" />
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
+        </DataGrid>
+    </StackPanel>
+</Page>

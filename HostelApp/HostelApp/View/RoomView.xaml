@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:HostelApp.View"
         mc:Ignorable="d"
-        Title="RoomView" >
+        Title="RoomView" Width="500" Height="450" >
     <StackPanel>
         <DockPanel>
             <Label Content="Номер общажития" FontSize="15" DockPanel.Dock="Left" Margin="5"></Label>
@@ -23,10 +23,8 @@
             <Label Content="Свободные места" FontSize="15" DockPanel.Dock="Left" Margin="5"  ></Label>
             <TextBox Margin="20,5,5,5" Name="txtFreePlace" Background="DarkGray" Foreground="Black" FontSize="15"  Width="119" />
         </DockPanel>
-        <DockPanel >
-            <Label Content="Студенты живущие в этой комнате"  FontSize="15" DockPanel.Dock="Left" Margin="5" Width="260" ></Label>
-        </DockPanel>
-        <DataGrid Height="100"/>
+        <Label Content="Студенты живущие в этой комнате"  FontSize="15" DockPanel.Dock="Left" Margin="5" Width="260" ></Label>
+        <DataGrid Height="215" Margin="10,0,10,10"/>
 
     </StackPanel>
 </Window>

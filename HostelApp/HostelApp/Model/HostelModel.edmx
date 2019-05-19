@@ -70,8 +70,8 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Login" Type="varchar" Nullable="false" MaxLength="200" />
-    <Property Name="Pasword" Type="varchar" Nullable="false" MaxLength="200" />
+    <Property Name="Login" Type="nvarchar" Nullable="false" MaxLength="200" />
+    <Property Name="Pasword" Type="nvarchar" Nullable="false" MaxLength="200" />
     <Property Name="Active" Type="bit" Nullable="false" />
     <Property Name="Person_Id" Type="int" Nullable="true" />
   </EntityType>
@@ -110,7 +110,7 @@
     <Property Name="FirstName" Type="nvarchar" Nullable="false" MaxLength="200" />
     <Property Name="SecondName" Type="nvarchar" Nullable="false" MaxLength="200" />
     <Property Name="MiddleName" Type="nvarchar" Nullable="true" MaxLength="200" />
-    <Property Name="Passport" Type="varchar" Nullable="false" MaxLength="15" />
+    <Property Name="Passport" Type="varchar" Nullable="true" MaxLength="15" />
     <Property Name="RegistrationAddress" Type="nvarchar" Nullable="true" MaxLength="1000" />
     <Property Name="Mother_Id" Type="int" Nullable="true" />
     <Property Name="Father_Id" Type="int" Nullable="true" />
@@ -136,8 +136,8 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="From" Type="datetime" Nullable="false" />
-    <Property Name="To" Type="datetime" Nullable="true" />
+    <Property Name="FromDate" Type="datetime" Nullable="false" />
+    <Property Name="ToDate" Type="datetime" Nullable="true" />
     <Property Name="Room_Id" Type="int" Nullable="false" />
     <Property Name="Student_Id" Type="int" Nullable="false" />
   </EntityType>
@@ -148,6 +148,7 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Number" Type="nvarchar" Nullable="false" MaxLength="200" />
     <Property Name="Price" Type="float" Nullable="false" />
+    <Property Name="OrderDate" Type="datetime" Nullable="false" />
     <Property Name="Ocupation_Id" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="PaymentSet">
@@ -157,6 +158,7 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Number" Type="nvarchar" Nullable="false" MaxLength="200" />
     <Property Name="Amount" Type="float" Nullable="false" />
+    <Property Name="PaymentDate" Type="datetime" Nullable="false" />
     <Property Name="Payer_Id" Type="int" Nullable="true" />
     <Property Name="Order_Id" Type="int" Nullable="false" />
   </EntityType>
@@ -173,7 +175,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="HostelRoom">
-    <End Role="Hostel" Type="HostelModel.Store.HostelSet" Multiplicity="1" />
+    <End Role="Hostel" Type="HostelModel.Store.HostelSet" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="Room" Type="HostelModel.Store.RoomSet" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Hostel">
@@ -185,7 +189,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="PersonStudent">
-    <End Role="Person" Type="HostelModel.Store.PersonSet" Multiplicity="1" />
+    <End Role="Person" Type="HostelModel.Store.PersonSet" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="Student" Type="HostelModel.Store.StudentSet" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Person">
@@ -197,7 +203,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FacultyGroup">
-    <End Role="Faculty" Type="HostelModel.Store.FacultySet" Multiplicity="1" />
+    <End Role="Faculty" Type="HostelModel.Store.FacultySet" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="Group" Type="HostelModel.Store.GroupSet" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Faculty">
@@ -209,7 +217,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="GroupStudent">
-    <End Role="Group" Type="HostelModel.Store.GroupSet" Multiplicity="1" />
+    <End Role="Group" Type="HostelModel.Store.GroupSet" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="Student" Type="HostelModel.Store.StudentSet" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Group">
@@ -245,7 +255,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="RoomOcupation">
-    <End Role="Room" Type="HostelModel.Store.RoomSet" Multiplicity="1" />
+    <End Role="Room" Type="HostelModel.Store.RoomSet" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="Ocupation" Type="HostelModel.Store.OcupationSet" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Room">
@@ -257,7 +269,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="StudentOcupation">
-    <End Role="Student" Type="HostelModel.Store.StudentSet" Multiplicity="1" />
+    <End Role="Student" Type="HostelModel.Store.StudentSet" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="Ocupation" Type="HostelModel.Store.OcupationSet" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Student">
@@ -269,7 +283,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="OcupationOrder">
-    <End Role="Ocupation" Type="HostelModel.Store.OcupationSet" Multiplicity="1" />
+    <End Role="Ocupation" Type="HostelModel.Store.OcupationSet" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="Order" Type="HostelModel.Store.OrderSet" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Ocupation">
@@ -294,7 +310,9 @@
   </Association>
   <Association Name="PaymentOrder">
     <End Role="Payment" Type="HostelModel.Store.PaymentSet" Multiplicity="*" />
-    <End Role="Order" Type="HostelModel.Store.OrderSet" Multiplicity="1" />
+    <End Role="Order" Type="HostelModel.Store.OrderSet" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <ReferentialConstraint>
       <Principal Role="Order">
         <PropertyRef Name="Id" />
@@ -376,8 +394,8 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Login" Type="String" Nullable="false" MaxLength="200" Unicode="false" />
-          <Property Name="Pasword" Type="String" Nullable="false" MaxLength="200" Unicode="false" />
+          <Property Name="Login" Type="String" Nullable="false" MaxLength="200" Unicode="true" />
+          <Property Name="Pasword" Type="String" Nullable="false" MaxLength="200" Unicode="true" />
           <NavigationProperty Name="Person" Relationship="HostelModel.PersonUser" FromRole="User" ToRole="Person" />
           <Property Name="Active" Type="Boolean" Nullable="false" />
         </EntityType>
@@ -392,7 +410,7 @@
           <Property Name="FirstName" Type="String" Nullable="false" MaxLength="200" Unicode="true" />
           <Property Name="SecondName" Type="String" Nullable="false" MaxLength="200" Unicode="true" />
           <Property Name="MiddleName" Type="String" MaxLength="200" Unicode="true" />
-          <Property Name="Passport" Type="String" Nullable="false" MaxLength="15" Unicode="false" />
+          <Property Name="Passport" Type="String" MaxLength="15" Unicode="false" />
           <NavigationProperty Name="User" Relationship="HostelModel.PersonUser" FromRole="Person" ToRole="User" />
           <NavigationProperty Name="Student" Relationship="HostelModel.PersonStudent" FromRole="Person" ToRole="Student" />
           <NavigationProperty Name="Mother" Relationship="HostelModel.Mother" FromRole="Mother" ToRole="ChildPerson" />
@@ -429,7 +447,9 @@
           <NavigationProperty Name="Ocupation" Relationship="HostelModel.RoomOcupation" FromRole="Room" ToRole="Ocupation" />
         </EntityType>
         <Association Name="HostelRoom">
-          <End Type="HostelModel.Hostel" Role="Hostel" Multiplicity="1" />
+          <End Type="HostelModel.Hostel" Role="Hostel" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
           <End Type="HostelModel.Room" Role="Room" Multiplicity="*" />
         </Association>
         <EntityType Name="Student">
@@ -443,7 +463,9 @@
           <NavigationProperty Name="Ocupation" Relationship="HostelModel.StudentOcupation" FromRole="Student" ToRole="Ocupation" />
         </EntityType>
         <Association Name="PersonStudent">
-          <End Type="HostelModel.Person" Role="Person" Multiplicity="1" />
+          <End Type="HostelModel.Person" Role="Person" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
           <End Type="HostelModel.Student" Role="Student" Multiplicity="*" />
         </Association>
         <EntityType Name="Faculty">
@@ -451,7 +473,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="1000" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="1000" Unicode="true" />
           <NavigationProperty Name="Group" Relationship="HostelModel.FacultyGroup" FromRole="Faculty" ToRole="Group" />
         </EntityType>
         <EntityType Name="Group">
@@ -465,11 +487,15 @@
           <NavigationProperty Name="Student" Relationship="HostelModel.GroupStudent" FromRole="Group" ToRole="Student" />
         </EntityType>
         <Association Name="FacultyGroup">
-          <End Type="HostelModel.Faculty" Role="Faculty" Multiplicity="1" />
+          <End Type="HostelModel.Faculty" Role="Faculty" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
           <End Type="HostelModel.Group" Role="Group" Multiplicity="*" />
         </Association>
         <Association Name="GroupStudent">
-          <End Type="HostelModel.Group" Role="Group" Multiplicity="1" />
+          <End Type="HostelModel.Group" Role="Group" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
           <End Type="HostelModel.Student" Role="Student" Multiplicity="*" />
         </Association>
         <Association Name="Mother">
@@ -487,16 +513,20 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Room" Relationship="HostelModel.RoomOcupation" FromRole="Ocupation" ToRole="Room" />
           <NavigationProperty Name="Student" Relationship="HostelModel.StudentOcupation" FromRole="Ocupation" ToRole="Student" />
-          <Property Name="From" Type="DateTime" Nullable="false" />
-          <Property Name="To" Type="DateTime" Nullable="true" />
+          <Property Name="FromDate" Type="DateTime" Nullable="false" />
+          <Property Name="ToDate" Type="DateTime" Nullable="true" />
           <NavigationProperty Name="Order" Relationship="HostelModel.OcupationOrder" FromRole="Ocupation" ToRole="Order" />
         </EntityType>
         <Association Name="RoomOcupation">
-          <End Type="HostelModel.Room" Role="Room" Multiplicity="1" />
+          <End Type="HostelModel.Room" Role="Room" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
           <End Type="HostelModel.Ocupation" Role="Ocupation" Multiplicity="*" />
         </Association>
         <Association Name="StudentOcupation">
-          <End Type="HostelModel.Student" Role="Student" Multiplicity="1" />
+          <End Type="HostelModel.Student" Role="Student" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
           <End Type="HostelModel.Ocupation" Role="Ocupation" Multiplicity="*" />
         </Association>
         <EntityType Name="Order">
@@ -508,9 +538,12 @@
           <Property Name="Number" Type="String" Nullable="false" MaxLength="200" />
           <Property Name="Price" Type="Double" Nullable="false" />
           <NavigationProperty Name="Payment" Relationship="HostelModel.PaymentOrder" FromRole="Order" ToRole="Payment" />
+          <Property Name="OrderDate" Type="DateTime" Nullable="false" />
         </EntityType>
         <Association Name="OcupationOrder">
-          <End Type="HostelModel.Ocupation" Role="Ocupation" Multiplicity="1" />
+          <End Type="HostelModel.Ocupation" Role="Ocupation" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
           <End Type="HostelModel.Order" Role="Order" Multiplicity="0..1" />
         </Association>
         <EntityType Name="Payment">
@@ -522,14 +555,18 @@
           <NavigationProperty Name="Order" Relationship="HostelModel.PaymentOrder" FromRole="Payment" ToRole="Order" />
           <Property Name="Number" Type="String" Nullable="false" MaxLength="200" />
           <Property Name="Amount" Type="Double" Nullable="false" />
+          <Property Name="PaymentDate" Type="DateTime" Nullable="false" />
         </EntityType>
         <Association Name="PaymentPerson">
           <End Type="HostelModel.Payment" Role="Payment" Multiplicity="*" />
           <End Type="HostelModel.Person" Role="Person" Multiplicity="0..1" />
         </Association>
         <Association Name="PaymentOrder">
-          <End Type="HostelModel.Payment" Role="Payment" Multiplicity="*" />
-          <End Type="HostelModel.Order" Role="Order" Multiplicity="1" />
+          <End Type="HostelModel.Payment" Role="Payment" Multiplicity="*" >
+          </End>
+          <End Type="HostelModel.Order" Role="Order" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
         </Association>
       </Schema>
     </edmx:ConceptualModels>
@@ -607,8 +644,8 @@
       <EntityTypeMapping TypeName="IsTypeOf(HostelModel.Ocupation)">
         <MappingFragment StoreEntitySet="OcupationSet">
           <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="From" ColumnName="From" />
-          <ScalarProperty Name="To" ColumnName="To" />
+          <ScalarProperty Name="FromDate" ColumnName="FromDate" />
+          <ScalarProperty Name="ToDate" ColumnName="ToDate" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -618,6 +655,7 @@
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Number" ColumnName="Number" />
           <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -627,6 +665,7 @@
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Number" ColumnName="Number" />
           <ScalarProperty Name="Amount" ColumnName="Amount" />
+          <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -181,7 +181,8 @@
       <LastGenOutput>HostelModel.cs</LastGenOutput>
       <DependentUpon>HostelModel.edmx</DependentUpon>
     </Content>
-    <Resource Include="View\images %281%29.jpg" />
+	<Content Include="Model\InitialData.sql" />
+	<Resource Include="View\images %281%29.jpg" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

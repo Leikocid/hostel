@@ -1,0 +1,36 @@
+﻿<Window x:Class="HostelApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:HostelApp"
+        mc:Ignorable="d"
+        Title="Общежитие" Height="1000" Width="1500" WindowStartupLocation="CenterScreen" >
+    <Window.Background>
+        <ImageBrush Opacity="0.2">
+            <ImageBrush.ImageSource>
+                <ImageSource>MainViewBackground.jpg</ImageSource>
+            </ImageBrush.ImageSource>
+        </ImageBrush>
+    </Window.Background>
+    <DockPanel LastChildFill="True" Margin="5">
+        <DockPanel DockPanel.Dock="Top" Margin="5">
+            <Button DockPanel.Dock="Right" Content="Выйти" Visibility ="Collapsed" Width="175" Background="DarkGray" Foreground="Black" FontSize="15" Height="44"/>
+            <Button DockPanel.Dock="Right" Content="Войти" Visibility ="Visible" Width="175" Background="DarkGray" Foreground="Black" FontSize="15" Height="44"/>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Добро пожаловать:" FontSize="22" Foreground="#FF05C4FC"/>
+                <Label Name="lblWelcomeName" Content="гость" FontSize="22" Foreground="#FF05C4FC"/>
+            </StackPanel>
+        </DockPanel>
+        <Separator DockPanel.Dock="Top" Background="#FF05C4FC"/>
+        <StackPanel DockPanel.Dock="Left" Margin="10" MinWidth="160">
+            <Button Content="Поиск по комнате" VerticalAlignment="Top" Background="DarkGray" Foreground="Black" FontSize="15" Margin="5"/>
+            <Button Content="Поиск по жильцу " VerticalAlignment="Top" Background="DarkGray" Foreground="Black" FontSize="15" Margin="5"/>
+            <Button Content="Информация&#xA;   об оплате" VerticalAlignment="Top" Background="DarkGray" Foreground="Black" FontSize="15" Margin="5"/>
+        </StackPanel>
+        <Rectangle DockPanel.Dock="Left" VerticalAlignment="Stretch" Width="1" Margin="2" Stroke="#FF05C4FC" />
+        <StackPanel Margin="10">
+            <Button Content="Center"></Button>
+        </StackPanel>
+    </DockPanel>
+</Window>

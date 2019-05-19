@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 05/19/2019 02:46:29
+-- Date Created: 05/19/2019 10:35:41
 -- Generated from EDMX file: C:\Work\hostel\HostelApp\HostelApp\Model\HostelModel.edmx
 -- --------------------------------------------------
 
@@ -384,7 +384,7 @@ ADD CONSTRAINT [FK_StudentOcupation]
     FOREIGN KEY ([Student_Id])
     REFERENCES [dbo].[StudentSet]
         ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
+    ON DELETE CASCADE ON UPDATE NO ACTION;
 GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_StudentOcupation'

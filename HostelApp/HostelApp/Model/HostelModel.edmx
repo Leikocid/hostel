@@ -269,7 +269,9 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="StudentOcupation">
-    <End Role="Student" Type="HostelModel.Store.StudentSet" Multiplicity="1" />
+    <End Role="Student" Type="HostelModel.Store.StudentSet" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
     <End Role="Ocupation" Type="HostelModel.Store.OcupationSet" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Student">
@@ -522,7 +524,9 @@
           <End Type="HostelModel.Ocupation" Role="Ocupation" Multiplicity="*" />
         </Association>
         <Association Name="StudentOcupation">
-          <End Type="HostelModel.Student" Role="Student" Multiplicity="1" />
+          <End Type="HostelModel.Student" Role="Student" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
+          </End>
           <End Type="HostelModel.Ocupation" Role="Ocupation" Multiplicity="*" />
         </Association>
         <EntityType Name="Order">

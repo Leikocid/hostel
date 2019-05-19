@@ -4,27 +4,25 @@ USE [hostel];
 GO
 declare @IdentityOutput table ( ID int );
 declare @id INT;
-declare @IdentityOutput2 table ( ID int );
-declare @id2 INT;
-declare @IdentityOutput3 table ( ID int );
-declare @id3 INT;
+
 -----------------
 
-update [dbo].[UserSet] set Person_Id = NULL;
+delete from [dbo].[UserSet];
 delete from [dbo].[PersonSet];
 delete from [dbo].[FacultySet];
 delete from [dbo].[HostelSet];
 
------------------
+-- создание 2х пользователей системы
 
 insert [dbo].[PersonSet] (FirstName, SecondName, MiddleName) output inserted.Id into @IdentityOutput values ('Элон', 'Маск', 'Рамуальдович');
 select @id = (select ID from @IdentityOutput); delete from @IdentityOutput;
 insert [dbo].[UserSet] (Login, Pasword, Active, Person_Id) values ('q', 'q', 'TRUE', @id);
+
 insert [dbo].[PersonSet] (FirstName, SecondName, MiddleName) output inserted.Id into @IdentityOutput values ('Филлип', 'Киркоров', 'Бедросович');
 select @id = (select ID from @IdentityOutput); delete from @IdentityOutput;
 insert [dbo].[UserSet] (Login, Pasword, Active, Person_Id) values ('a', 'a', 'TRUE', @id);
 
-
+-- создание факультетов и групп
 insert [dbo].[FacultySet] (Name) output inserted.Id into @IdentityOutput values ('Факультет технологий управления и гуманитаризации');
 select @id = (select ID from @IdentityOutput); delete from @IdentityOutput;
 insert [dbo].[GroupSet] (StudyYear, Number, Faculty_Id) values (1, 1, @id);
@@ -106,29 +104,29 @@ insert [dbo].[GroupSet] (StudyYear, Number, Faculty_Id) values (4, 4, @id);
 insert [dbo].[GroupSet] (StudyYear, Number, Faculty_Id) values (4, 5, @id);
 insert [dbo].[GroupSet] (StudyYear, Number, Faculty_Id) values (4, 6, @id);
 
-insert [dbo].[HostelSet] (Name, Address) output inserted.Id into @IdentityOutput2 values ('Пятерка', 'г. Минск, ул. Беларуская, 21');
-select @id2 = (select ID from @IdentityOutput2); delete from @IdentityOutput2;
+-- создание общежитий и комнат
+insert [dbo].[HostelSet] (Name, Address) output inserted.Id into @IdentityOutput values ('Пятерка', 'г. Минск, ул. Беларуская, 21');
+select @id = (select ID from @IdentityOutput); delete from @IdentityOutput;
 
 with numbers as (select 1 as n union all select n + 1 from numbers where n < 20)
-insert into [dbo].[RoomSet] (Floor, Number, Capacity, Hostel_Id) select n1.n, n1.n*100 + n2.n, 5, @id2 from numbers n2, numbers n1
+insert into [dbo].[RoomSet] (Floor, Number, Capacity, Hostel_Id) select n1.n, n1.n*100 + n2.n, 5, @id from numbers n2, numbers n1
 where n1.n <= 15 and n2.n <= 12; 
 
-insert [dbo].[HostelSet] (Name, Address) output inserted.Id into @IdentityOutput2 values ('Гурского', 'г. Минск, ул. Гурского, 7');
-select @id2 = (select ID from @IdentityOutput2); delete from @IdentityOutput2;
+insert [dbo].[HostelSet] (Name, Address) output inserted.Id into @IdentityOutput values ('Гурского', 'г. Минск, ул. Гурского, 7');
+select @id = (select ID from @IdentityOutput); delete from @IdentityOutput;
 
 with numbers as (select 1 as n union all select n + 1 from numbers where n < 20)
-insert into [dbo].[RoomSet] (Floor, Number, Capacity, Hostel_Id) select n1.n, n1.n*100 + n2.n, 4, @id2 from numbers n2, numbers n1
+insert into [dbo].[RoomSet] (Floor, Number, Capacity, Hostel_Id) select n1.n, n1.n*100 + n2.n, 4, @id from numbers n2, numbers n1
 where n1.n <= 5 and n2.n <= 12;
 
-insert [dbo].[HostelSet] (Name, Address) output inserted.Id into @IdentityOutput2 values ('Копейка', 'г. Минск, ул. Бобруйская, 19');
-select @id2 = (select ID from @IdentityOutput2); delete from @IdentityOutput2;
+insert [dbo].[HostelSet] (Name, Address) output inserted.Id into @IdentityOutput values ('Копейка', 'г. Минск, ул. Бобруйская, 19');
+select @id = (select ID from @IdentityOutput); delete from @IdentityOutput;
 
 with numbers as (select 1 as n union all select n + 1 from numbers where n < 20)
-insert into [dbo].[RoomSet] (Floor, Number, Capacity, Hostel_Id) select n1.n, n1.n*100 + n2.n, 3, @id2 from numbers n2, numbers n1
+insert into [dbo].[RoomSet] (Floor, Number, Capacity, Hostel_Id) select n1.n, n1.n*100 + n2.n, 3, @id from numbers n2, numbers n1
 where n1.n <= 3 and n2.n <= 6; 
 
-insert into @IdentityOutput2 select MAX(Id) from [dbo].[RoomSet]; select @id2 = (select ID from @IdentityOutput2); delete from @IdentityOutput2;
-
+-- создание персон
 insert [dbo].[PersonSet] (FirstName, SecondName, MiddleName) values ('Юрий', 'Алексеевич', 'Гагарин');
 insert [dbo].[PersonSet] (FirstName, SecondName, MiddleName) values ('Герман', 'Степанович', 'Титов');
 insert [dbo].[PersonSet] (FirstName, SecondName, MiddleName) values ('Андриян', 'Григорьевич', 'Николаев');
@@ -202,6 +200,7 @@ insert [dbo].[PersonSet] (FirstName, SecondName, MiddleName) values ('Викто
 insert [dbo].[PersonSet] (FirstName, SecondName, MiddleName) values ('Анатолий', 'Павлович', 'Арцебарский');
 insert [dbo].[PersonSet] (FirstName, SecondName, MiddleName) values ('Токтар', 'Онгарбаевич', 'Аубакиров');
 
+-- все персоны становятся студентами 
 insert into [dbo].[StudentSet] (Active, Person_Id, Group_Id)
 select 'true', p.Id, g.Id from (
 select ROW_NUMBER() OVER(ORDER BY Id ASC) AS Row, * from [dbo].[PersonSet]
@@ -209,6 +208,7 @@ select ROW_NUMBER() OVER(ORDER BY Id ASC) AS Row, * from [dbo].[PersonSet]
 select ROW_NUMBER() OVER(ORDER BY Id DESC) AS Row, * from [dbo].[GroupSet]
 ) as g on p.Row = g.Row where p.Row > 2;
 
+-- заселяем их последовательно в каждую вторую комнату
 insert into [dbo].[OcupationSet] (FromDate, Room_Id, Student_Id)
 select GETDATE(), r.Id, s.Id from (
 select ROW_NUMBER() OVER(ORDER BY Id ASC) AS Row, * from [dbo].[StudentSet]

@@ -11,7 +11,7 @@
         <StackPanel>
             <DockPanel>
                 <Label Content="Фамилия" FontSize="15" DockPanel.Dock="Left" Margin="5"></Label>
-                <TextBox Name="tbSurName" Background="DarkGray" Foreground="Black" FontSize="15" Width="119" Margin="-10,5,5,5"/>
+                <TextBox Name="txtSurName" Background="DarkGray" Foreground="Black" FontSize="15" Width="119" Margin="-10,5,5,5"/>
             </DockPanel>
             <DockPanel >
                 <Label Content="Имя" DockPanel.Dock="Left" FontSize="15" Margin="5" Width="60"></Label>
@@ -38,7 +38,7 @@
             <DockPanel>
                 <Label Content="Заселение" HorizontalAlignment="Center" FontSize="15"  DockPanel.Dock="Top" Margin="5"></Label>
                 <Label Content="Статус:" DockPanel.Dock="Left" Margin="5" FontSize="15" ></Label>
-                <Label Content="не найден" Name="tbState" DockPanel.Dock="Left" Margin="5" FontSize="15" ></Label>
+                <Label Content="не найден" Name="lbState" DockPanel.Dock="Left" Margin="5" FontSize="15" ></Label>
             </DockPanel>
             <DockPanel Visibility="Collapsed">
                 <TextBox  Text="Общажитие"  DockPanel.Dock="Left" Margin="5" Name="txtHostelNum" Background="DarkGray" Foreground="Black" FontSize="15"  Width="119" />
@@ -56,7 +56,7 @@
             <DockPanel>
                 <Label Content="Оплата" HorizontalAlignment="Center" FontSize="15"  DockPanel.Dock="Top" Margin="5"></Label>
                 <Label Content="Статус:" DockPanel.Dock="Left" Margin="5" FontSize="15" ></Label>
-                <Label Content="не найден" Name="tbPaymentState" DockPanel.Dock="Left" Margin="5" FontSize="15" ></Label>
+                <Label Content="не найден" Name="lbPaymentState" DockPanel.Dock="Left" Margin="5" FontSize="15" ></Label>
             </DockPanel>
             <DockPanel Visibility="Collapsed">
                 <TextBox  Text="Номер счета"  DockPanel.Dock="Left" Margin="5" Name="txtNumber" Background="DarkGray" Foreground="Black" FontSize="15"  Width="119" />
@@ -69,7 +69,7 @@
                 <Button Content="Оплатить" Width="125" Background="DarkGray" Margin="5" Foreground="Black" FontSize="15" DockPanel.Dock="Right"></Button>
             </DockPanel>
             <StackPanel>
-                <Grid></Grid>
+                <DataGrid></DataGrid>
                 <Button Content="Оплатить" Width="125" Background="DarkGray" Margin="5" Foreground="Black" FontSize="15" DockPanel.Dock="Right"></Button>
             </StackPanel>
         </StackPanel>

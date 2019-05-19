@@ -64,8 +64,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="View\AddStudent.xaml.cs">
+      <DependentUpon>AddStudent.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\RoomsPage.xaml.cs">
       <DependentUpon>RoomsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\RoomView.xaml.cs">
+      <DependentUpon>RoomView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\StudentsPage.xaml.cs">
       <DependentUpon>StudentsPage.xaml</DependentUpon>
@@ -76,6 +82,10 @@
     <Compile Include="View\SummaryPage.xaml.cs">
       <DependentUpon>SummaryPage.xaml</DependentUpon>
     </Compile>
+    <Page Include="View\AddStudent.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\LoginWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -142,6 +152,10 @@
     <Page Include="View\RoomsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\RoomView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\StudentsPage.xaml">
       <SubType>Designer</SubType>

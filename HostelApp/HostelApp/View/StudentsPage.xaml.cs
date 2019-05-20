@@ -78,9 +78,10 @@ namespace HostelApp.View
                                        Группа = s.Group.Number,
                                        StudentOcupation = (from o in context.OcupationSet
                                                     where o.Student == s &&
-                                                              o.Student.Active &&
-                                                              o.FromDate < DateTime.Now &&
-                                                              (o.ToDate > DateTime.Now || o.ToDate == null)
+                                                            o.Active &&
+                                                            o.Student.Active &&
+                                                            o.FromDate < DateTime.Now &&
+                                                            (o.ToDate > DateTime.Now || o.ToDate == null)
                                                     select new StudentOcupation {
                                                         Общежитие = o.Room.Hostel.Name + "\n" + o.Room.Hostel.Address,
                                                         Комната = o.Room.Number }).FirstOrDefault()

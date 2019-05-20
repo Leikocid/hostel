@@ -32,7 +32,7 @@
         </DataGrid>
         <DockPanel LastChildFill="True" Margin="5">
             <Label DockPanel.Dock="Left" Content="Жильцы:" Foreground="#FF05C4FC" FontSize="16" Margin="5"></Label>
-            <Button DockPanel.Dock="Right" Content=" Заселить студента " FontSize="16" Margin="5" Background="DarkGray"></Button>
+            <Button DockPanel.Dock="Right" Content=" Заселить студента " FontSize="16" Margin="5" Background="DarkGray" Click="Button_Click"></Button>
             <Label></Label>
         </DockPanel>
         <DataGrid Name="grdStudents" Margin="10" Height="120" AutoGenerateColumns="False" FontSize="12" IsReadOnly="True" SelectionMode="Single" CanUserResizeRows="False">
@@ -56,9 +56,9 @@
                 </Style>
             </DataGrid.ColumnHeaderStyle>
         </DataGrid>
-        <StackPanel Orientation="Horizontal">
-            <Button DockPanel.Dock="Right" Content=" Выселить студента " FontSize="16"  Margin="5" Background="DarkGray"></Button>
-            <Button DockPanel.Dock="Right" Content=" Выстывить счет " FontSize="16"  Margin="5" Background="DarkGray"></Button>
+        <StackPanel Orientation="Horizontal" Margin="5">
+            <Button DockPanel.Dock="Right" Content=" Выселить студента " FontSize="16"  Margin="5" Background="DarkGray" Click="Button_Click_1"></Button>
+            <Button DockPanel.Dock="Right" Content=" Параметры заселения " FontSize="16"  Margin="5" Background="DarkGray" Click="Button_Click_2"></Button>
             <Button DockPanel.Dock="Right" Content=" Внести оплату " FontSize="16"  Margin="5" Background="DarkGray"></Button>
         </StackPanel>
     </StackPanel>

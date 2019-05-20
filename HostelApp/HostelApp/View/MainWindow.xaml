@@ -30,7 +30,6 @@
             <StackPanel Name="pnlAdmin">
                 <Separator Background="#FF05C4FC"/>
                 <Button Content="Заселение и&#xA; выселение" Background="DarkGray" Foreground="Black" FontSize="15" Margin="5" Click="Button_Click_5"/>
-                <Button Content="Информация&#xA;   об оплате" Background="DarkGray" Foreground="Black" FontSize="15" Margin="5" Click="Button_Click_6"/>
                 <Button Content="Управление&#xA;студентами" Background="DarkGray" Foreground="Black" FontSize="15" Margin="5" Click="Button_Click_7"/>
             </StackPanel>
         </StackPanel>

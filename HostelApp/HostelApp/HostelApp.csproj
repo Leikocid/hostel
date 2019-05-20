@@ -73,14 +73,14 @@
     <Compile Include="View\OcupationPage.xaml.cs">
       <DependentUpon>OcupationPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\PaymentsPage.xaml.cs">
-      <DependentUpon>PaymentsPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="View\RoomPage.xaml.cs">
       <DependentUpon>RoomPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\RoomsPage.xaml.cs">
       <DependentUpon>RoomsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SelectStudentWindow.xaml.cs">
+      <DependentUpon>SelectStudentWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\StudentsPage.xaml.cs">
       <DependentUpon>StudentsPage.xaml</DependentUpon>
@@ -166,15 +166,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\PaymentsPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\RoomPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\RoomsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SelectStudentWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

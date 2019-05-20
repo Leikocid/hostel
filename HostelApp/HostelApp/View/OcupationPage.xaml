@@ -1,0 +1,58 @@
+﻿<Page x:Class="HostelApp.View.OcupationPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:HostelApp.View"
+      mc:Ignorable="d" 
+      d:DesignHeight="550" d:DesignWidth="800"
+      Title="OcupationPage">
+
+    <StackPanel>
+        <DockPanel LastChildFill="True" Margin="5">
+            <Label DockPanel.Dock="Left" Content="Общежитие:" Foreground="#FF05C4FC" FontSize="16" Margin="5"></Label>
+            <ComboBox FontSize="16" Name="cmbHostel" Margin="5" SelectionChanged="CmbHostel_SelectionChanged"></ComboBox>
+        </DockPanel>
+        <DataGrid Name="grdRooms" Margin="10" Height="220" AutoGenerateColumns="False" FontSize="16" IsReadOnly="True" SelectionMode="Single" CanUserResizeRows="False" SelectionChanged="GrdRooms_SelectionChanged">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id" Binding="{Binding Id}" Visibility="Collapsed"/>
+                <DataGridTextColumn Header="Общежитие " Binding="{Binding Общежитие}"/>
+                <DataGridTextColumn Header="Этаж " Binding="{Binding Этаж}"/>
+                <DataGridTextColumn Header="Номер " Binding="{Binding Номер}"/>
+                <DataGridTextColumn Header="Вместимость " Binding="{Binding Вместимость}"/>
+                <DataGridTextColumn Header="Заселено" Binding="{Binding Заселено}"/>
+                <DataGridTextColumn Header="Свободно" Binding="{Binding Свободно}"/>
+           </DataGrid.Columns>
+            <DataGrid.ColumnHeaderStyle>
+                <Style TargetType="{x:Type DataGridColumnHeader}">
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="FontWeight" Value="Bold" />
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
+        </DataGrid>
+        <DockPanel LastChildFill="True" Margin="5">
+            <Label DockPanel.Dock="Left" Content="Жильцы:" Foreground="#FF05C4FC" FontSize="16" Margin="5"></Label>
+            <Button DockPanel.Dock="Right" Content=" Заселить студента " FontSize="16"  Margin="5"></Button>
+            <Label></Label>
+        </DockPanel>
+        <DataGrid Name="grdStudents" Margin="10" Height="120" AutoGenerateColumns="False" FontSize="16" IsReadOnly="True" SelectionMode="Single" CanUserResizeRows="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id" Binding="{Binding Id}" Visibility="Collapsed"/>
+                <DataGridTextColumn Header="Фамилия " Binding="{Binding Фамилия}"/>
+                <DataGridTextColumn Header="Имя " Binding="{Binding Имя}"/>
+                <DataGridTextColumn Header="Отчество " Binding="{Binding Отчество}"/>
+                <DataGridTextColumn Header="Факультет " Binding="{Binding Факультет}"/>
+                <DataGridTextColumn Header="Курс " Binding="{Binding Курс}"/>
+                <DataGridTextColumn Header="Группа" Binding="{Binding Группа}"/>
+                <DataGridTextColumn Header="Дата заселения" Binding="{Binding ДатаС}"/>
+                <DataGridTextColumn Header="Дата выселения" Binding="{Binding ДатаПо}"/>
+            </DataGrid.Columns>
+            <DataGrid.ColumnHeaderStyle>
+                <Style TargetType="{x:Type DataGridColumnHeader}">
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="FontWeight" Value="Bold" />
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
+        </DataGrid>
+    </StackPanel>
+</Page>

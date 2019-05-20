@@ -64,8 +64,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="View\AddEditStudentPage.xaml.cs">
+      <DependentUpon>AddEditStudentPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\AddStudent.xaml.cs">
       <DependentUpon>AddStudent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\OcupationPage.xaml.cs">
+      <DependentUpon>OcupationPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\PaymentsPage.xaml.cs">
+      <DependentUpon>PaymentsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\RoomPage.xaml.cs">
       <DependentUpon>RoomPage.xaml</DependentUpon>
@@ -82,6 +91,10 @@
     <Compile Include="View\SummaryPage.xaml.cs">
       <DependentUpon>SummaryPage.xaml</DependentUpon>
     </Compile>
+    <Page Include="View\AddEditStudentPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\AddStudent.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -149,6 +162,14 @@
     <Compile Include="View\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
+    <Page Include="View\OcupationPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\PaymentsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\RoomPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

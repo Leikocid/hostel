@@ -27,7 +27,10 @@ namespace HostelApp.View
         RoomsPage roomsPage;
         SummaryPage summaryPage;
         StudentsPage studentsPage;
- 
+        OcupationPage ocupationPage;
+        PaymentsPage paymentsPage;
+        AddEditStudentPage addEditStudentPage;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -35,8 +38,13 @@ namespace HostelApp.View
             summaryPage = new SummaryPage();
             roomsPage = new RoomsPage();
             studentsPage = new StudentsPage();
- 
+            ocupationPage = new OcupationPage();
+            paymentsPage = new PaymentsPage();
+            addEditStudentPage = new AddEditStudentPage();
+
             frameMain.Content = summaryPage;
+
+            UpdateUserUIAccess();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -52,6 +60,21 @@ namespace HostelApp.View
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
             frameMain.Content = summaryPage;
+        }
+
+        private void Button_Click_5(object sender, RoutedEventArgs e)
+        {
+            frameMain.Content = ocupationPage;
+        }
+
+        private void Button_Click_6(object sender, RoutedEventArgs e)
+        {
+            frameMain.Content = paymentsPage;
+        }
+
+        private void Button_Click_7(object sender, RoutedEventArgs e)
+        {
+            frameMain.Content = addEditStudentPage;
         }
 
         private void Button_Click_3(object sender, RoutedEventArgs e)
@@ -72,13 +95,14 @@ namespace HostelApp.View
             if (currentUser == null)
             {
                 lblWelcomeName.Content = "гость";
-                summaryPage.lblDept.Visibility = Visibility.Hidden;
                 summaryPage.pnlAdmin.Visibility = Visibility.Hidden;
                 btnLogout.Visibility = Visibility.Collapsed;
                 btnLogin.Visibility = Visibility.Visible;
-                if (!frameMain.Content.Equals(studentsPage) && !frameMain.Content.Equals(roomsPage) && !frameMain.Content.Equals(summaryPage)) {
+                if (frameMain.Content!= null && 
+                    !frameMain.Content.Equals(studentsPage) && !frameMain.Content.Equals(roomsPage) && !frameMain.Content.Equals(summaryPage)) {
                     frameMain.Content = summaryPage;
                 }
+                pnlAdmin.Visibility = Visibility.Hidden;
             }
             else {
                 if (currentUser.Person == null) {
@@ -86,10 +110,11 @@ namespace HostelApp.View
                 } else {
                     lblWelcomeName.Content = currentUser.Person.FirstName + " " + currentUser.Person.MiddleName;
                 }
+                summaryPage.pnlAdmin.Visibility = Visibility.Visible;
+                btnLogout.Visibility = Visibility.Visible;
+                btnLogin.Visibility = Visibility.Collapsed;
+                pnlAdmin.Visibility = Visibility.Visible;
             }
-            summaryPage.pnlAdmin.Visibility = Visibility.Visible;
-            btnLogout.Visibility = Visibility.Visible;
-            btnLogin.Visibility = Visibility.Collapsed;
         }
-    }
+     }
 }

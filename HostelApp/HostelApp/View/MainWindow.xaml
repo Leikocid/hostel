@@ -26,8 +26,13 @@
         <StackPanel DockPanel.Dock="Left" Margin="10" MinWidth="160">
             <Button Content="Общая информация" Background="DarkGray" Height="50" Foreground="Black" FontSize="15" Margin="5" Click="Button_Click_2"/>
             <Button Content="Поиск по комнате" Background="DarkGray" Height="50" Foreground="Black" FontSize="15" Margin="5" Click="Button_Click"/>
-            <Button Content="Поиск по жильцу " Background="DarkGray" Height="50" Foreground="Black" FontSize="15" Margin="5" Click="Button_Click_1"/>
-            <Button Content="Информация&#xA;   об оплате" Visibility ="Collapsed" Background="DarkGray" Foreground="Black" FontSize="15" Margin="5"/>
+            <Button Content="Поиск студента" Background="DarkGray" Height="50" Foreground="Black" FontSize="15" Margin="5" Click="Button_Click_1"/>
+            <StackPanel Name="pnlAdmin">
+                <Separator Background="#FF05C4FC"/>
+                <Button Content="Заселение и&#xA; выселение" Background="DarkGray" Foreground="Black" FontSize="15" Margin="5" Click="Button_Click_5"/>
+                <Button Content="Информация&#xA;   об оплате" Background="DarkGray" Foreground="Black" FontSize="15" Margin="5" Click="Button_Click_6"/>
+                <Button Content="Управление&#xA;студентами" Background="DarkGray" Foreground="Black" FontSize="15" Margin="5" Click="Button_Click_7"/>
+            </StackPanel>
         </StackPanel>
         <Rectangle DockPanel.Dock="Left" VerticalAlignment="Stretch" Width="1" Margin="2" Stroke="#FF05C4FC" />
         <Frame Margin="10" Name="frameMain" NavigationUIVisibility="Hidden"></Frame>

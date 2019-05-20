@@ -41,7 +41,13 @@ namespace HostelApp.View
             }
         }
 
-        public class Record {
+        public class StudentOcupation
+        {
+            public String Общежитие { set; get; }
+            public int Комната { set; get; }
+        }
+
+        public class StudentRecord {
             public int Id { set; get; }
             public String Фамилия { set; get; }
             public String Имя { set; get; }
@@ -49,18 +55,19 @@ namespace HostelApp.View
             public String Факультет { set; get; }
             public int Курс { set; get; }
             public int Группа { set; get; }
-        }
+            public StudentOcupation StudentOcupation { set; get; }
+         }
 
         private void FindStudents() {
             using (var context = new HostelModelContainer())
             {
                 var query = context.StudentSet
-                                   .Where(s => 
+                                   .Where(s =>
                                         s.Active && (
-                                            s.Person.FirstName.ToLower().StartsWith(tbxSearchText.Text.ToLower()) || 
+                                            s.Person.FirstName.ToLower().StartsWith(tbxSearchText.Text.ToLower()) ||
                                             s.Person.LastName.ToLower().StartsWith(tbxSearchText.Text.ToLower())
                                             ))
-                                   .Take<Student>(10).Select(s => new Record
+                                   .Take<Student>(10).Select(s => new StudentRecord
                                    {
                                        Id = s.Id,
                                        Фамилия = s.Person.LastName,
@@ -68,7 +75,16 @@ namespace HostelApp.View
                                        Отчество = s.Person.MiddleName,
                                        Факультет = s.Group.Faculty.Name,
                                        Курс = s.Group.StudyYear,
-                                       Группа = s.Group.Number });
+                                       Группа = s.Group.Number,
+                                       StudentOcupation = (from o in context.OcupationSet
+                                                    where o.Student == s &&
+                                                              o.Student.Active &&
+                                                              o.FromDate < DateTime.Now &&
+                                                              (o.ToDate > DateTime.Now || o.ToDate == null)
+                                                    select new StudentOcupation {
+                                                        Общежитие = o.Room.Hostel.Name + "\n" + o.Room.Hostel.Address,
+                                                        Комната = o.Room.Number }).FirstOrDefault()
+                                   });
                  grdStudents.ItemsSource = query.ToList();
             }
         }
@@ -79,7 +95,7 @@ namespace HostelApp.View
         }
 
         private void EditStudent() {
-             MessageBox.Show((grdStudents.SelectedItem as Record).Id.ToString());
+             //MessageBox.Show((grdStudents.SelectedItem as StudentRecord).Id.ToString());
         }
     }
 }

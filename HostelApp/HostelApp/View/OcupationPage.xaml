@@ -32,20 +32,22 @@
         </DataGrid>
         <DockPanel LastChildFill="True" Margin="5">
             <Label DockPanel.Dock="Left" Content="Жильцы:" Foreground="#FF05C4FC" FontSize="16" Margin="5"></Label>
-            <Button DockPanel.Dock="Right" Content=" Заселить студента " FontSize="16"  Margin="5"></Button>
+            <Button DockPanel.Dock="Right" Content=" Заселить студента " FontSize="16" Margin="5" Background="DarkGray"></Button>
             <Label></Label>
         </DockPanel>
-        <DataGrid Name="grdStudents" Margin="10" Height="120" AutoGenerateColumns="False" FontSize="16" IsReadOnly="True" SelectionMode="Single" CanUserResizeRows="False">
+        <DataGrid Name="grdStudents" Margin="10" Height="120" AutoGenerateColumns="False" FontSize="12" IsReadOnly="True" SelectionMode="Single" CanUserResizeRows="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}" Visibility="Collapsed"/>
-                <DataGridTextColumn Header="Фамилия " Binding="{Binding Фамилия}"/>
-                <DataGridTextColumn Header="Имя " Binding="{Binding Имя}"/>
-                <DataGridTextColumn Header="Отчество " Binding="{Binding Отчество}"/>
-                <DataGridTextColumn Header="Факультет " Binding="{Binding Факультет}"/>
-                <DataGridTextColumn Header="Курс " Binding="{Binding Курс}"/>
-                <DataGridTextColumn Header="Группа" Binding="{Binding Группа}"/>
-                <DataGridTextColumn Header="Дата заселения" Binding="{Binding ДатаС}"/>
-                <DataGridTextColumn Header="Дата выселения" Binding="{Binding ДатаПо}"/>
+                <DataGridTextColumn Header="Фамилия " Binding="{Binding Фамилия}" Width="100"/>
+                <DataGridTextColumn Header="Имя " Binding="{Binding Имя}" Width="70"/>
+                <DataGridTextColumn Header="Отчество " Binding="{Binding Отчество}" Width="80"/>
+                <DataGridTextColumn Header="Факультет " Binding="{Binding Факультет}" Width="150"/>
+                <DataGridTextColumn Header="Курс " Binding="{Binding Курс}" Width="45"/>
+                <DataGridTextColumn Header="Группа" Binding="{Binding Группа}" Width="45"/>
+                <DataGridTextColumn Header="Заселение" Binding="{Binding ДатаС}" Width="80"/>
+                <DataGridTextColumn Header="Выселение" Binding="{Binding ДатаПо}" Width="80"/>
+                <DataGridTextColumn Header="Стоимость" Binding="{Binding Стоимость}" Width="80"/>
+                <DataGridTextColumn Header="Оплачено" Binding="{Binding Оплачено}" Width="80"/>
             </DataGrid.Columns>
             <DataGrid.ColumnHeaderStyle>
                 <Style TargetType="{x:Type DataGridColumnHeader}">
@@ -54,5 +56,10 @@
                 </Style>
             </DataGrid.ColumnHeaderStyle>
         </DataGrid>
+        <StackPanel Orientation="Horizontal">
+            <Button DockPanel.Dock="Right" Content=" Выселить студента " FontSize="16"  Margin="5" Background="DarkGray"></Button>
+            <Button DockPanel.Dock="Right" Content=" Выстывить счет " FontSize="16"  Margin="5" Background="DarkGray"></Button>
+            <Button DockPanel.Dock="Right" Content=" Внести оплату " FontSize="16"  Margin="5" Background="DarkGray"></Button>
+        </StackPanel>
     </StackPanel>
 </Page>

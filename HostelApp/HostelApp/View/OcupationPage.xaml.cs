@@ -124,25 +124,31 @@ namespace HostelApp.View
             public String Факультет { set; get; }
             public int Курс { set; get; }
             public int Группа { set; get; }
-            public DateTime ДатаС { set; get; }
-            public DateTime? ДатаПо { set; get; }
+            public DateTime From { set; get; }
+            public DateTime? To { set; get; }
+            public String ДатаС { set; get; }
+            public String ДатаПо { set; get; }
         }
+
+        List<StudentRecord> students = new List<StudentRecord>();
 
         private void GrdRooms_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            students.Clear();
+            grdStudents.ItemsSource = students;
+
             int selectedIndex = grdRooms.SelectedIndex;
             if (selectedIndex > 0)
             {
-                RoomRecord roomRecord = grdRooms.Items[selectedIndex] as RoomRecord;
-                if (roomRecord != null && roomRecord.Заселено > 0)
+                if (grdRooms.Items[selectedIndex] is RoomRecord roomRecord && roomRecord.Заселено > 0)
                 {
                     using (var context = new HostelModelContainer())
                     {
                         var query = from o in context.OcupationSet
                                     where o.Room.Id == roomRecord.Id &&
                                         o.Student.Active &&
-                                        o.FromDate > DateTime.Now &&
-                                        (o.ToDate < DateTime.Now || o.ToDate == null)
+                                        o.FromDate < DateTime.Now &&
+                                        (o.ToDate > DateTime.Now || o.ToDate == null)
                                     select new StudentRecord
                                     {
                                         Id = o.Id,
@@ -152,12 +158,13 @@ namespace HostelApp.View
                                         Факультет = o.Student.Group.Faculty.Name,
                                         Курс = o.Student.Group.StudyYear,
                                         Группа = o.Student.Group.Number,
-                                        ДатаС = o.FromDate,
-                                        ДатаПо = o.ToDate
+                                        From = o.FromDate,
+                                        To = o.ToDate
                                     };
-                        List<StudentRecord> records = query.ToList();
-                        records.Sort((r1, r2) => r2.ДатаС.CompareTo(r1.ДатаС));
-                        grdStudents.ItemsSource = records;
+                        List<StudentRecord> students = query.ToList();
+                        students.ForEach(s => { s.ДатаС = s.From.ToString("dd.MM.yyyy"); s.ДатаПо = s.To?.ToString("dd.MM.yyyy"); });
+                        students.Sort((r1, r2) => r2.ДатаС.CompareTo(r1.ДатаС));
+                        grdStudents.ItemsSource = students;
                     }
                 }
             }

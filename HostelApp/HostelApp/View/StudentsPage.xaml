@@ -15,15 +15,17 @@
         </DockPanel>
         <Separator></Separator>
 
-        <DataGrid Name="grdStudents" Margin="10" Background="Transparent" AutoGenerateColumns="False" RowBackground="Transparent" Foreground="#FF05C4FC" FontSize="16" IsReadOnly="True" SelectionMode="Single" CanUserResizeRows="False" MouseDoubleClick="GrdStudents_MouseDoubleClick">
+        <DataGrid Name="grdStudents" Margin="10" Background="Transparent" AutoGenerateColumns="False" RowBackground="Transparent" Foreground="#FF05C4FC" FontSize="14" IsReadOnly="True" SelectionMode="Single" CanUserResizeRows="False" MouseDoubleClick="GrdStudents_MouseDoubleClick">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}" Visibility="Collapsed"/>
                 <DataGridTextColumn Header="Фамилия " Binding="{Binding Фамилия}"/>
                 <DataGridTextColumn Header="Имя " Binding="{Binding Имя}"/>
                 <DataGridTextColumn Header="Отчество " Binding="{Binding Отчество}"/>
-                <DataGridTextColumn Header="Факультет " Binding="{Binding Факультет}"/>
+                <DataGridTextColumn Header="Факультет " Binding="{Binding Факультет}" Width="250"/>
                 <DataGridTextColumn Header="Курс " Binding="{Binding Курс}"/>
-                <DataGridTextColumn Header="Группа" Binding="{Binding Группа}"/>
+                <DataGridTextColumn Header="Группа " Binding="{Binding Группа}"/>
+                <DataGridTextColumn Header="Общежитие " Binding="{Binding StudentOcupation.Общежитие}" Width="190"/>
+                <DataGridTextColumn Header="Комната " Binding="{Binding StudentOcupation.Комната}"/>
             </DataGrid.Columns>
             <DataGrid.ColumnHeaderStyle>
                 <Style TargetType="{x:Type DataGridColumnHeader}">

@@ -24,10 +24,31 @@ namespace HostelApp.View
         public LoginWindow()
         {
             InitializeComponent();
+            txtUsername.Focus();
         }
 
         private void BtnSubmit_Click(object sender, RoutedEventArgs e)
         {
+            Login();
+        }
+
+        private void txtUsername_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                txtPassword.Focus();
+            }
+        }
+
+        private void txtPassword_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Return)
+            {
+                Login();
+            }
+        }
+
+        public void Login() {
             using (var context = new HostelModelContainer())
             {
                 User user = context.UserSet.Where(u => u.Login == txtUsername.Text && u.Pasword == txtPassword.Password && u.Active == true).FirstOrDefault();

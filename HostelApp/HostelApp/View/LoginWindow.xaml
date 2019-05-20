@@ -14,9 +14,9 @@
             <Label Content="Общежитие" Foreground="White" FontSize="25" HorizontalAlignment="Center"></Label>
             <Separator></Separator>
             <Label Content="Имя пользователя :" FontSize="18" Foreground="#FF05C4FC" ></Label>
-            <TextBox Name="txtUsername" Background="DarkGray" Foreground="Black" FontSize="15" Margin="5"></TextBox>
+            <TextBox Name="txtUsername"  Background="DarkGray" Foreground="Black"  Focusable ="True"   FontSize="15" Margin="5" KeyUp="txtUsername_KeyUp"></TextBox>
             <Label Content="Пароль :" FontSize="18" Foreground="#FF05C4FC"></Label>
-            <PasswordBox Name="txtPassword" Background="DarkGray" Foreground="Black" FontSize="15" Margin="5"></PasswordBox>
+            <PasswordBox Name="txtPassword" Background="DarkGray" Foreground="Black" FontSize="15" Margin="5" KeyUp="txtPassword_KeyUp"></PasswordBox>
             <Button Content="Войти" Click="BtnSubmit_Click" Margin="0,15,0,0" Background="DarkGray" Foreground="Black" FontSize="15" Width="160"/>
             <Label Name="lblError" Visibility="Hidden" FontSize="18" Content="Ошибка аутентификации" Foreground="#FFE56D6D" HorizontalAlignment="Center"/>
         </StackPanel>

@@ -76,7 +76,7 @@ namespace HostelApp.View
                                        Факультет = s.Group.Faculty.Name,
                                        Курс = s.Group.StudyYear,
                                        Группа = s.Group.Number,
-                                       StudentOcupation = (from o in context.OcupationSet
+                                       StudentOcupation = (from o in context.OccupationSet
                                                     where o.Student == s &&
                                                             o.Active &&
                                                             o.Student.Active &&

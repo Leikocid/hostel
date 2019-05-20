@@ -33,7 +33,7 @@ namespace HostelApp.View
                 int total = context.RoomSet.Sum(r => r.Capacity);
                 lblTotal.Content = total.ToString();
 
-                int occupied = context.OcupationSet.Where(o => 
+                int occupied = context.OccupationSet.Where(o => 
                     o.Active && 
                     o.Student.Active && 
                     o.FromDate < DateTime.Now && 

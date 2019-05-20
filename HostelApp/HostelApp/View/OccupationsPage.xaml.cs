@@ -19,12 +19,12 @@ namespace HostelApp.View
     /// <summary>
     /// Interaction logic for OcupationPage.xaml
     /// </summary>
-    public partial class OcupationPage : Page
+    public partial class OccupationsPage : Page
     {
 
         List<Hostel> hostels = new List<Hostel>();
         
-        public OcupationPage()
+        public OccupationsPage()
         {
             InitializeComponent();
             InitFilters();
@@ -76,7 +76,7 @@ namespace HostelApp.View
                                     Этаж = r.Floor,
                                     Номер = r.Number,
                                     Вместимость = r.Capacity,
-                                    Заселено = (from o in context.OcupationSet
+                                    Заселено = (from o in context.OccupationSet
                                                       where o.Room == r &&
                                                           o.Active &&
                                                           o.Student.Active &&
@@ -101,7 +101,7 @@ namespace HostelApp.View
                                     Этаж = r.Floor,
                                     Номер = r.Number,
                                     Вместимость = r.Capacity,
-                                    Заселено = (from o in context.OcupationSet
+                                    Заселено = (from o in context.OccupationSet
                                                 where o.Room == r&&
                                                           o.Active &&
                                                           o.Student.Active &&
@@ -130,6 +130,8 @@ namespace HostelApp.View
             public DateTime? To { set; get; }
             public String ДатаС { set; get; }
             public String ДатаПо { set; get; }
+            public Double? Стоимость { set; get; }
+            public Double? Оплачено { set; get; }
         }
 
         List<StudentRecord> students = new List<StudentRecord>();
@@ -150,7 +152,7 @@ namespace HostelApp.View
                 {
                     using (var context = new HostelModelContainer())
                     {
-                        var query = from o in context.OcupationSet
+                        var query = from o in context.OccupationSet
                                     where o.Room.Id == roomRecord.Id &&
                                         o.Active &&
                                         o.Student.Active &&
@@ -166,7 +168,13 @@ namespace HostelApp.View
                                         Курс = o.Student.Group.StudyYear,
                                         Группа = o.Student.Group.Number,
                                         From = o.FromDate,
-                                        To = o.ToDate
+                                        To = o.ToDate,
+                                        Стоимость = (from oo in context.OrderSet
+                                                     where oo.Ocupation == o
+                                                     select oo.Price).FirstOrDefault(),
+                                        Оплачено = (from p in context.PaymentSet
+                                                    where p.Order.Ocupation == o
+                                                    select p.Amount).Sum()
                                     };
                         List<StudentRecord> students = query.ToList();
                         students.ForEach(s => { s.ДатаС = s.From.ToString("dd.MM.yyyy"); s.ДатаПо = s.To?.ToString("dd.MM.yyyy"); });
@@ -196,20 +204,20 @@ namespace HostelApp.View
                         // Студент: selectStudentWindow.SelectedId, Комната: roomRecord.Id, fromDate = Today, toDate = null, order = null
                         using (var context = new HostelModelContainer())
                         {
-                            Ocupation previousOcupation = context.OcupationSet.SingleOrDefault(o => o.Student.Id == selectStudentWindow.SelectedId && o.Active == true);                           
+                            Occupation previousOcupation = context.OccupationSet.SingleOrDefault(o => o.Student.Id == selectStudentWindow.SelectedId && o.Active == true);                           
                             if (previousOcupation == null || (previousOcupation.Room.Id != roomRecord.Id)) {
                                 if (previousOcupation != null)
                                 {
                                     previousOcupation.Active = false;
                                 }
-                                Ocupation ocupation = new Ocupation()
+                                Occupation ocupation = new Occupation()
                                 {
                                     Active = true,
                                     Student = context.StudentSet.Single(s => s.Id == selectStudentWindow.SelectedId),
                                     Room = context.RoomSet.Single(r => r.Id == roomRecord.Id),
                                     FromDate = DateTime.Today
                                 };
-                                context.OcupationSet.Add(ocupation);
+                                context.OccupationSet.Add(ocupation);
                                 context.SaveChanges();
 
                                 // обновление UI
@@ -249,7 +257,7 @@ namespace HostelApp.View
                             {
                                 using (var context = new HostelModelContainer())
                                 {
-                                    Ocupation previousOcupation = context.OcupationSet.SingleOrDefault(o => o.Id == studentRecord.Id && o.Active == true);
+                                    Occupation previousOcupation = context.OccupationSet.SingleOrDefault(o => o.Id == studentRecord.Id && o.Active == true);
                                     previousOcupation.Active = false;
                                     context.SaveChanges();
 
@@ -275,6 +283,30 @@ namespace HostelApp.View
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            int selectedIndex = grdRooms.SelectedIndex;
+            if (selectedIndex >= 0)
+            {
+                if (grdRooms.Items[selectedIndex] is RoomRecord roomRecord && roomRecord.Свободно > 0)
+                {
+                    int studentIndex = grdStudents.SelectedIndex;
+                    if (studentIndex >= 0)
+                    {
+                        if (grdStudents.Items[studentIndex] is StudentRecord studentRecord)
+                        {
+                            EditOccupationWindow editOccupationWindow = new EditOccupationWindow
+                            {
+                                OccupationId = studentRecord.Id
+                            };
+                            editOccupationWindow.ShowDialog();
+                            UpdateStudentsGrid();
+                        }
+                    }
+                }
+            }
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
         {
 
         }

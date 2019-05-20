@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 05/20/2019 21:10:19
+-- Date Created: 05/20/2019 23:20:42
 -- Generated from EDMX file: C:\Work\hostel\HostelApp\HostelApp\Model\HostelModel.edmx
 -- --------------------------------------------------
 
@@ -159,8 +159,8 @@ CREATE TABLE [dbo].[GroupSet] (
 );
 GO
 
--- Creating table 'OcupationSet'
-CREATE TABLE [dbo].[OcupationSet] (
+-- Creating table 'OccupationSet'
+CREATE TABLE [dbo].[OccupationSet] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [FromDate] datetime  NOT NULL,
     [ToDate] datetime  NULL,
@@ -237,9 +237,9 @@ ADD CONSTRAINT [PK_GroupSet]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
--- Creating primary key on [Id] in table 'OcupationSet'
-ALTER TABLE [dbo].[OcupationSet]
-ADD CONSTRAINT [PK_OcupationSet]
+-- Creating primary key on [Id] in table 'OccupationSet'
+ALTER TABLE [dbo].[OccupationSet]
+ADD CONSTRAINT [PK_OccupationSet]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
@@ -364,8 +364,8 @@ ON [dbo].[PersonSet]
     ([Father_Id]);
 GO
 
--- Creating foreign key on [Room_Id] in table 'OcupationSet'
-ALTER TABLE [dbo].[OcupationSet]
+-- Creating foreign key on [Room_Id] in table 'OccupationSet'
+ALTER TABLE [dbo].[OccupationSet]
 ADD CONSTRAINT [FK_RoomOcupation]
     FOREIGN KEY ([Room_Id])
     REFERENCES [dbo].[RoomSet]
@@ -375,12 +375,12 @@ GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_RoomOcupation'
 CREATE INDEX [IX_FK_RoomOcupation]
-ON [dbo].[OcupationSet]
+ON [dbo].[OccupationSet]
     ([Room_Id]);
 GO
 
--- Creating foreign key on [Student_Id] in table 'OcupationSet'
-ALTER TABLE [dbo].[OcupationSet]
+-- Creating foreign key on [Student_Id] in table 'OccupationSet'
+ALTER TABLE [dbo].[OccupationSet]
 ADD CONSTRAINT [FK_StudentOcupation]
     FOREIGN KEY ([Student_Id])
     REFERENCES [dbo].[StudentSet]
@@ -390,7 +390,7 @@ GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_StudentOcupation'
 CREATE INDEX [IX_FK_StudentOcupation]
-ON [dbo].[OcupationSet]
+ON [dbo].[OccupationSet]
     ([Student_Id]);
 GO
 
@@ -398,7 +398,7 @@ GO
 ALTER TABLE [dbo].[OrderSet]
 ADD CONSTRAINT [FK_OcupationOrder]
     FOREIGN KEY ([Ocupation_Id])
-    REFERENCES [dbo].[OcupationSet]
+    REFERENCES [dbo].[OccupationSet]
         ([Id])
     ON DELETE CASCADE ON UPDATE NO ACTION;
 GO

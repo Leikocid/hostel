@@ -27,7 +27,7 @@ namespace HostelApp.View
         RoomsPage roomsPage;
         SummaryPage summaryPage;
         StudentsPage studentsPage;
-        OcupationPage ocupationPage;
+        OccupationsPage occupationsPage;
         AddEditStudentPage addEditStudentPage;
 
         public MainWindow()
@@ -37,7 +37,7 @@ namespace HostelApp.View
             summaryPage = new SummaryPage();
             roomsPage = new RoomsPage();
             studentsPage = new StudentsPage();
-            ocupationPage = new OcupationPage();
+            occupationsPage = new OccupationsPage();
             addEditStudentPage = new AddEditStudentPage();
 
             frameMain.Content = summaryPage;
@@ -62,7 +62,7 @@ namespace HostelApp.View
 
         private void Button_Click_5(object sender, RoutedEventArgs e)
         {
-            frameMain.Content = ocupationPage;
+            frameMain.Content = occupationsPage;
         }
 
         private void Button_Click_7(object sender, RoutedEventArgs e)

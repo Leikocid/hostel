@@ -17,7 +17,7 @@ namespace HostelApp.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Room()
         {
-            this.Ocupation = new HashSet<Ocupation>();
+            this.Occupation = new HashSet<Occupation>();
         }
     
         public int Id { get; set; }
@@ -27,6 +27,6 @@ namespace HostelApp.Model
     
         public virtual Hostel Hostel { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Ocupation> Ocupation { get; set; }
+        public virtual ICollection<Occupation> Occupation { get; set; }
     }
 }

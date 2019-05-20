@@ -20,7 +20,7 @@
         <AssociationConnector Association="HostelModel.GroupStudent" />
         <AssociationConnector Association="HostelModel.Mother" />
         <AssociationConnector Association="HostelModel.Father" />
-        <EntityTypeShape EntityType="HostelModel.Ocupation" Width="1.5" PointX="3.25" PointY="2.5" />
+        <EntityTypeShape EntityType="HostelModel.Occupation" Width="1.5" PointX="3.25" PointY="2.5" />
         <AssociationConnector Association="HostelModel.RoomOcupation" />
         <AssociationConnector Association="HostelModel.StudentOcupation" />
         <EntityTypeShape EntityType="HostelModel.Order" Width="1.5" PointX="3.25" PointY="5.625" />

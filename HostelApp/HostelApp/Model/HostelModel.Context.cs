@@ -32,7 +32,7 @@ namespace HostelApp.Model
         public virtual DbSet<Person> PersonSet { get; set; }
         public virtual DbSet<Faculty> FacultySet { get; set; }
         public virtual DbSet<Group> GroupSet { get; set; }
-        public virtual DbSet<Ocupation> OcupationSet { get; set; }
+        public virtual DbSet<Occupation> OccupationSet { get; set; }
         public virtual DbSet<Order> OrderSet { get; set; }
         public virtual DbSet<Payment> PaymentSet { get; set; }
     }

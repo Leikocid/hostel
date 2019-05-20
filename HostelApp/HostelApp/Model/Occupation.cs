@@ -12,7 +12,7 @@ namespace HostelApp.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Ocupation
+    public partial class Occupation
     {
         public int Id { get; set; }
         public System.DateTime FromDate { get; set; }

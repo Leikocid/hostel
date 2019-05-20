@@ -25,7 +25,7 @@ namespace HostelApp.Model
         public double Price { get; set; }
         public System.DateTime OrderDate { get; set; }
     
-        public virtual Ocupation Ocupation { get; set; }
+        public virtual Occupation Ocupation { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Payment> Payment { get; set; }
     }

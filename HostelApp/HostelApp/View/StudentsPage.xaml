@@ -15,7 +15,7 @@
         </DockPanel>
         <Separator></Separator>
 
-        <DataGrid Name="grdStudents" Margin="10" Background="Transparent" AutoGenerateColumns="False" RowBackground="Transparent" Foreground="#FF05C4FC" FontSize="14" IsReadOnly="True" SelectionMode="Single" CanUserResizeRows="False" MouseDoubleClick="GrdStudents_MouseDoubleClick">
+        <DataGrid Name="grdStudents" Margin="10" Background="Transparent" AutoGenerateColumns="False" RowBackground="Transparent" Foreground="#FF05C4FC" FontSize="14" IsReadOnly="True" SelectionMode="Single" CanUserResizeRows="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}" Visibility="Collapsed"/>
                 <DataGridTextColumn Header="Фамилия " Binding="{Binding Фамилия}"/>

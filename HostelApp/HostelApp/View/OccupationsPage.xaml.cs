@@ -80,8 +80,8 @@ namespace HostelApp.View
                                                       where o.Room == r &&
                                                           o.Active &&
                                                           o.Student.Active &&
-                                                          o.FromDate < DateTime.Now &&
-                                                          (o.ToDate > DateTime.Now || o.ToDate == null)
+                                                          o.FromDate <= DateTime.Today &&
+                                                          (o.ToDate >= DateTime.Today || o.ToDate == null)
                                                       select o).Count()
                                 };
                     List<RoomRecord> records = query.ToList();
@@ -105,8 +105,8 @@ namespace HostelApp.View
                                                 where o.Room == r&&
                                                           o.Active &&
                                                           o.Student.Active &&
-                                                          o.FromDate < DateTime.Now &&
-                                                          (o.ToDate > DateTime.Now || o.ToDate == null)
+                                                          o.FromDate <= DateTime.Today &&
+                                                          (o.ToDate >= DateTime.Today || o.ToDate == null)
                                                 select o).Count()
                                 };
                     List<RoomRecord> records = query.ToList();
@@ -156,8 +156,8 @@ namespace HostelApp.View
                                     where o.Room.Id == roomRecord.Id &&
                                         o.Active &&
                                         o.Student.Active &&
-                                        o.FromDate < DateTime.Now &&
-                                        (o.ToDate > DateTime.Now || o.ToDate == null)
+                                        o.FromDate <= DateTime.Today &&
+                                        (o.ToDate >= DateTime.Today || o.ToDate == null)
                                     select new StudentRecord
                                     {
                                         Id = o.Id,
@@ -174,7 +174,7 @@ namespace HostelApp.View
                                                      select oo.Price).FirstOrDefault(),
                                         Оплачено = (from p in context.PaymentSet
                                                     where p.Order.Ocupation == o
-                                                    select p.Amount).Sum()
+                                                    select p.Amount).DefaultIfEmpty().Sum()
                                     };
                         List<StudentRecord> students = query.ToList();
                         students.ForEach(s => { s.ДатаС = s.From.ToString("dd.MM.yyyy"); s.ДатаПо = s.To?.ToString("dd.MM.yyyy"); });
@@ -308,7 +308,26 @@ namespace HostelApp.View
 
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
-
+            int selectedIndex = grdRooms.SelectedIndex;
+            if (selectedIndex >= 0)
+            {
+                if (grdRooms.Items[selectedIndex] is RoomRecord roomRecord && roomRecord.Свободно > 0)
+                {
+                    int studentIndex = grdStudents.SelectedIndex;
+                    if (studentIndex >= 0)
+                    {
+                        if (grdStudents.Items[studentIndex] is StudentRecord studentRecord && studentRecord.Стоимость > 0)
+                        {
+                            AddPaymentWindow addPaymentWindow = new AddPaymentWindow
+                            {
+                                OccupationId = studentRecord.Id
+                            };
+                            addPaymentWindow.ShowDialog();
+                            UpdateStudentsGrid();
+                        }
+                    }
+                }
+            }
         }
     }
 }

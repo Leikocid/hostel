@@ -36,8 +36,8 @@ namespace HostelApp.View
                 int occupied = context.OccupationSet.Where(o => 
                     o.Active && 
                     o.Student.Active && 
-                    o.FromDate < DateTime.Now && 
-                    (o.ToDate > DateTime.Now || o.ToDate == null)
+                    o.FromDate <= DateTime.Today && 
+                    (o.ToDate >= DateTime.Today || o.ToDate == null)
                 ).Count();
                 lblFree.Content = (total - occupied).ToString();
 

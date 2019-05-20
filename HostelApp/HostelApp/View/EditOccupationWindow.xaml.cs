@@ -90,6 +90,10 @@ namespace HostelApp.View
             if (price > 0 && tbxOrderNumber.Text.Length == 0) {
                 errorText = "Не задан номер счета";
             }
+            if (price > 0 && dpkOrder.SelectedDate == null)
+            {
+                errorText = "Не задана дата платежа";
+            }
             if (price == 0 && payments > 0)
             {
                 errorText = "Нельзя удалить счет по которому есть платежи";
@@ -101,8 +105,8 @@ namespace HostelApp.View
                 using (var context = new HostelModelContainer())
                 {
                     context.Set(typeof(Occupation)).Attach(occupation);
-                    occupation.FromDate = (DateTime)dpkFrom.SelectedDate;
-                    occupation.ToDate = (DateTime)dpkTo.SelectedDate;
+                    occupation.FromDate = dpkFrom.SelectedDate.Value;
+                    occupation.ToDate = dpkTo.SelectedDate;
 
                     Order order = occupation.Order;
                     if (price > 0) {
@@ -115,7 +119,7 @@ namespace HostelApp.View
                             context.OrderSet.Add(order);
                         }
                         order.Price = price;
-                        order.OrderDate = (DateTime)dpkOrder.SelectedDate;
+                        order.OrderDate = dpkOrder.SelectedDate.Value; 
                         order.Number = tbxOrderNumber.Text;
                     }
  

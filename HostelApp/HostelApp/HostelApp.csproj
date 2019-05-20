@@ -70,6 +70,9 @@
     <Compile Include="View\AddEditStudentPage.xaml.cs">
       <DependentUpon>AddEditStudentPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\AddPaymentWindow.xaml.cs">
+      <DependentUpon>AddPaymentWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\AddStudent.xaml.cs">
       <DependentUpon>AddStudent.xaml</DependentUpon>
     </Compile>
@@ -98,6 +101,10 @@
       <DependentUpon>SummaryPage.xaml</DependentUpon>
     </Compile>
     <Page Include="View\AddEditStudentPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AddPaymentWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

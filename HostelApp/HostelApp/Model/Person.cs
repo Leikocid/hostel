@@ -19,7 +19,6 @@ namespace HostelApp.Model
         {
             this.User = new HashSet<User>();
             this.Student = new HashSet<Student>();
-            this.Payment = new HashSet<Payment>();
         }
     
         public int Id { get; set; }
@@ -35,7 +34,5 @@ namespace HostelApp.Model
         public virtual ICollection<Student> Student { get; set; }
         public virtual Person Mother { get; set; }
         public virtual Person Father { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Payment> Payment { get; set; }
     }
 }

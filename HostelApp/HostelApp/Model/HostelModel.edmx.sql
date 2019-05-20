@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 05/20/2019 23:20:42
+-- Date Created: 05/21/2019 02:00:42
 -- Generated from EDMX file: C:\Work\hostel\HostelApp\HostelApp\Model\HostelModel.edmx
 -- --------------------------------------------------
 
@@ -39,16 +39,13 @@ IF OBJECT_ID(N'[dbo].[FK_Father]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[PersonSet] DROP CONSTRAINT [FK_Father];
 GO
 IF OBJECT_ID(N'[dbo].[FK_RoomOcupation]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[OcupationSet] DROP CONSTRAINT [FK_RoomOcupation];
+    ALTER TABLE [dbo].[OccupationSet] DROP CONSTRAINT [FK_RoomOcupation];
 GO
 IF OBJECT_ID(N'[dbo].[FK_StudentOcupation]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[OcupationSet] DROP CONSTRAINT [FK_StudentOcupation];
+    ALTER TABLE [dbo].[OccupationSet] DROP CONSTRAINT [FK_StudentOcupation];
 GO
 IF OBJECT_ID(N'[dbo].[FK_OcupationOrder]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[OrderSet] DROP CONSTRAINT [FK_OcupationOrder];
-GO
-IF OBJECT_ID(N'[dbo].[FK_PaymentPerson]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[PaymentSet] DROP CONSTRAINT [FK_PaymentPerson];
 GO
 IF OBJECT_ID(N'[dbo].[FK_PaymentOrder]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[PaymentSet] DROP CONSTRAINT [FK_PaymentOrder];
@@ -79,8 +76,8 @@ GO
 IF OBJECT_ID(N'[dbo].[GroupSet]', 'U') IS NOT NULL
     DROP TABLE [dbo].[GroupSet];
 GO
-IF OBJECT_ID(N'[dbo].[OcupationSet]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[OcupationSet];
+IF OBJECT_ID(N'[dbo].[OccupationSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[OccupationSet];
 GO
 IF OBJECT_ID(N'[dbo].[OrderSet]', 'U') IS NOT NULL
     DROP TABLE [dbo].[OrderSet];
@@ -186,7 +183,6 @@ CREATE TABLE [dbo].[PaymentSet] (
     [Number] nvarchar(200)  NOT NULL,
     [Amount] float  NOT NULL,
     [PaymentDate] datetime  NOT NULL,
-    [Payer_Id] int  NULL,
     [Order_Id] int  NOT NULL
 );
 GO
@@ -407,21 +403,6 @@ GO
 CREATE INDEX [IX_FK_OcupationOrder]
 ON [dbo].[OrderSet]
     ([Ocupation_Id]);
-GO
-
--- Creating foreign key on [Payer_Id] in table 'PaymentSet'
-ALTER TABLE [dbo].[PaymentSet]
-ADD CONSTRAINT [FK_PaymentPerson]
-    FOREIGN KEY ([Payer_Id])
-    REFERENCES [dbo].[PersonSet]
-        ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
-
--- Creating non-clustered index for FOREIGN KEY 'FK_PaymentPerson'
-CREATE INDEX [IX_FK_PaymentPerson]
-ON [dbo].[PaymentSet]
-    ([Payer_Id]);
 GO
 
 -- Creating foreign key on [Order_Id] in table 'PaymentSet'

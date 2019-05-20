@@ -25,8 +25,7 @@
         <AssociationConnector Association="HostelModel.StudentOcupation" />
         <EntityTypeShape EntityType="HostelModel.Order" Width="1.5" PointX="3.25" PointY="5.625" />
         <AssociationConnector Association="HostelModel.OcupationOrder" />
-        <EntityTypeShape EntityType="HostelModel.Payment" Width="1.5" PointX="8.375" PointY="5.625" />
-        <AssociationConnector Association="HostelModel.PaymentPerson" />
+        <EntityTypeShape EntityType="HostelModel.Payment" Width="1.5" PointX="5.75" PointY="5.625" />
         <AssociationConnector Association="HostelModel.PaymentOrder" />
       </Diagram>
     </edmx:Diagrams>

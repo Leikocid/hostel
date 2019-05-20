@@ -19,7 +19,6 @@ namespace HostelApp.Model
         public double Amount { get; set; }
         public System.DateTime PaymentDate { get; set; }
     
-        public virtual Person Payer { get; set; }
         public virtual Order Order { get; set; }
     }
 }

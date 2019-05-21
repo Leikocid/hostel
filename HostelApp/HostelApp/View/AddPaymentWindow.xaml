@@ -13,14 +13,14 @@
                 <TextBox Name="tbxRoom" FontSize="16" Margin="5" IsReadOnly="True" Background="DarkGray"></TextBox>
                 <Label Foreground="#FF05C4FC" FontSize="16" Margin="5" Content="Студент:"></Label>
                 <TextBox Name="tbxStudent" FontSize="16" Margin="5" IsReadOnly="True" Background="DarkGray"></TextBox>
-                <Separator Margin="5,20,5,20"></Separator>
+                <Separator Margin="5,20,5,20" Background="#FF05C4FC"></Separator>
                 <StackPanel Orientation="Horizontal">
                     <Label Foreground="#FF05C4FC" FontSize="14" Margin="5" Content="Дата заселения:"></Label>
                     <TextBox Name="dpkFrom" FontSize="14" Margin="5" IsReadOnly="True" Background="DarkGray" Width="100"></TextBox>
                     <Label Foreground="#FF05C4FC" FontSize="14" Margin="5" Content="Дата выселения:"></Label>
                     <TextBox Name="dpkTo" FontSize="14" Margin="5" IsReadOnly="True" Background="DarkGray" Width="100"></TextBox>
                 </StackPanel>
-                <Separator Margin="5,20,5,20"></Separator>
+                <Separator Margin="5,20,5,20" Background="#FF05C4FC"></Separator>
                 <StackPanel Orientation="Horizontal">
                     <Label Foreground="#FF05C4FC" FontSize="14" Margin="5" Content="Стоимость оплаты:"></Label>
                     <TextBox Name="tbxPrice" FontSize="14" Margin="5" Width="100" IsReadOnly="True" Background="DarkGray" VerticalAlignment="Center"></TextBox>
@@ -31,7 +31,7 @@
                     <Label Foreground="#FF05C4FC" FontSize="14" Margin="5" Content=     "Оплачено:"></Label>
                     <Label Name="lblPayment" Foreground="White" FontSize="14" Margin="5" Content="0"></Label>
                 </StackPanel>
-                <Separator Margin="5,20,5,20"></Separator>
+                <Separator Margin="5,20,5,20" Background="#FF05C4FC"></Separator>
                 <StackPanel Orientation="Horizontal">
                     <Label Foreground="#FF05C4FC" FontSize="14" Margin="5" Content="Оплата:"></Label>
                     <TextBox Name="tbxAmount" FontSize="14" Margin="5" Width="100" VerticalAlignment="Center"></TextBox>
@@ -40,7 +40,7 @@
                     <Label Foreground="#FF05C4FC" FontSize="14" Margin="5" Content="Номер:"></Label>
                     <TextBox Name="tbxPaymentNumber" FontSize="14" Margin="5" Width="100" VerticalAlignment="Center"></TextBox>
                 </StackPanel>
-                <Separator Margin="5,20,5,0"></Separator>
+                <Separator Margin="5,20,5,0" Background="#FF05C4FC"></Separator>
             </StackPanel>
             <DockPanel DockPanel.Dock="Bottom">
                 <Button DockPanel.Dock="Left" Name="btnCancel" Content="Отмена" FontSize="16" Margin="5" Background="DarkGray" Click="BtnCancel_Click"></Button>

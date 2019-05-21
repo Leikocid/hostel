@@ -43,7 +43,6 @@ namespace HostelApp.View
                     cmbHostel.Items.Add(hostel.Name + " (" + hostel.Address + ")");
                 }
             }
-
         }
 
         private void CmbHostel_SelectionChanged(object sender, SelectionChangedEventArgs e)

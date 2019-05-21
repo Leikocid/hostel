@@ -1,49 +1,32 @@
 ﻿using HostelApp.Model;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
-namespace HostelApp.View
-{
+namespace HostelApp.View {
     /// <summary>
     /// Interaction logic for EditOccupationWindow.xaml
     /// </summary>
-    public partial class EditOccupationWindow : Window
-    {
-        public EditOccupationWindow()
-        {
+    public partial class EditOccupationWindow : Window {
+        public EditOccupationWindow() {
             InitializeComponent();
         }
 
         private int occupationId;
         private Occupation occupation;
         double payments = 0;
-        public int OccupationId
-        {
-            get
-            {
+        public int OccupationId {
+            get {
                 return occupationId;
-            } set{
+            }
+            set {
                 occupationId = value;
                 UpdateForm();
             }
         }
 
-        public void UpdateForm()
-        {
-            using (var context = new HostelModelContainer())
-            {
-                occupation = context.OccupationSet.Single(o => o.Id == occupationId);
+        public void UpdateForm() {
+            using (var context = new HostelModelContainer()) {
                 tbxRoom.Text = occupation.Room.Hostel.Name + " (" + occupation.Room.Hostel.Address + ") комната " + occupation.Room.Number;
                 tbxStudent.Text = occupation.Student.Person.LastName + " " + occupation.Student.Person.FirstName + " " + occupation.Student.Person.MiddleName + " - " +
                     occupation.Student.Group.Faculty.Name + " " + occupation.Student.Group.StudyYear + " курс " + occupation.Student.Group.Number + " группа";
@@ -58,20 +41,18 @@ namespace HostelApp.View
                     }
                     tbxOrderNumber.Text = occupation.Order.Number;
                     payments = (from p in context.PaymentSet
-                                 where p.Order.Id == occupation.Order.Id
-                                 select p.Amount).DefaultIfEmpty().Sum();
-                 }
+                                where p.Order.Id == occupation.Order.Id
+                                select p.Amount).DefaultIfEmpty().Sum();
+                }
                 lblPayment.Content = payments.ToString();
             }
         }
 
-        private void BtnCancel_Click(object sender, RoutedEventArgs e)
-        {
+        private void BtnCancel_Click(object sender, RoutedEventArgs e) {
             Close();
         }
 
-        private void BtnOk_Click(object sender, RoutedEventArgs e)
-        {
+        private void BtnOk_Click(object sender, RoutedEventArgs e) {
             // проверки корректности
             String errorText = null;
             if (dpkFrom.SelectedDate == null) {
@@ -90,47 +71,40 @@ namespace HostelApp.View
             if (price > 0 && tbxOrderNumber.Text.Length == 0) {
                 errorText = "Не задан номер счета";
             }
-            if (price > 0 && dpkOrder.SelectedDate == null)
-            {
+            if (price > 0 && dpkOrder.SelectedDate == null) {
                 errorText = "Не задана дата платежа";
             }
-            if (price == 0 && payments > 0)
-            {
+            if (price == 0 && payments > 0) {
                 errorText = "Нельзя удалить счет по которому есть платежи";
             }
 
             // изменения
-            if (errorText == null)
-            {
-                using (var context = new HostelModelContainer())
-                {
+            if (errorText == null) {
+                using (var context = new HostelModelContainer()) {
                     context.Set(typeof(Occupation)).Attach(occupation);
                     occupation.FromDate = dpkFrom.SelectedDate.Value;
                     occupation.ToDate = dpkTo.SelectedDate;
 
                     Order order = occupation.Order;
                     if (price > 0) {
-                        if (order == null)
-                        {
-                            order = new Order()
-                            {
+                        if (order == null) {
+                            order = new Order() {
                                 Ocupation = occupation
                             };
                             context.OrderSet.Add(order);
                         }
                         order.Price = price;
-                        order.OrderDate = dpkOrder.SelectedDate.Value; 
+                        order.OrderDate = dpkOrder.SelectedDate.Value;
                         order.Number = tbxOrderNumber.Text;
                     }
- 
+
                     if (order != null && price == 0) {
                         context.OrderSet.Remove(order);
                     }
                     context.SaveChanges();
                 }
                 Close();
-            }
-            else {
+            } else {
                 lblError.Content = errorText;
             }
         }

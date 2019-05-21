@@ -1,6 +1,5 @@
 ﻿using HostelApp.Model;
 using HostelApp.Service;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
@@ -44,23 +43,7 @@ namespace HostelApp.View {
             grdRooms.ItemsSource = records;
         }
 
-        public class StudentRecord {
-            public int Id { set; get; }
-            public String Фамилия { set; get; }
-            public String Имя { set; get; }
-            public String Отчество { set; get; }
-            public String Факультет { set; get; }
-            public int Курс { set; get; }
-            public int Группа { set; get; }
-            public DateTime From { set; get; }
-            public DateTime? To { set; get; }
-            public String ДатаС { set; get; }
-            public String ДатаПо { set; get; }
-            public Double? Стоимость { set; get; }
-            public Double? Оплачено { set; get; }
-        }
-
-        List<StudentRecord> students = new List<StudentRecord>();
+        List<DataService.StudentRecord> students = new List<DataService.StudentRecord>();
 
         private void GrdRooms_SelectionChanged(object sender, SelectionChangedEventArgs e) {
             UpdateStudentsGrid();
@@ -69,39 +52,13 @@ namespace HostelApp.View {
         private void UpdateStudentsGrid() {
             students.Clear();
             grdStudents.ItemsSource = students;
-
             int selectedIndex = grdRooms.SelectedIndex;
             if (selectedIndex >= 0) {
                 if (grdRooms.Items[selectedIndex] is DataService.RoomRecord roomRecord && roomRecord.Occupied > 0) {
-                    using (var context = new HostelModelContainer()) {
-                        var query = from o in context.OccupationSet
-                                    where o.Room.Id == roomRecord.Id &&
-                                        o.Active &&
-                                        o.Student.Active &&
-                                        o.FromDate <= DateTime.Today &&
-                                        (o.ToDate >= DateTime.Today || o.ToDate == null)
-                                    select new StudentRecord {
-                                        Id = o.Id,
-                                        Фамилия = o.Student.Person.LastName,
-                                        Имя = o.Student.Person.FirstName,
-                                        Отчество = o.Student.Person.MiddleName,
-                                        Факультет = o.Student.Group.Faculty.Name,
-                                        Курс = o.Student.Group.StudyYear,
-                                        Группа = o.Student.Group.Number,
-                                        From = o.FromDate,
-                                        To = o.ToDate,
-                                        Стоимость = (from oo in context.OrderSet
-                                                     where oo.Ocupation == o
-                                                     select oo.Price).FirstOrDefault(),
-                                        Оплачено = (from p in context.PaymentSet
-                                                    where p.Order.Ocupation == o
-                                                    select p.Amount).DefaultIfEmpty().Sum()
-                                    };
-                        List<StudentRecord> students = query.ToList();
-                        students.ForEach(s => { s.ДатаС = s.From.ToString("dd.MM.yyyy"); s.ДатаПо = s.To?.ToString("dd.MM.yyyy"); });
-                        students.Sort((r1, r2) => r2.ДатаС.CompareTo(r1.ДатаС));
-                        grdStudents.ItemsSource = students;
-                    }
+                    List<DataService.StudentRecord> students = DataService.FindStudents(roomRecord.Id, true);
+                    students.ForEach(s => { s.StudentOccupation.FromText = s.StudentOccupation.From.ToString("dd.MM.yyyy"); s.StudentOccupation.ToText = s.StudentOccupation.To?.ToString("dd.MM.yyyy"); });
+                    students.Sort((r1, r2) => r2.StudentOccupation.From.CompareTo(r1.StudentOccupation.From));
+                    grdStudents.ItemsSource = students;
                 }
             }
         }
@@ -118,38 +75,21 @@ namespace HostelApp.View {
                     selectStudentWindow.Close();
 
                     if (selectStudentWindow.SelectedId >= 0) {
-                        // заселение или переселение студета, если он уже живет. 
-                        // Студент: selectStudentWindow.SelectedId, Комната: roomRecord.Id, fromDate = Today, toDate = null, order = null
-                        using (var context = new HostelModelContainer()) {
-                            Occupation previousOcupation = context.OccupationSet.SingleOrDefault(o => o.Student.Id == selectStudentWindow.SelectedId && o.Active == true);
-                            if (previousOcupation == null || (previousOcupation.Room.Id != roomRecord.Id)) {
-                                if (previousOcupation != null) {
-                                    previousOcupation.Active = false;
-                                }
-                                Occupation ocupation = new Occupation() {
-                                    Active = true,
-                                    Student = context.StudentSet.Single(s => s.Id == selectStudentWindow.SelectedId),
-                                    Room = context.RoomSet.Single(r => r.Id == roomRecord.Id),
-                                    FromDate = DateTime.Today
-                                };
-                                context.OccupationSet.Add(ocupation);
-                                context.SaveChanges();
+                        (Occupation previousOccupation, Occupation occupation) = DataService.SetOccupation(selectStudentWindow.SelectedId, roomRecord.Id);
 
-                                // обновление UI
-                                List<DataService.RoomRecord> records = new List<DataService.RoomRecord>();
-                                foreach (DataService.RoomRecord r in grdRooms.ItemsSource) {
-                                    records.Add(r);
-                                    if (previousOcupation != null && r.Id == previousOcupation.Room.Id) {
-                                        r.Occupied = r.Occupied - 1;
-                                        r.Free = r.Free + 1;
-                                    }
-                                }
-                                records[selectedIndex].Occupied = records[selectedIndex].Occupied + 1;
-                                records[selectedIndex].Free = records[selectedIndex].Free - 1;
-                                grdRooms.ItemsSource = records;
-                                UpdateStudentsGrid();
+                        // обновление UI
+                        List<DataService.RoomRecord> records = new List<DataService.RoomRecord>();
+                        foreach (DataService.RoomRecord r in grdRooms.ItemsSource) {
+                            records.Add(r);
+                            if (previousOccupation != null && r.Id == previousOccupation.Room.Id) {
+                                r.Occupied = r.Occupied - 1;
+                                r.Free = r.Free + 1;
                             }
                         }
+                        records[selectedIndex].Occupied = records[selectedIndex].Occupied + 1;
+                        records[selectedIndex].Free = records[selectedIndex].Free - 1;
+                        grdRooms.ItemsSource = records;
+                        UpdateStudentsGrid();
                     }
                 }
             }
@@ -161,26 +101,22 @@ namespace HostelApp.View {
                 if (grdRooms.Items[selectedIndex] is DataService.RoomRecord roomRecord && roomRecord.Free > 0) {
                     int studentIndex = grdStudents.SelectedIndex;
                     if (studentIndex >= 0) {
-                        if (grdStudents.Items[studentIndex] is StudentRecord studentRecord) {
+                        if (grdStudents.Items[studentIndex] is DataService.StudentRecord studentRecord) {
                             MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Вы уверены что хотите выселить студента?", "Подтверждение действия", System.Windows.MessageBoxButton.YesNo);
                             if (messageBoxResult == MessageBoxResult.Yes) {
-                                using (var context = new HostelModelContainer()) {
-                                    Occupation previousOcupation = context.OccupationSet.SingleOrDefault(o => o.Id == studentRecord.Id && o.Active == true);
-                                    previousOcupation.Active = false;
-                                    context.SaveChanges();
-
-                                    // обновление UI
-                                    List<DataService.RoomRecord> records = new List<DataService.RoomRecord>();
-                                    foreach (DataService.RoomRecord r in grdRooms.ItemsSource) {
-                                        records.Add(r);
-                                        if (r.Id == previousOcupation.Room.Id) {
-                                            r.Occupied = r.Occupied - 1;
-                                            r.Free = r.Free + 1;
-                                        }
+                                (Occupation previousOccupation, Occupation occupation) = DataService.SetOccupation(studentRecord.StudentOccupation.Id, -1);
+  
+                                // обновление UI
+                                List<DataService.RoomRecord> records = new List<DataService.RoomRecord>();
+                                foreach (DataService.RoomRecord r in grdRooms.ItemsSource) {
+                                    records.Add(r);
+                                    if (r.Id == previousOccupation.Room.Id) {
+                                        r.Occupied = r.Occupied - 1;
+                                        r.Free = r.Free + 1;
                                     }
-                                    grdRooms.ItemsSource = records;
-                                    UpdateStudentsGrid();
                                 }
+                                grdRooms.ItemsSource = records;
+                                UpdateStudentsGrid();
                             }
                         }
                     }
@@ -194,9 +130,9 @@ namespace HostelApp.View {
                 if (grdRooms.Items[selectedIndex] is DataService.RoomRecord roomRecord && roomRecord.Free > 0) {
                     int studentIndex = grdStudents.SelectedIndex;
                     if (studentIndex >= 0) {
-                        if (grdStudents.Items[studentIndex] is StudentRecord studentRecord) {
+                        if (grdStudents.Items[studentIndex] is DataService.StudentRecord studentRecord) {
                             EditOccupationWindow editOccupationWindow = new EditOccupationWindow {
-                                OccupationId = studentRecord.Id
+                                OccupationId = studentRecord.StudentOccupation.Id
                             };
                             editOccupationWindow.ShowDialog();
                             UpdateStudentsGrid();
@@ -212,9 +148,9 @@ namespace HostelApp.View {
                 if (grdRooms.Items[selectedIndex] is DataService.RoomRecord roomRecord && roomRecord.Free > 0) {
                     int studentIndex = grdStudents.SelectedIndex;
                     if (studentIndex >= 0) {
-                        if (grdStudents.Items[studentIndex] is StudentRecord studentRecord && studentRecord.Стоимость > 0) {
+                        if (grdStudents.Items[studentIndex] is DataService.StudentRecord studentRecord && studentRecord.StudentOccupation.Price > 0) {
                             AddPaymentWindow addPaymentWindow = new AddPaymentWindow {
-                                OccupationId = studentRecord.Id
+                                OccupationId = studentRecord.StudentOccupation.Id
                             };
                             addPaymentWindow.ShowDialog();
                             UpdateStudentsGrid();

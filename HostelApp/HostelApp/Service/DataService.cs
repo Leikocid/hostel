@@ -41,10 +41,16 @@ namespace HostelApp.Service {
             }
         }
 
-        // поиск студентов и извлечение информации для таблицы
-        public class StudentOcupation {
+        public class StudentOccupation {
+            public int Id { set; get; }
             public String Hostel { set; get; }
             public int RoomNumber { set; get; }
+            public DateTime From { set; get; }
+            public DateTime? To { set; get; }
+            public String FromText { set; get; }
+            public String ToText { set; get; }
+            public Double? Price { set; get; }
+            public Double? Payed { set; get; }
         }
 
         public class StudentRecord {
@@ -55,9 +61,10 @@ namespace HostelApp.Service {
             public String FacultyName { set; get; }
             public int StudyYear { set; get; }
             public int GroupNumber { set; get; }
-            public StudentOcupation StudentOcupation { set; get; }
+            public StudentOccupation StudentOccupation { set; get; }
         }
 
+        // поиск студентов и извлечение информации для таблицы
         public static List<StudentRecord> FindStudents(String text) {
             using (var context = new HostelModelContainer()) {
                 if (text != null && text.Length > 0) {
@@ -72,13 +79,13 @@ namespace HostelApp.Service {
                         FacultyName = s.Group.Faculty.Name,
                         StudyYear = s.Group.StudyYear,
                         GroupNumber = s.Group.Number,
-                        StudentOcupation = (
+                        StudentOccupation = (
                                 from o in context.OccupationSet
                                 where o.Student == s &&
                                         o.Active && o.Student.Active &&
                                         o.FromDate <= DateTime.Today && (o.ToDate >= DateTime.Today || o.ToDate == null)
                                 select
-                                new StudentOcupation {
+                                new StudentOccupation {
                                     Hostel = o.Room.Hostel.Name + "\n" + o.Room.Hostel.Address,
                                     RoomNumber = o.Room.Number
                                 }).FirstOrDefault()
@@ -94,13 +101,13 @@ namespace HostelApp.Service {
                             FacultyName = s.Group.Faculty.Name,
                             StudyYear = s.Group.StudyYear,
                             GroupNumber = s.Group.Number,
-                            StudentOcupation = (
+                            StudentOccupation = (
                                     from o in context.OccupationSet
                                     where o.Student == s &&
                                             o.Active && o.Student.Active &&
                                             o.FromDate <= DateTime.Today && (o.ToDate >= DateTime.Today || o.ToDate == null)
                                     select
-                                    new StudentOcupation {
+                                    new StudentOccupation {
                                         Hostel = o.Room.Hostel.Name + "\n" + o.Room.Hostel.Address,
                                         RoomNumber = o.Room.Number
                                     }).FirstOrDefault()
@@ -146,24 +153,50 @@ namespace HostelApp.Service {
         }
 
         // Поиск студентов проживающих в комнате
-        public static List<StudentRecord> FindStudents(int roomId) {
+        public static List<StudentRecord> FindStudents(int roomId, bool loadOccupationInfo) {
             using (var context = new HostelModelContainer()) {
-                return (from o in context.OccupationSet
-                        where o.Room.Id == roomId && o.Student.Active == true
-                        select o.Student).ToList().Select(s =>
-                        new StudentRecord {
-                            Id = s.Id,
-                            LastName = s.Person.LastName,
-                            FirstName = s.Person.FirstName,
-                            MiddleName = s.Person.MiddleName,
-                            FacultyName = s.Group.Faculty.Name,
-                            StudyYear = s.Group.StudyYear,
-                            GroupNumber = s.Group.Number
-                        }).ToList();
+                if (loadOccupationInfo) {
+                    return (from o in context.OccupationSet
+                                    where o.Room.Id == roomId &&
+                                        o.Active && o.Student.Active &&
+                                        o.FromDate <= DateTime.Today && (o.ToDate >= DateTime.Today || o.ToDate == null)
+                                    select new StudentRecord {
+                                        Id = o.Student.Id,
+                                        LastName = o.Student.Person.LastName,
+                                        FirstName = o.Student.Person.FirstName,
+                                        MiddleName = o.Student.Person.MiddleName,
+                                        FacultyName = o.Student.Group.Faculty.Name,
+                                        StudyYear = o.Student.Group.StudyYear,
+                                        GroupNumber = o.Student.Group.Number,
+                                        StudentOccupation = new StudentOccupation {
+                                            Id = o.Id,
+                                            From = o.FromDate,
+                                            To = o.ToDate,
+                                            Price = (from oo in context.OrderSet
+                                                         where oo.Ocupation == o
+                                                         select oo.Price).FirstOrDefault(),
+                                            Payed = (from p in context.PaymentSet
+                                                        where p.Order.Ocupation == o
+                                                        select p.Amount).DefaultIfEmpty().Sum()
+                                        }
+                                    }).ToList();                    
+                } else {
+                    return (from o in context.OccupationSet
+                            where o.Room.Id == roomId && o.Active && o.Student.Active &&
+                                o.FromDate <= DateTime.Today && (o.ToDate >= DateTime.Today || o.ToDate == null)
+                            select new StudentRecord {
+                                Id = o.Student.Id,
+                                LastName = o.Student.Person.LastName,
+                                FirstName = o.Student.Person.FirstName,
+                                MiddleName = o.Student.Person.MiddleName,
+                                FacultyName = o.Student.Group.Faculty.Name,
+                                StudyYear = o.Student.Group.StudyYear,
+                                GroupNumber = o.Student.Group.Number
+                            }).ToList();
+                }
             }
         }
 
-        // Поиск комнат
         public class RoomRecord {
             public int Id { set; get; }
             public String Hostel { set; get; }
@@ -174,6 +207,7 @@ namespace HostelApp.Service {
             public int Free { set; get; }
         }
 
+        // Поиск комнат
         public static List<RoomRecord> GetRooms(int hostelId) {
             using (var context = new HostelModelContainer()) {
                 if (hostelId == -1) {
@@ -207,6 +241,35 @@ namespace HostelApp.Service {
                                                       o.FromDate <= DateTime.Today && (o.ToDate >= DateTime.Today || o.ToDate == null)
                                             select o).Count()
                             }).ToList();
+                }
+            }
+        }
+
+        // Поселить студента в комнату. Если студент уже где-то живет то он буоет выселен, если roomId == -1 то он будет просто выселен
+        public static (Occupation, Occupation) SetOccupation(int studentId, int roomId) {
+            using (var context = new HostelModelContainer()) {
+                Occupation previousOcupation = context.OccupationSet.SingleOrDefault(o => o.Student.Id == studentId && o.Active == true);
+                if (roomId != -1) {
+                    if (previousOcupation == null || (previousOcupation.Room.Id != roomId)) {
+                        if (previousOcupation != null) {
+                            previousOcupation.Active = false;
+                        }
+                        Occupation occupation = new Occupation() {
+                            Active = true,
+                            Student = context.StudentSet.Single(s => s.Id == studentId),
+                            Room = context.RoomSet.Single(r => r.Id == roomId),
+                            FromDate = DateTime.Today
+                        };
+                        context.OccupationSet.Add(occupation);
+                        context.SaveChanges();
+                        return (previousOcupation, occupation);
+                    } else {
+                        return (previousOcupation, previousOcupation);
+                    }
+                } else {
+                    previousOcupation.Active = false;
+                    context.SaveChanges();
+                    return (previousOcupation, null);
                 }
             }
         }

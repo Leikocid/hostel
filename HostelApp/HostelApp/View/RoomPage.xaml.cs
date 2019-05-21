@@ -28,7 +28,7 @@ namespace HostelApp.View {
             txtRoomNum.Text = room.Number.ToString();
             txtHostelNum.Text = room.Hostel.Name;
             txtRoomPlaces.Text = room.Capacity.ToString();
-            grdStudents.ItemsSource = DataService.FindStudents(roomId);
+            grdStudents.ItemsSource = DataService.FindStudents(roomId, false);
             txtFreePlace.Text = (room.Capacity - grdStudents.Items.Count).ToString();
         }
     }

@@ -38,16 +38,16 @@
         <DataGrid Name="grdStudents" Margin="10" Height="120" AutoGenerateColumns="False" FontSize="12" IsReadOnly="True" SelectionMode="Single" CanUserResizeRows="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}" Visibility="Collapsed"/>
-                <DataGridTextColumn Header="Фамилия " Binding="{Binding Фамилия}" Width="100"/>
-                <DataGridTextColumn Header="Имя " Binding="{Binding Имя}" Width="70"/>
-                <DataGridTextColumn Header="Отчество " Binding="{Binding Отчество}" Width="80"/>
-                <DataGridTextColumn Header="Факультет " Binding="{Binding Факультет}" Width="150"/>
-                <DataGridTextColumn Header="Курс " Binding="{Binding Курс}" Width="45"/>
-                <DataGridTextColumn Header="Группа" Binding="{Binding Группа}" Width="45"/>
-                <DataGridTextColumn Header="Заселение" Binding="{Binding ДатаС}" Width="80"/>
-                <DataGridTextColumn Header="Выселение" Binding="{Binding ДатаПо}" Width="80"/>
-                <DataGridTextColumn Header="Стоимость" Binding="{Binding Стоимость}" Width="80"/>
-                <DataGridTextColumn Header="Оплачено" Binding="{Binding Оплачено}" Width="80"/>
+                <DataGridTextColumn Header="Фамилия " Binding="{Binding LastName}" Width="100"/>
+                <DataGridTextColumn Header="Имя " Binding="{Binding FirstName}" Width="70"/>
+                <DataGridTextColumn Header="Отчество " Binding="{Binding MiddleName}" Width="80"/>
+                <DataGridTextColumn Header="Факультет " Binding="{Binding FacultyName}" Width="150"/>
+                <DataGridTextColumn Header="Курс " Binding="{Binding StudyYear}" Width="45"/>
+                <DataGridTextColumn Header="Группа" Binding="{Binding GroupNumber}" Width="45"/>
+                <DataGridTextColumn Header="Заселение" Binding="{Binding StudentOccupation.FromText}" Width="80"/>
+                <DataGridTextColumn Header="Выселение" Binding="{Binding StudentOccupation.ToText}" Width="80"/>
+                <DataGridTextColumn Header="Стоимость" Binding="{Binding StudentOccupation.Price}" Width="80"/>
+                <DataGridTextColumn Header="Оплачено" Binding="{Binding StudentOccupation.Payed}" Width="80"/>
             </DataGrid.Columns>
             <DataGrid.ColumnHeaderStyle>
                 <Style TargetType="{x:Type DataGridColumnHeader}">

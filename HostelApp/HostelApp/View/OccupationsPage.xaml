@@ -16,12 +16,12 @@
         <DataGrid Name="grdRooms" Margin="10" Height="220" AutoGenerateColumns="False" FontSize="16" IsReadOnly="True" SelectionMode="Single" CanUserResizeRows="False" SelectionChanged="GrdRooms_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}" Visibility="Collapsed"/>
-                <DataGridTextColumn Header="Общежитие " Binding="{Binding Общежитие}"/>
-                <DataGridTextColumn Header="Этаж " Binding="{Binding Этаж}"/>
-                <DataGridTextColumn Header="Номер " Binding="{Binding Номер}"/>
-                <DataGridTextColumn Header="Вместимость " Binding="{Binding Вместимость}"/>
-                <DataGridTextColumn Header="Заселено" Binding="{Binding Заселено}"/>
-                <DataGridTextColumn Header="Свободно" Binding="{Binding Свободно}"/>
+                <DataGridTextColumn Header="Общежитие " Binding="{Binding Hostel}"/>
+                <DataGridTextColumn Header="Этаж " Binding="{Binding Floor}"/>
+                <DataGridTextColumn Header="Номер " Binding="{Binding Number}"/>
+                <DataGridTextColumn Header="Вместимость " Binding="{Binding Capacity}"/>
+                <DataGridTextColumn Header="Заселено" Binding="{Binding Occupied}"/>
+                <DataGridTextColumn Header="Свободно" Binding="{Binding Free}"/>
            </DataGrid.Columns>
             <DataGrid.ColumnHeaderStyle>
                 <Style TargetType="{x:Type DataGridColumnHeader}">

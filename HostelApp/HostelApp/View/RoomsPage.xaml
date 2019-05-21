@@ -13,7 +13,7 @@
             <Button DockPanel.Dock="Right" Content="Поиск" Width="160" Margin="10" FontSize="15" Height="40" Background="DarkGray" VerticalAlignment="Bottom" Click="Button_Click"></Button>
             <StackPanel Margin="10" DockPanel.Dock="Right">
                 <Label Content="Комната:" Foreground="#FF05C4FC" FontSize="22"></Label>
-                <TextBox  Name="tbxRoom" FontSize="22"></TextBox>
+                <TextBox  Name="tbxRoom" FontSize="22" KeyUp="TbxRoom_KeyUp"></TextBox>
             </StackPanel>
             <StackPanel Margin="10">
                 <Label Content="Общежитие:" Foreground="#FF05C4FC" FontSize="22"></Label>

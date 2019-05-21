@@ -32,12 +32,12 @@
         <DataGrid Name="grdStudents" Margin="10" AutoGenerateColumns="False" FontSize="16" IsReadOnly="True" SelectionMode="Single" CanUserResizeRows="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}" Visibility="Collapsed"/>
-                <DataGridTextColumn Header="Фамилия " Binding="{Binding Фамилия}"/>
-                <DataGridTextColumn Header="Имя " Binding="{Binding Имя}"/>
-                <DataGridTextColumn Header="Отчество " Binding="{Binding Отчество}"/>
-                <DataGridTextColumn Header="Факультет " Binding="{Binding Факультет}"/>
-                <DataGridTextColumn Header="Курс " Binding="{Binding Курс}"/>
-                <DataGridTextColumn Header="Группа" Binding="{Binding Группа}"/>
+                <DataGridTextColumn Header="Фамилия " Binding="{Binding LastName}"/>
+                <DataGridTextColumn Header="Имя " Binding="{Binding FirstName}"/>
+                <DataGridTextColumn Header="Отчество " Binding="{Binding MiddleName}"/>
+                <DataGridTextColumn Header="Факультет " Binding="{Binding FacultyName}"/>
+                <DataGridTextColumn Header="Курс " Binding="{Binding StudyYear}"/>
+                <DataGridTextColumn Header="Группа" Binding="{Binding GroupNumber}"/>
             </DataGrid.Columns>
             <DataGrid.ColumnHeaderStyle>
                 <Style TargetType="{x:Type DataGridColumnHeader}">

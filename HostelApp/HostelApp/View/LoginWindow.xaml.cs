@@ -1,67 +1,41 @@
 ﻿using HostelApp.Model;
-using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using HostelApp.Service;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
-namespace HostelApp.View
-{
+namespace HostelApp.View {
     /// <summary>
     /// Логика взаимодействия для LoginScreen.xaml
     /// </summary>
-    public partial class LoginWindow : Window
-    {
-        public LoginWindow()
-        {
+    public partial class LoginWindow : Window {
+        public LoginWindow() {
             InitializeComponent();
             txtUsername.Focus();
         }
 
-        private void BtnSubmit_Click(object sender, RoutedEventArgs e)
-        {
+        private void BtnSubmit_Click(object sender, RoutedEventArgs e) {
             Login();
         }
 
-        private void txtUsername_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Return)
-            {
+        private void txtUsername_KeyUp(object sender, KeyEventArgs e) {
+            if (e.Key == Key.Return) {
                 txtPassword.Focus();
             }
         }
 
-        private void txtPassword_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Return)
-            {
+        private void txtPassword_KeyUp(object sender, KeyEventArgs e) {
+            if (e.Key == Key.Return) {
                 Login();
             }
         }
 
         public void Login() {
-            using (var context = new HostelModelContainer())
-            {
-                User user = context.UserSet.Where(u => u.Login == txtUsername.Text && u.Pasword == txtPassword.Password && u.Active == true).FirstOrDefault();
-                if (user == null)
-                {
-                    lblError.Visibility = Visibility.Visible;
-                }
-                else
-                {
-                    MainWindow.currentUser = user;
-                    Person person = user.Person; // загрузить дополнительные данные в объект заранее
-                    this.Close();
-                }
+            User user = DataService.Login(txtUsername.Text, txtPassword.Password);
+            if (user == null) {
+                lblError.Visibility = Visibility.Visible;
+            } else {
+                MainWindow.currentUser = user;
+                this.Close();
             }
         }
     }

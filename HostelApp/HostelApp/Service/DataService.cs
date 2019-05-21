@@ -109,5 +109,106 @@ namespace HostelApp.Service {
                 }
             }
         }
+
+        // попытка авторизации пользователя, если успекно то возврашается заполненный объект User
+        public static User Login(String login, String password) {
+            using (var context = new HostelModelContainer()) {
+                User user = context.UserSet.Where(u => u.Login == login && u.Pasword == password && u.Active == true).FirstOrDefault();
+                if (user != null) {
+                    Person person = user.Person; // загрузить дополнительные данные в объект заранее
+                }
+                return user;
+            }
+        }
+
+        // возвращает спсиок всех обежитий
+        public static List<Hostel> GetAllHostels() {
+            using (var context = new HostelModelContainer()) {
+                return context.HostelSet.ToList();
+            }
+        }
+
+        // поиск комнаты по общежитию и номеру
+        public static Room FindRoom(int hostelId, int roomNumber) {
+            using (var context = new HostelModelContainer()) {
+                Room room = context.RoomSet.Where(r => r.Number == roomNumber && r.Hostel.Id == hostelId).FirstOrDefault();
+                return room;
+            }
+        }
+
+        // загрузка объекта Room и данных по Hostel
+        public static Room LoadRoom(int roomId) {
+            using (var context = new HostelModelContainer()) {
+                Room room = context.RoomSet.Single(r => r.Id == roomId);
+                Hostel hostel = room.Hostel; // предзагрузка данных про общежитиеы
+                return room;
+            }
+        }
+
+        // Поиск студентов проживающих в комнате
+        public static List<StudentRecord> FindStudents(int roomId) {
+            using (var context = new HostelModelContainer()) {
+                return (from o in context.OccupationSet
+                        where o.Room.Id == roomId && o.Student.Active == true
+                        select o.Student).ToList().Select(s =>
+                        new StudentRecord {
+                            Id = s.Id,
+                            LastName = s.Person.LastName,
+                            FirstName = s.Person.FirstName,
+                            MiddleName = s.Person.MiddleName,
+                            FacultyName = s.Group.Faculty.Name,
+                            StudyYear = s.Group.StudyYear,
+                            GroupNumber = s.Group.Number
+                        }).ToList();
+            }
+        }
+
+        // Поиск комнат
+        public class RoomRecord {
+            public int Id { set; get; }
+            public String Hostel { set; get; }
+            public int Floor { set; get; }
+            public int Number { set; get; }
+            public int Capacity { set; get; }
+            public int Occupied { set; get; }
+            public int Free { set; get; }
+        }
+
+        public static List<RoomRecord> GetRooms(int hostelId) {
+            using (var context = new HostelModelContainer()) {
+                if (hostelId == -1) {
+                    return (from r in context.RoomSet
+                            select new RoomRecord {
+                                Id = r.Id,
+                                Hostel = r.Hostel.Name + "(" + r.Hostel.Address + ")",
+                                Floor = r.Floor,
+                                Number = r.Number,
+                                Capacity = r.Capacity,
+                                Occupied = (from o in context.OccupationSet
+                                            where o.Room == r &&
+                                                o.Active &&
+                                                o.Student.Active &&
+                                                o.FromDate <= DateTime.Today && (o.ToDate >= DateTime.Today || o.ToDate == null)
+                                            select o).Count()
+                            }).ToList();
+                } else {
+                    return (from r in context.RoomSet
+                            where r.Hostel.Id == hostelId
+                            select new RoomRecord {
+                                Id = r.Id,
+                                Hostel = r.Hostel.Name + " (" + r.Hostel.Address + ")",
+                                Floor = r.Floor,
+                                Number = r.Number,
+                                Capacity = r.Capacity,
+                                Occupied = (from o in context.OccupationSet
+                                            where o.Room == r &&
+                                                      o.Active &&
+                                                      o.Student.Active &&
+                                                      o.FromDate <= DateTime.Today && (o.ToDate >= DateTime.Today || o.ToDate == null)
+                                            select o).Count()
+                            }).ToList();
+                }
+            }
+        }
     }
 }

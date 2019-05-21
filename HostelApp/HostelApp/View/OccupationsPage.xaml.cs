@@ -1,123 +1,50 @@
 ﻿using HostelApp.Model;
+using HostelApp.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
-namespace HostelApp.View
-{
+namespace HostelApp.View {
     /// <summary>
     /// Interaction logic for OcupationPage.xaml
     /// </summary>
-    public partial class OccupationsPage : Page
-    {
+    public partial class OccupationsPage : Page {
 
         List<Hostel> hostels = new List<Hostel>();
-        
-        public OccupationsPage()
-        {
+
+        public OccupationsPage() {
             InitializeComponent();
             InitFilters();
             InitializeRooms();
         }
 
-        public void InitFilters()
-        {
+        public void InitFilters() {
             hostels.Clear();
             cmbHostel.Items.Clear();
-            using (var context = new HostelModelContainer())
-            {
-                hostels = context.HostelSet.ToList();
-                foreach (Hostel hostel in hostels)
-                {
-                    cmbHostel.Items.Add(hostel.Name + " (" + hostel.Address + ")");
-                }
+            hostels = DataService.GetAllHostels();
+            foreach (Hostel hostel in hostels) {
+                cmbHostel.Items.Add(hostel.Name + " (" + hostel.Address + ")");
             }
         }
 
-        private void CmbHostel_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
+        private void CmbHostel_SelectionChanged(object sender, SelectionChangedEventArgs e) {
             InitializeRooms();
         }
 
-        public class RoomRecord
-        {
-            public int Id { set; get; }
-            public String Общежитие { set; get; }
-            public int Этаж { set; get; }
-            public int Номер { set; get; }
-            public int Вместимость { set; get; }
-            public int Заселено { set; get; }
-            public int Свободно { set; get; }
-        }
-
-        public void InitializeRooms()
-        {
-
-            using (var context = new HostelModelContainer())
-            {
-                if (cmbHostel.SelectedIndex == -1)
-                {
-                    var query = from r in context.RoomSet
-                                select new RoomRecord {
-                                    Id = r.Id,
-                                    Общежитие = r.Hostel.Name + "(" + r.Hostel.Address + ")",
-                                    Этаж = r.Floor,
-                                    Номер = r.Number,
-                                    Вместимость = r.Capacity,
-                                    Заселено = (from o in context.OccupationSet
-                                                      where o.Room == r &&
-                                                          o.Active &&
-                                                          o.Student.Active &&
-                                                          o.FromDate <= DateTime.Today &&
-                                                          (o.ToDate >= DateTime.Today || o.ToDate == null)
-                                                      select o).Count()
-                                };
-                    List<RoomRecord> records = query.ToList();
-                    records.ForEach(r => r.Свободно = r.Вместимость - r.Заселено);
-                    records.Sort((r1, r2) => r2.Свободно.CompareTo(r1.Свободно));
-                    grdRooms.ItemsSource = records; 
-                }
-                else
-                {
-                    int hostelId = hostels[cmbHostel.SelectedIndex].Id;
-                    var query = from r in context.RoomSet
-                                where r.Hostel.Id == hostelId
-                                select new RoomRecord
-                                {
-                                    Id = r.Id,
-                                    Общежитие = r.Hostel.Name + " (" + r.Hostel.Address + ")",
-                                    Этаж = r.Floor,
-                                    Номер = r.Number,
-                                    Вместимость = r.Capacity,
-                                    Заселено = (from o in context.OccupationSet
-                                                where o.Room == r&&
-                                                          o.Active &&
-                                                          o.Student.Active &&
-                                                          o.FromDate <= DateTime.Today &&
-                                                          (o.ToDate >= DateTime.Today || o.ToDate == null)
-                                                select o).Count()
-                                };
-                    List<RoomRecord> records = query.ToList();
-                    records.ForEach(r => r.Свободно = r.Вместимость - r.Заселено);
-                    records.Sort((r1, r2) => r2.Свободно.CompareTo(r1.Свободно));
-                    grdRooms.ItemsSource = records;
-                }
+        public void InitializeRooms() {
+            int hostelId = -1;
+            if (cmbHostel.SelectedIndex >= 0) {
+                hostelId = hostels[cmbHostel.SelectedIndex].Id;
             }
+            List<DataService.RoomRecord> records = DataService.GetRooms(hostelId);
+            records.ForEach(r => r.Free = r.Capacity - r.Occupied);
+            records.Sort((r1, r2) => r2.Free.CompareTo(r1.Free));
+            grdRooms.ItemsSource = records;
         }
 
-        public class StudentRecord
-        {
+        public class StudentRecord {
             public int Id { set; get; }
             public String Фамилия { set; get; }
             public String Имя { set; get; }
@@ -135,8 +62,7 @@ namespace HostelApp.View
 
         List<StudentRecord> students = new List<StudentRecord>();
 
-        private void GrdRooms_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
+        private void GrdRooms_SelectionChanged(object sender, SelectionChangedEventArgs e) {
             UpdateStudentsGrid();
         }
 
@@ -145,20 +71,16 @@ namespace HostelApp.View
             grdStudents.ItemsSource = students;
 
             int selectedIndex = grdRooms.SelectedIndex;
-            if (selectedIndex >= 0)
-            {
-                if (grdRooms.Items[selectedIndex] is RoomRecord roomRecord && roomRecord.Заселено > 0)
-                {
-                    using (var context = new HostelModelContainer())
-                    {
+            if (selectedIndex >= 0) {
+                if (grdRooms.Items[selectedIndex] is DataService.RoomRecord roomRecord && roomRecord.Occupied > 0) {
+                    using (var context = new HostelModelContainer()) {
                         var query = from o in context.OccupationSet
                                     where o.Room.Id == roomRecord.Id &&
                                         o.Active &&
                                         o.Student.Active &&
                                         o.FromDate <= DateTime.Today &&
                                         (o.ToDate >= DateTime.Today || o.ToDate == null)
-                                    select new StudentRecord
-                                    {
+                                    select new StudentRecord {
                                         Id = o.Id,
                                         Фамилия = o.Student.Person.LastName,
                                         Имя = o.Student.Person.FirstName,
@@ -184,33 +106,27 @@ namespace HostelApp.View
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
+        private void Button_Click(object sender, RoutedEventArgs e) {
             int selectedIndex = grdRooms.SelectedIndex;
-            if (selectedIndex >= 0)
-            {
-                if (grdRooms.Items[selectedIndex] is RoomRecord roomRecord && roomRecord.Свободно > 0)
-                {
+            if (selectedIndex >= 0) {
+                if (grdRooms.Items[selectedIndex] is DataService.RoomRecord roomRecord && roomRecord.Free > 0) {
                     // вызов селектора студентов
                     SelectStudentWindow selectStudentWindow = new SelectStudentWindow();
-                    selectStudentWindow.lblHeader.Content = "Заселение в: " + roomRecord.Общежитие + " комната " + roomRecord.Номер;
+                    selectStudentWindow.lblHeader.Content = "Заселение в: " + roomRecord.Hostel + " комната " + roomRecord.Number;
                     selectStudentWindow.lblHeader.Visibility = Visibility.Visible;
                     selectStudentWindow.ShowDialog();
                     selectStudentWindow.Close();
-                    
-                    if (selectStudentWindow.SelectedId >=0) {
+
+                    if (selectStudentWindow.SelectedId >= 0) {
                         // заселение или переселение студета, если он уже живет. 
                         // Студент: selectStudentWindow.SelectedId, Комната: roomRecord.Id, fromDate = Today, toDate = null, order = null
-                        using (var context = new HostelModelContainer())
-                        {
-                            Occupation previousOcupation = context.OccupationSet.SingleOrDefault(o => o.Student.Id == selectStudentWindow.SelectedId && o.Active == true);                           
+                        using (var context = new HostelModelContainer()) {
+                            Occupation previousOcupation = context.OccupationSet.SingleOrDefault(o => o.Student.Id == selectStudentWindow.SelectedId && o.Active == true);
                             if (previousOcupation == null || (previousOcupation.Room.Id != roomRecord.Id)) {
-                                if (previousOcupation != null)
-                                {
+                                if (previousOcupation != null) {
                                     previousOcupation.Active = false;
                                 }
-                                Occupation ocupation = new Occupation()
-                                {
+                                Occupation ocupation = new Occupation() {
                                     Active = true,
                                     Student = context.StudentSet.Single(s => s.Id == selectStudentWindow.SelectedId),
                                     Room = context.RoomSet.Single(r => r.Id == roomRecord.Id),
@@ -220,55 +136,46 @@ namespace HostelApp.View
                                 context.SaveChanges();
 
                                 // обновление UI
-                                List<RoomRecord> records = new List<RoomRecord>();
-                                foreach (RoomRecord r in grdRooms.ItemsSource) {
+                                List<DataService.RoomRecord> records = new List<DataService.RoomRecord>();
+                                foreach (DataService.RoomRecord r in grdRooms.ItemsSource) {
                                     records.Add(r);
-                                    if (previousOcupation!=null && r.Id == previousOcupation.Room.Id) {
-                                        r.Заселено = r.Заселено - 1;
-                                        r.Свободно = r.Свободно + 1;
+                                    if (previousOcupation != null && r.Id == previousOcupation.Room.Id) {
+                                        r.Occupied = r.Occupied - 1;
+                                        r.Free = r.Free + 1;
                                     }
-                                } 
-                                records[selectedIndex].Заселено = records[selectedIndex].Заселено + 1;
-                                records[selectedIndex].Свободно = records[selectedIndex].Свободно - 1;
-                                grdRooms.ItemsSource = records;                                   
+                                }
+                                records[selectedIndex].Occupied = records[selectedIndex].Occupied + 1;
+                                records[selectedIndex].Free = records[selectedIndex].Free - 1;
+                                grdRooms.ItemsSource = records;
                                 UpdateStudentsGrid();
-                            }                        
+                            }
                         }
                     }
                 }
             }
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
+        private void Button_Click_1(object sender, RoutedEventArgs e) {
             int selectedIndex = grdRooms.SelectedIndex;
-            if (selectedIndex >= 0)
-            {
-                if (grdRooms.Items[selectedIndex] is RoomRecord roomRecord && roomRecord.Свободно > 0)
-                {
+            if (selectedIndex >= 0) {
+                if (grdRooms.Items[selectedIndex] is DataService.RoomRecord roomRecord && roomRecord.Free > 0) {
                     int studentIndex = grdStudents.SelectedIndex;
-                    if (studentIndex >= 0)
-                    {
-                        if (grdStudents.Items[studentIndex] is StudentRecord studentRecord)
-                        {
+                    if (studentIndex >= 0) {
+                        if (grdStudents.Items[studentIndex] is StudentRecord studentRecord) {
                             MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Вы уверены что хотите выселить студента?", "Подтверждение действия", System.Windows.MessageBoxButton.YesNo);
-                            if (messageBoxResult == MessageBoxResult.Yes)
-                            {
-                                using (var context = new HostelModelContainer())
-                                {
+                            if (messageBoxResult == MessageBoxResult.Yes) {
+                                using (var context = new HostelModelContainer()) {
                                     Occupation previousOcupation = context.OccupationSet.SingleOrDefault(o => o.Id == studentRecord.Id && o.Active == true);
                                     previousOcupation.Active = false;
                                     context.SaveChanges();
 
                                     // обновление UI
-                                    List<RoomRecord> records = new List<RoomRecord>();
-                                    foreach (RoomRecord r in grdRooms.ItemsSource)
-                                    {
+                                    List<DataService.RoomRecord> records = new List<DataService.RoomRecord>();
+                                    foreach (DataService.RoomRecord r in grdRooms.ItemsSource) {
                                         records.Add(r);
-                                        if (r.Id == previousOcupation.Room.Id)
-                                        {
-                                            r.Заселено = r.Заселено - 1;
-                                            r.Свободно = r.Свободно + 1;
+                                        if (r.Id == previousOcupation.Room.Id) {
+                                            r.Occupied = r.Occupied - 1;
+                                            r.Free = r.Free + 1;
                                         }
                                     }
                                     grdRooms.ItemsSource = records;
@@ -281,20 +188,14 @@ namespace HostelApp.View
             }
         }
 
-        private void Button_Click_2(object sender, RoutedEventArgs e)
-        {
+        private void Button_Click_2(object sender, RoutedEventArgs e) {
             int selectedIndex = grdRooms.SelectedIndex;
-            if (selectedIndex >= 0)
-            {
-                if (grdRooms.Items[selectedIndex] is RoomRecord roomRecord && roomRecord.Свободно > 0)
-                {
+            if (selectedIndex >= 0) {
+                if (grdRooms.Items[selectedIndex] is DataService.RoomRecord roomRecord && roomRecord.Free > 0) {
                     int studentIndex = grdStudents.SelectedIndex;
-                    if (studentIndex >= 0)
-                    {
-                        if (grdStudents.Items[studentIndex] is StudentRecord studentRecord)
-                        {
-                            EditOccupationWindow editOccupationWindow = new EditOccupationWindow
-                            {
+                    if (studentIndex >= 0) {
+                        if (grdStudents.Items[studentIndex] is StudentRecord studentRecord) {
+                            EditOccupationWindow editOccupationWindow = new EditOccupationWindow {
                                 OccupationId = studentRecord.Id
                             };
                             editOccupationWindow.ShowDialog();
@@ -305,20 +206,14 @@ namespace HostelApp.View
             }
         }
 
-        private void Button_Click_3(object sender, RoutedEventArgs e)
-        {
+        private void Button_Click_3(object sender, RoutedEventArgs e) {
             int selectedIndex = grdRooms.SelectedIndex;
-            if (selectedIndex >= 0)
-            {
-                if (grdRooms.Items[selectedIndex] is RoomRecord roomRecord && roomRecord.Свободно > 0)
-                {
+            if (selectedIndex >= 0) {
+                if (grdRooms.Items[selectedIndex] is DataService.RoomRecord roomRecord && roomRecord.Free > 0) {
                     int studentIndex = grdStudents.SelectedIndex;
-                    if (studentIndex >= 0)
-                    {
-                        if (grdStudents.Items[studentIndex] is StudentRecord studentRecord && studentRecord.Стоимость > 0)
-                        {
-                            AddPaymentWindow addPaymentWindow = new AddPaymentWindow
-                            {
+                    if (studentIndex >= 0) {
+                        if (grdStudents.Items[studentIndex] is StudentRecord studentRecord && studentRecord.Стоимость > 0) {
+                            AddPaymentWindow addPaymentWindow = new AddPaymentWindow {
                                 OccupationId = studentRecord.Id
                             };
                             addPaymentWindow.ShowDialog();

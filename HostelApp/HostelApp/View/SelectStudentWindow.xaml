@@ -14,7 +14,7 @@
                 <Button DockPanel.Dock="Right" Name="btnOk" Content="Выбрать" FontSize="16" Margin="5" Background="DarkGray" Click="BtnOk_Click"></Button>
                 <Label Name="lblError" ></Label>
             </DockPanel>
-            <Frame Name="frmSelection"   NavigationUIVisibility="Hidden" Source="/HostelApp;component/View/StudentsPage.xaml"></Frame>
+            <Frame Name="frmSelection"   NavigationUIVisibility="Hidden" Source="/HostelApp;component/View/StudentsPage.xaml" LoadCompleted="FrmSelection_LoadCompleted"></Frame>
         </DockPanel>
     </Border>
 </Window>

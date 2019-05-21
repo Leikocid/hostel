@@ -67,6 +67,7 @@
     <Compile Include="Model\Occupation.cs">
       <DependentUpon>HostelModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Service\DataService.cs" />
     <Compile Include="View\AddEditStudentPage.xaml.cs">
       <DependentUpon>AddEditStudentPage.xaml</DependentUpon>
     </Compile>

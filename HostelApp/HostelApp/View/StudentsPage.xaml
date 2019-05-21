@@ -8,24 +8,24 @@
       d:DesignHeight="450" d:DesignWidth="900"
       Title="StudentsPage">
 
-    <StackPanel Margin="10">
+    <StackPanel Margin="5">
         <DockPanel LastChildFill="True">
-            <Button DockPanel.Dock="Right" Content="Поиск" Width="160" Margin="10" FontSize="15" Click="Button_Click" Height="40" Background="DarkGray"></Button>
-            <TextBox  Name="tbxSearchText" FontSize="22" Margin="10" KeyUp="TbxSearchText_KeyUp" VerticalAlignment="Center" ></TextBox>
+            <Button DockPanel.Dock="Right" Content="Поиск" Width="160" Margin="5" FontSize="14" Click="Button_Click" Background="DarkGray"></Button>
+            <TextBox  Name="tbxSearchText" FontSize="18" Margin="5" KeyUp="TbxSearchText_KeyUp" VerticalAlignment="Center" ></TextBox>
         </DockPanel>
         <Separator></Separator>
 
-        <DataGrid Name="grdStudents" Margin="10" Background="Transparent" AutoGenerateColumns="False" RowBackground="Transparent" Foreground="#FF05C4FC" FontSize="14" IsReadOnly="True" SelectionMode="Single" CanUserResizeRows="False">
+        <DataGrid Name="grdStudents" Margin="5" Background="Transparent" AutoGenerateColumns="False" RowBackground="Transparent" Foreground="#FF05C4FC" FontSize="14" IsReadOnly="True" SelectionMode="Single" CanUserResizeRows="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}" Visibility="Collapsed"/>
-                <DataGridTextColumn Header="Фамилия " Binding="{Binding Фамилия}"/>
-                <DataGridTextColumn Header="Имя " Binding="{Binding Имя}"/>
-                <DataGridTextColumn Header="Отчество " Binding="{Binding Отчество}"/>
-                <DataGridTextColumn Header="Факультет " Binding="{Binding Факультет}" Width="250"/>
-                <DataGridTextColumn Header="Курс " Binding="{Binding Курс}"/>
-                <DataGridTextColumn Header="Группа " Binding="{Binding Группа}"/>
-                <DataGridTextColumn Header="Общежитие " Binding="{Binding StudentOcupation.Общежитие}" Width="190"/>
-                <DataGridTextColumn Header="Комната " Binding="{Binding StudentOcupation.Комната}"/>
+                <DataGridTextColumn Header="Фамилия " Binding="{Binding LastName}"/>
+                <DataGridTextColumn Header="Имя " Binding="{Binding FirstName}"/>
+                <DataGridTextColumn Header="Отчество " Binding="{Binding MiddleName}" Width="80"/>
+                <DataGridTextColumn Header="Факультет " Binding="{Binding FacultyName}" Width="220"/>
+                <DataGridTextColumn Header="Курс " Binding="{Binding StudyYear}"/>
+                <DataGridTextColumn Header="Группа " Binding="{Binding GroupNumber}"/>
+                <DataGridTextColumn Header="Общежитие " Binding="{Binding StudentOcupation.Hostel}" Width="190"/>
+                <DataGridTextColumn Header="Комната " Binding="{Binding StudentOcupation.RoomNumber}"/>
             </DataGrid.Columns>
             <DataGrid.ColumnHeaderStyle>
                 <Style TargetType="{x:Type DataGridColumnHeader}">

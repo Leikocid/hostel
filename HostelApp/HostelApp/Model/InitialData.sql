@@ -210,7 +210,7 @@ select ROW_NUMBER() OVER(ORDER BY Id DESC) AS Row, * from [dbo].[GroupSet]
 
 -- заселяем их последовательно в каждую вторую комнату
 insert into [dbo].[OccupationSet] (FromDate, Room_Id, Student_Id, Active)
-select GETDATE(), r.Id, s.Id, "true" from (
+select CONVERT(date, GETDATE()), r.Id, s.Id, "true" from (
 select ROW_NUMBER() OVER(ORDER BY Id ASC) AS Row, * from [dbo].[StudentSet]
 ) as s inner join (
 select ROW_NUMBER() OVER(ORDER BY Id DESC) AS Row, * from [dbo].[RoomSet]

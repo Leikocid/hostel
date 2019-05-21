@@ -80,12 +80,13 @@
                 <ComboBox FontSize="12" Name="cmbFaculty" Margin="5"></ComboBox>
             </DockPanel>
             <DockPanel Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2">
-                <Button  DockPanel.Dock="Right" Name="btnSave" Content=" Сохранить " Width="70" FontSize="12" Margin="5" Background="DarkGray" HorizontalAlignment="Left" Click="BtnSave_Click"></Button>
+                <Button  DockPanel.Dock="Right" Name="btnSave" Content="Сохранить" Width="70" FontSize="12" Margin="5" Background="DarkGray" HorizontalAlignment="Left" Click="BtnSave_Click"></Button>
+                <Button  DockPanel.Dock="Right" Name="btnDelete" Content="Удалить" Width="70" FontSize="12" Margin="5" Background="DarkGray" HorizontalAlignment="Left" Click="BtnDelete_Click"></Button>
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Курс" Margin="5" Foreground="#FF05C4FC" Width="70"></Label>
-                    <TextBox Margin="5" Name="txtYear" FontSize="15" Width="70" VerticalAlignment="Center"/>
+                    <TextBox Margin="5" Name="txtYear" FontSize="15" Width="50" VerticalAlignment="Center"/>
                     <Label Content="Группа" Margin="5" Foreground="#FF05C4FC" Width="50"></Label>
-                    <TextBox Margin="5" Name="txtGrpNumber" FontSize="15" Width="70" VerticalAlignment="Center"/>
+                    <TextBox Margin="5" Name="txtGrpNumber" FontSize="15" Width="50" VerticalAlignment="Center"/>
                 </StackPanel>
             </DockPanel>
         </Grid>

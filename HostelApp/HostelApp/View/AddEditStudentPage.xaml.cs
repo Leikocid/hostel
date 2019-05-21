@@ -404,5 +404,17 @@ namespace HostelApp.View
                 return student.Id;
             }
         }
+
+        private void BtnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentStudentId != -1) {
+                MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Вы уверены что хотите удалить студента?", "Подтверждение действия", System.Windows.MessageBoxButton.YesNo);
+                if (messageBoxResult == MessageBoxResult.Yes)
+                {
+                    DeactivateStudent(currentStudentId);
+                    SwitchToNewMode();
+                }
+            }
+        }
     }
 }

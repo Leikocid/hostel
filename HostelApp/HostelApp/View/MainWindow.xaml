@@ -15,11 +15,11 @@
     </Window.Background>
     <DockPanel LastChildFill="True" Margin="5">
         <DockPanel DockPanel.Dock="Top" Margin="5">
-            <Button Name="btnLogout" DockPanel.Dock="Right" Content="Выйти" Visibility ="Collapsed" Width="175" Background="DarkGray" Foreground="Black" FontSize="15" Height="44" Click="Button_Click_4"/>
-            <Button Name="btnLogin"  DockPanel.Dock="Right" Content="Войти" Visibility ="Visible" Width="175" Background="DarkGray" Foreground="Black" FontSize="15" Height="44" Click="Button_Click_3"/>
+            <Button Name="btnLogout" DockPanel.Dock="Right" Content="Выйти" Visibility ="Collapsed" Width="175" Background="DarkGray" Foreground="Black" FontSize="14" Click="Button_Click_4"/>
+            <Button Name="btnLogin"  DockPanel.Dock="Right" Content="Войти" Visibility ="Visible" Width="175" Background="DarkGray" Foreground="Black" FontSize="14" Click="Button_Click_3"/>
             <StackPanel Orientation="Horizontal">
-                <Label Content="Добро пожаловать:" FontSize="22" Foreground="#FF05C4FC"/>
-                <Label Name="lblWelcomeName" Content="гость" FontSize="22" Foreground="#FF05C4FC"/>
+                <Label Content="Добро пожаловать:" FontSize="18" Foreground="#FF05C4FC"/>
+                <Label Name="lblWelcomeName" Content="гость" FontSize="18" Foreground="#FF05C4FC"/>
             </StackPanel>
         </DockPanel>
         <Separator DockPanel.Dock="Top" Background="#FF05C4FC"/>

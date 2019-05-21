@@ -80,7 +80,7 @@
                 <ComboBox FontSize="12" Name="cmbFaculty" Margin="5"></ComboBox>
             </DockPanel>
             <DockPanel Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2">
-                <Button  DockPanel.Dock="Right" Name="btnSave" Content=" Сохранить " Width="70" FontSize="12" Margin="5" Background="DarkGray" HorizontalAlignment="Left"></Button>
+                <Button  DockPanel.Dock="Right" Name="btnSave" Content=" Сохранить " Width="70" FontSize="12" Margin="5" Background="DarkGray" HorizontalAlignment="Left" Click="BtnSave_Click"></Button>
                 <StackPanel Orientation="Horizontal">
                     <Label Content="Курс" Margin="5" Foreground="#FF05C4FC" Width="70"></Label>
                     <TextBox Margin="5" Name="txtYear" FontSize="15" Width="70" VerticalAlignment="Center"/>
@@ -91,12 +91,13 @@
         </Grid>
         <Separator Margin="5,5,5,0" Background="#FF05C4FC"></Separator>
         <StackPanel Orientation="Horizontal">
-            <Label Content="Статус проживания: " FontSize="12" Margin="5" Foreground="#FF05C4FC"></Label>
-            <Label Name="lblOcup" Content="" FontSize="12" Margin="5" Foreground="White"></Label>
+            <Label Content="Статус проживания:" FontSize="12" Margin="5" Foreground="#FF05C4FC"></Label>
+            <Label Name="lblOccuoationStatus" Content="" FontSize="12" Margin="5" Foreground="White"></Label>
         </StackPanel>
-        <DataGrid Name="grdOHist" Margin="5" Height="100" AutoGenerateColumns="False" FontSize="12" IsReadOnly="True" SelectionMode="Single" CanUserResizeRows="False">
+        <DataGrid Name="grdOHist" Margin="5" Height="90" AutoGenerateColumns="False" FontSize="12" IsReadOnly="True" SelectionMode="Single" CanUserResizeRows="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}" Visibility="Collapsed"/>
+                <DataGridTextColumn Header="Актуально " Binding="{Binding ActiveText}"/>
                 <DataGridTextColumn Header="Общежитие " Binding="{Binding Hostel}"/>
                 <DataGridTextColumn Header="Комата " Binding="{Binding RoomNumber}"/>
                 <DataGridTextColumn Header="Заселение " Binding="{Binding From}"/>
@@ -114,10 +115,10 @@
         </DataGrid>
         <Separator Margin="5,5,5,0" Background="#FF05C4FC"></Separator>
         <StackPanel Orientation="Horizontal">
-            <Label Content="Статус оплат: " FontSize="12" Margin="5" Foreground="#FF05C4FC"></Label>
-            <Label Name="lblPay" Content="" FontSize="12" Margin="5" Foreground="White"></Label>
+            <Label Content="Статус оплат:" FontSize="12" Margin="5" Foreground="#FF05C4FC"></Label>
+            <Label Name="lblPaymentStatus" Content="" FontSize="12" Margin="5" Foreground="White"></Label>
         </StackPanel>
-        <DataGrid Name="grdPHist" Margin="5" Height="100" AutoGenerateColumns="False" FontSize="12" IsReadOnly="True" SelectionMode="Single" CanUserResizeRows="False">
+        <DataGrid Name="grdPHist" Margin="5" Height="90" AutoGenerateColumns="False" FontSize="12" IsReadOnly="True" SelectionMode="Single" CanUserResizeRows="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Id}" Visibility="Collapsed"/>
                 <DataGridTextColumn Header="Сумма " Binding="{Binding Amount}"/>
@@ -134,5 +135,6 @@
                 </Style>
             </DataGrid.ColumnHeaderStyle>
         </DataGrid>
+        <Label Name="lblError" FontSize="12" Foreground="#FFE56D6D" HorizontalAlignment="Center"/>
     </StackPanel>
 </Page>

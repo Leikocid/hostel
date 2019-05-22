@@ -27,6 +27,7 @@ namespace HostelApp.View {
 
         public void UpdateForm() {
             using (var context = new HostelModelContainer()) {
+                occupation = context.OccupationSet.Single(o => o.Id == occupationId);
                 tbxRoom.Text = occupation.Room.Hostel.Name + " (" + occupation.Room.Hostel.Address + ") комната " + occupation.Room.Number;
                 tbxStudent.Text = occupation.Student.Person.LastName + " " + occupation.Student.Person.FirstName + " " + occupation.Student.Person.MiddleName + " - " +
                     occupation.Student.Group.Faculty.Name + " " + occupation.Student.Group.StudyYear + " курс " + occupation.Student.Group.Number + " группа";

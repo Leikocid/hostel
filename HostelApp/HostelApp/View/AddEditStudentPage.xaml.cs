@@ -274,7 +274,7 @@ namespace HostelApp.View
                error = "Год обучения задан некорректно";
             }
             if (year < 1 || year > 4) {
-                error = "Год обучения должен быить от 1 до 4";
+                error = "Год обучения должен быть от 1 до 4";
             }
             int number = 0;
             if (txtGrpNumber.Text.Length == 0 || !Int32.TryParse(txtGrpNumber.Text, out number))
@@ -389,6 +389,7 @@ namespace HostelApp.View
                 mother.FirstName = txtMFN.Text;
                 mother.LastName = txtMLN.Text;
                 mother.MiddleName = txtMMN.Text;
+
                 Student student = new Student();
                 context.StudentSet.Add(student);
                 student.Person = person;

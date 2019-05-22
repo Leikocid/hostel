@@ -214,40 +214,39 @@ namespace HostelApp.View {
 
         private void BtnSave_Click(object sender, RoutedEventArgs e) {
             // проверка корректности полей
-            String error = null;
             lblError.Content = "";
 
-            if (txtLN.Text.Length == 0) {
-                error = "Фамилия студента не может быть пустой";
-            }
-            if (txtFN.Text.Length == 0) {
-                error = "Имя студента не может быть пустым";
-            }
-            if (cmbFaculty.SelectedIndex == -1) {
-                error = "Не задан факультет";
-            }
-            int year = 0;
-            if (txtYear.Text.Length == 0 || !Int32.TryParse(txtYear.Text, out year)) {
-                error = "Год обучения задан некорректно";
-            }
-            if (year < 1 || year > 4) {
-                error = "Год обучения должен быить от 1 до 4";
-            }
-            int number = 0;
-            if (txtGrpNumber.Text.Length == 0 || !Int32.TryParse(txtGrpNumber.Text, out number)) {
-                error = "Номер группы задан некорректно";
-            }
-            int facultyId = faculties[cmbFaculty.SelectedIndex].Id;
-            using (var context = new HostelModelContainer()) {
-
-                Group group = (from g in context.GroupSet
-                               where g.Faculty.Id == facultyId && g.StudyYear == year && g.Number == number
-                               select g).FirstOrDefault();
-                if (group == null) {
-                    error = "Указанная группа не найдена";
+            try {
+                if (txtLN.Text.Length == 0) {
+                    throw new Exception("Фамилия студента не может быть пустой");
                 }
-            }
-            if (error == null) {
+                if (txtFN.Text.Length == 0) {
+                    throw new Exception("Имя студента не может быть пустым");
+                }
+                if (cmbFaculty.SelectedIndex == -1) {
+                    throw new Exception("Не задан факультет");
+                }
+                int year = 0;
+                if (txtYear.Text.Length == 0 || !Int32.TryParse(txtYear.Text, out year)) {
+                    throw new Exception("Год обучения задан некорректно");
+                }
+                if (year < 1 || year > 4) {
+                    throw new Exception("Год обучения должен быить от 1 до 4");
+                }
+                int number = 0;
+                if (txtGrpNumber.Text.Length == 0 || !Int32.TryParse(txtGrpNumber.Text, out number)) {
+                    throw new Exception("Номер группы задан некорректно");
+                }
+                int facultyId = faculties[cmbFaculty.SelectedIndex].Id;
+                using (var context = new HostelModelContainer()) {
+
+                    Group group = (from g in context.GroupSet
+                                   where g.Faculty.Id == facultyId && g.StudyYear == year && g.Number == number
+                                   select g).FirstOrDefault();
+                    if (group == null) {
+                        throw new Exception("Указанная группа не найдена");
+                    }
+                }
                 if (currentStudentId == -1) {
                     int studentId = CreateNewStudent();
                     SwitchToEditMode(studentId);
@@ -264,8 +263,8 @@ namespace HostelApp.View {
                         }
                     }
                 }
-            } else {
-                lblError.Content = error;
+            } catch (Exception e) {
+                lblError.Content = e.Message;
             }
         }
 

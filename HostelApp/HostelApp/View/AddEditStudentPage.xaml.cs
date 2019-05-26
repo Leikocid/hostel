@@ -263,8 +263,8 @@ namespace HostelApp.View {
                         }
                     }
                 }
-            } catch (Exception e) {
-                lblError.Content = e.Message;
+            } catch (Exception ex) {
+                lblError.Content = ex.Message;
             }
         }
 

@@ -24,8 +24,8 @@
                 <DataGridTextColumn Header="Факультет " Binding="{Binding FacultyName}" Width="220"/>
                 <DataGridTextColumn Header="Курс " Binding="{Binding StudyYear}"/>
                 <DataGridTextColumn Header="Группа " Binding="{Binding GroupNumber}"/>
-                <DataGridTextColumn Header="Общежитие " Binding="{Binding StudentOcupation.Hostel}" Width="190"/>
-                <DataGridTextColumn Header="Комната " Binding="{Binding StudentOcupation.RoomNumber}"/>
+                <DataGridTextColumn Header="Общежитие " Binding="{Binding StudentOccupation.Hostel}" Width="190"/>
+                <DataGridTextColumn Header="Комната " Binding="{Binding StudentOccupation.RoomNumber}"/>
             </DataGrid.Columns>
             <DataGrid.ColumnHeaderStyle>
                 <Style TargetType="{x:Type DataGridColumnHeader}">

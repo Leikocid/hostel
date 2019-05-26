@@ -214,6 +214,7 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>HostelModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="Model\HostelClassDiagram.cd" />
     <None Include="Model\HostelModel.edmx.diagram">
       <DependentUpon>HostelModel.edmx</DependentUpon>
     </None>

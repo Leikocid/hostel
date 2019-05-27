@@ -104,7 +104,7 @@ namespace HostelApp.View {
                         if (grdStudents.Items[studentIndex] is DataService.StudentRecord studentRecord) {
                             MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Вы уверены что хотите выселить студента?", "Подтверждение действия", System.Windows.MessageBoxButton.YesNo);
                             if (messageBoxResult == MessageBoxResult.Yes) {
-                                (Occupation previousOccupation, Occupation occupation) = DataService.SetOccupation(studentRecord.StudentOccupation.Id, -1);
+                                (Occupation previousOccupation, Occupation occupation) = DataService.SetOccupation(studentRecord.Id, -1);
   
                                 // обновление UI
                                 List<DataService.RoomRecord> records = new List<DataService.RoomRecord>();

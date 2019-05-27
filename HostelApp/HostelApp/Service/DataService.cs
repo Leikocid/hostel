@@ -120,7 +120,7 @@ namespace HostelApp.Service {
         // попытка авторизации пользователя, если успекно то возврашается заполненный объект User
         public static User Login(String login, String password) {
             using (var context = new HostelModelContainer()) {
-                User user = context.UserSet.Where(u => u.Login == login && u.Pasword == password && u.Active == true).FirstOrDefault();
+                User user = context.UserSet.Where(u => u.Login == login && u.Pasword == password && u.Active).FirstOrDefault();
                 if (user != null) {
                     Person person = user.Person; // загрузить дополнительные данные в объект заранее
                 }
@@ -157,9 +157,7 @@ namespace HostelApp.Service {
             using (var context = new HostelModelContainer()) {
                 if (loadOccupationInfo) {
                     return (from o in context.OccupationSet
-                                    where o.Room.Id == roomId &&
-                                        o.Active && o.Student.Active &&
-                                        o.FromDate <= DateTime.Today && (o.ToDate >= DateTime.Today || o.ToDate == null)
+                                    where o.Room.Id == roomId && o.Active && o.Student.Active && o.FromDate <= DateTime.Today && (o.ToDate >= DateTime.Today || o.ToDate == null)
                                     select new StudentRecord {
                                         Id = o.Student.Id,
                                         LastName = o.Student.Person.LastName,
@@ -248,7 +246,7 @@ namespace HostelApp.Service {
         // Поселить студента в комнату. Если студент уже где-то живет то он буоет выселен, если roomId == -1 то он будет просто выселен
         public static (Occupation, Occupation) SetOccupation(int studentId, int roomId) {
             using (var context = new HostelModelContainer()) {
-                Occupation previousOcupation = context.OccupationSet.SingleOrDefault(o => o.Student.Id == studentId && o.Active == true);
+                Occupation previousOcupation = context.OccupationSet.SingleOrDefault(o => o.Student.Id == studentId && o.Active);
                 if (previousOcupation != null) {
                     Room room = previousOcupation.Room; // дозагрузка информации про комнату
                 }

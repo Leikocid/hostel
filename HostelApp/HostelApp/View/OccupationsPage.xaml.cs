@@ -110,7 +110,7 @@ namespace HostelApp.View {
                                 List<DataService.RoomRecord> records = new List<DataService.RoomRecord>();
                                 foreach (DataService.RoomRecord r in grdRooms.ItemsSource) {
                                     records.Add(r);
-                                    if (r.Id == previousOccupation.Room.Id) {
+                                    if (previousOccupation != null && r.Id == previousOccupation.Room.Id) {
                                         r.Occupied = r.Occupied - 1;
                                         r.Free = r.Free + 1;
                                     }

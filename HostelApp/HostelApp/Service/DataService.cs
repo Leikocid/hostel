@@ -249,6 +249,9 @@ namespace HostelApp.Service {
         public static (Occupation, Occupation) SetOccupation(int studentId, int roomId) {
             using (var context = new HostelModelContainer()) {
                 Occupation previousOcupation = context.OccupationSet.SingleOrDefault(o => o.Student.Id == studentId && o.Active == true);
+                if (previousOcupation != null) {
+                    Room room = previousOcupation.Room; // дозагрузка информации про комнату
+                }
                 if (roomId != -1) {
                     if (previousOcupation == null || (previousOcupation.Room.Id != roomId)) {
                         if (previousOcupation != null) {
@@ -267,8 +270,10 @@ namespace HostelApp.Service {
                         return (previousOcupation, previousOcupation);
                     }
                 } else {
-                    previousOcupation.Active = false;
-                    context.SaveChanges();
+                    if (previousOcupation != null) {
+                        previousOcupation.Active = false;
+                        context.SaveChanges();
+                    }
                     return (previousOcupation, null);
                 }
             }
